@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Gallops Menstrual Cup - Safe, comfortable, and eco-friendly reusable menstrual cup. Enjoy up to 12 hours of leak-free protection. Made from 100% medical-grade silicone.">
+  <meta name="keywords"
+    content="menstrual cup, reusable menstrual cup, medical grade silicone cup, period care, eco friendly menstrual cup, Gallops, female hygiene">
+  <meta name="author" content="Earth Enterprise">
+  <title>Gallops Menstrual Cup – Safe, Comfortable & Eco-Friendly</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Header & Navigation -->
+  <header>
+    <div class="container">
+      <a href="#home" class="logo" id="logo-link">
+        <img src="assets/LOGO.png" alt="Gallops Logo">
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#benefits">Benefits</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#products">Products</a></li>
+          <li><a href="#how-to-use">How To Use</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#tracking">Track Order</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <a href="#products" class="btn btn-primary btn-sm">Shop Now</a>
+        <button class="burger" aria-label="Toggle Navigation">
+          <span class="line1"></span>
+          <span class="line2"></span>
+          <span class="line3"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section id="home" class="hero">
+    <div class="container">
+      <div class="hero-content reveal">
+        <div class="hero-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,17L7.5,13.5L8.91,12.09L11,14.17L15.09,10.08L16.5,11.5L11,17Z" />
+          </svg>
+          100% Medical-Grade Silicone
+        </div>
+        <h1>Gallops Menstrual Cup – <span>Safe, Comfortable</span> & Eco-Friendly</h1>
+        <p>Enjoy up to 12 hours of leak-free protection with a reusable menstrual cup designed for active lifestyles and
+          body comfort.</p>
+
+        <div class="hero-ctas">
+          <a href="#products" class="btn btn-primary">Shop Now</a>
+          <a href="https://wa.me/919558642815" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path
+                d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.993L2 22l5.13-1.347a9.96 9.96 0 0 0 4.88 1.277h.005c5.505 0 9.988-4.478 9.99-9.985A9.97 9.97 0 0 0 12.012 2zm4.957 14.22c-.274.774-1.397 1.428-1.923 1.517-.457.078-.992.117-2.907-.639-2.45-.967-4.009-3.414-4.132-3.574-.12-.16-.991-1.294-.991-2.468 0-1.175.617-1.75.836-1.99.223-.242.484-.301.644-.301.163 0 .323.001.464.007.149.006.347-.057.542.404.201.477.689 1.652.75 1.773.06.12.101.26.021.42-.081.162-.121.26-.242.399-.12.141-.253.315-.361.424-.12.12-.246.252-.106.49.141.242.626 1.017 1.341 1.646.923.811 1.699 1.062 1.94 1.183.241.12.383.101.523-.061.141-.162.604-.69.765-.927.162-.239.323-.201.543-.12.22.081 1.402.652 1.643.771.241.12.402.181.463.283.06.1.06.58-.214 1.354z" />
+            </svg>
+            Chat on WhatsApp
+          </a>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-item">
+            <h4>12h</h4>
+            <p>Leak-Free Wear</p>
+          </div>
+          <div class="stat-item">
+            <h4>10Y</h4>
+            <p>Reusable Life</p>
+          </div>
+          <div class="stat-item">
+            <h4>0%</h4>
+            <p>Toxins & BPA</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-image-wrapper reveal reveal-delay-2">
+        <div class="hero-image-bg"></div>
+        <img src="assets/lifestyle.jpg" alt="Gallops Menstrual Cup Lifestyle Presentation">
+        <div class="floating-badge">
+          <div class="floating-badge-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M12,3A9,9 0 0,0 3,12A9,9 0 0,0 12,21A9,9 0 0,0 21,12A9,9 0 0,0 12,3M12,5A7,7 0 0,1 19,12C19,14.07 18.1,15.93 16.66,17.21L15.25,15.8C16.34,14.85 17,13.5 17,12A5,5 0 0,0 12,7V5M12,9A3,3 0 0,1 15,12C15,12.9 14.6,13.72 13.97,14.28L12.56,12.87C12.84,12.67 13,12.35 13,12A1,1 0 0,0 12,11V9M12,13A1,1 0 0,0 11,12V11A3,3 0 0,1 14,8V9C14,10.65 12.65,12 11,12H12V13M12,15A3,3 0 0,1 9,12H11A1,1 0 0,0 12,13V15M12,17A5,5 0 0,0 7,12H9C9,13.65 10.35,15 12,15V17Z" />
+            </svg>
+          </div>
+          <div class="floating-badge-text">
+            <h5>Eco-Friendly Choice</h5>
+            <p>Zero Waste Period</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section id="benefits" class="benefits">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="subtitle">Why Choose Gallops</span>
+        <h2>Designed for Your Body & The Planet</h2>
+        <p>Switching to a Gallops menstrual cup is a step towards better hygiene, immense cost savings, and
+          environmental protection.</p>
+      </div>
+
+      <div class="benefits-grid">
+        <!-- Benefit 1 -->
+        <div class="benefit-card reveal">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M12,6A6,6 0 0,1 18,12C18,14.24 16.77,16.2 15,17.27V20H9V17.27C7.23,16.2 6,14.24 6,12A6,6 0 0,1 12,6M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,8A4,4 0 0,0 8,12C8,13.5 8.82,14.81 10,15.5V18H14V15.5C15.18,14.81 16,13.5 16,12A4,4 0 0,0 12,8Z" />
+            </svg>
+          </div>
+          <h3>Reusable for 5–10 Years</h3>
+          <p>A single Gallops cup replaces thousands of single-use pads and tampons, offering long-lasting reliable
+            performance year after year.</p>
+        </div>
+
+        <!-- Benefit 2 -->
+        <div class="benefit-card reveal reveal-delay-1">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M12 20c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8m0-18C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 10V7h-2v7h6v-2h-4z" />
+            </svg>
+          </div>
+          <h3>Up to 12 Hours Protection</h3>
+          <p>Enjoy uninterrupted sleep, active sports workouts, and hectic working days without worrying about leakages
+            or frequent bathroom visits.</p>
+        </div>
+
+        <!-- Benefit 3 -->
+        <div class="benefit-card reveal reveal-delay-2">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1M12,3L19,6.1V11C19,15.4 16.03,19.54 12,20.9C7.97,19.54 5,15.4 5,11V6.1L12,3M12,7A3,3 0 0,0 9,10A3,3 0 0,0 12,13A3,3 0 0,0 15,10A3,3 0 0,0 12,7M12,9A1,1 0 0,1 13,10A1,1 0 0,1 12,11A1,1 0 0,1 11,10A1,1 0 0,1 12,9Z" />
+            </svg>
+          </div>
+          <h3>Medical-Grade Silicone</h3>
+          <p>Crafted exclusively from certified biocompatible, toxin-free medical-grade silicone. It preserves natural
+            pH balances and prevents dry spells.</p>
+        </div>
+
+        <!-- Benefit 4 -->
+        <div class="benefit-card reveal reveal-delay-3">
+          <div class="benefit-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path
+                d="M5,6A2,2 0 0,1 7,4M9,4A2,2 0 0,1 11,6M7,20A2,2 0 0,1 5,18M11,20A2,2 0 0,1 9,18M19,16A2,2 0 0,1 17,18M15,18A2,2 0 0,1 13,16M17,6A2,2 0 0,1 19,4M13,4A2,2 0 0,1 15,6M16,10A3,3 0 0,1 19,13A3,3 0 0,1 16,16A3,3 0 0,1 13,13A3,3 0 0,1 16,10M12,14H8V10H12V8H6V16H12V14Z" />
+            </svg>
+          </div>
+          <h3>Eco-Friendly & Cost-Saving</h3>
+          <p>Dramatically reduces your monthly carbon footprint. Save thousands of rupees while shielding the planet
+            from landfill waste.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about" class="about">
+    <div class="container">
+      <div class="about-image reveal">
+        <img src="assets/hero.png" alt="Aesthetic Menstrual Cup Design">
+        <div class="about-img-badge">
+          <div class="number">100%</div>
+          <div class="label">Natural Care</div>
+        </div>
+      </div>
+
+      <div class="about-content reveal reveal-delay-1">
+        <span class="subtitle">About Gallops</span>
+        <h2>Designed for Comfort, Safety, and Eco-Balance</h2>
+        <p class="lead-text">Gallops Menstrual Cup is made from ultra-soft, premium medical-grade silicone that respects
+          your body’s natural environment.</p>
+        <p>Unlike disposable pads or tampons that absorb moisture and alter vaginal flora, Gallops collects fluid
+          naturally. It eliminates dry spells, rashes, and discomfort completely. It is incredibly soft, flexible, and
+          forms an airtight seal that offers secure protection for every body type.</p>
+        <p>Whether you're hitting the gym, traveling, or getting a full night's sleep, Gallops conforms to your body
+          shape so you won't feel a thing. Save money, save the environment, and step into period freedom.</p>
+
+        <div class="about-features">
+          <div class="about-feat-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+            <span>100% Odor-free</span>
+          </div>
+          <div class="about-feat-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+            <span>Travel Friendly</span>
+          </div>
+          <div class="about-feat-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+            <span>Active Lifestyle Approved</span>
+          </div>
+          <div class="about-feat-item">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+              <path d="M21,7L9,19L3.5,13.5L4.91,12.09L9,16.17L19.59,5.59L21,7Z" />
+            </svg>
+            <span>Hypoallergenic</span>
+          </div>
+        </div>
+
+        <a href="#products" class="btn btn-primary">Find Your Size</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Section / Gallery -->
+  <section id="products" class="product">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="subtitle">E-commerce Shop</span>
+        <h2>Choose Your Perfect Gallops Cup</h2>
+        <p>Available in three sizes carefully engineered to match your biological cycle and body shape. Select a size to
+          view specifications and order.</p>
+      </div>
+
+      <div class="product-panel reveal">
+        <!-- Image Gallery Side -->
+        <div class="product-gallery-side">
+          <span class="product-badge">Best Seller</span>
+          <div class="product-image-container">
+            <img src="assets/box_small.jpg" alt="Gallops Menstrual Cup - Size Small" id="product-image"
+              class="product-img-display">
+          </div>
+          <div class="product-thumbnails">
+            <button class="thumb-btn active" data-src="box" aria-label="View box packaging">
+              <img src="assets/box_small.jpg" alt="Packaging Box" id="thumb-box-img">
+            </button>
+            <button class="thumb-btn" data-src="assets/cup_upright.jpg" aria-label="View cup upright">
+              <img src="assets/cup_upright.jpg" alt="Upright Cup">
+            </button>
+            <button class="thumb-btn" data-src="assets/cup_angle.jpg" aria-label="View cup showing design">
+              <img src="assets/cup_angle.jpg" alt="Angle Cup">
+            </button>
+          </div>
+        </div>
+
+        <!-- Info / Selector Side -->
+        <div class="product-info-side">
+          <h3 class="product-title">Gallops Menstrual Cup</h3>
+
+          <div class="product-rating">
+            <div class="stars">
+              <!-- SVG Stars (5) -->
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+            </div>
+            <span class="rating-text">(4.9/5 stars based on 1,200+ users)</span>
+          </div>
+
+          <div class="product-price">
+            <span class="price-current">₹199<span class="price-shipping-note">+ Courier Charges</span></span>
+            <span class="price-original">₹599</span>
+            <span class="price-tag">80% OFF</span>
+          </div>
+
+          <p class="product-description">Say goodbye to dry spells, plastic waste, and odor. The Gallops menstrual cup
+            sits comfortably inside, providing a secure seal so you can sleep, exercise, and run errands leak-free.</p>
+
+          <!-- Size Selector -->
+          <div class="product-selector-label">Select Size</div>
+          <div class="size-selector-tabs">
+            <!-- Size Small Tab -->
+            <button class="size-tab active" data-size="small" aria-label="Select size Small">
+              <div class="size-tab-header">
+                <span class="size-name">Size Small (Pink)</span>
+                <span class="size-radio"></span>
+              </div>
+              <div class="size-desc">Capacity: 25ml. Ideal for users under 30 or pre-childbirth.</div>
+            </button>
+
+            <!-- Size Medium Tab -->
+            <button class="size-tab" data-size="medium" aria-label="Select size Medium">
+              <div class="size-tab-header">
+                <span class="size-name">Size Medium (Pink)</span>
+                <span class="size-radio"></span>
+              </div>
+              <div class="size-desc">Capacity: 28ml. Ideal for general flow or almost all body types.</div>
+            </button>
+
+            <!-- Size Large Tab -->
+            <button class="size-tab" data-size="large" aria-label="Select size Large">
+              <div class="size-tab-header">
+                <span class="size-name">Size Large (Pink)</span>
+                <span class="size-radio"></span>
+              </div>
+              <div class="size-desc">Capacity: 30ml. Ideal for users over 30 or post-childbirth.</div>
+            </button>
+          </div>
+
+          <!-- Specs Summary -->
+          <div class="product-selector-label">Specifications</div>
+          <div class="product-specs">
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8V12L15.22,14.22L16.22,12.78L13.5,11.22V8H12Z" />
+              </svg>
+              <span>Capacity: <span id="spec-capacity">25 ml</span></span>
+            </div>
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12,20A8,8 0 1,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2Z" />
+              </svg>
+              <span>Diameter: <span id="spec-diameter">42 mm</span></span>
+            </div>
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M10.59,4.58L9.17,6L11.17,8H8.83L10.83,6L9.41,4.58L6,8H2V10H6L9.41,13.41L10.83,12L8.83,10H11.17L9.17,12L10.59,13.41L14,10H22V8H14L10.59,4.58Z" />
+              </svg>
+              <span>Total Length: <span id="spec-length">65 mm</span></span>
+            </div>
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A1.5,1.5 0 0,0 10.5,7.5A1.5,1.5 0 0,0 12,9A1.5,1.5 0 0,0 13.5,7.5A1.5,1.5 0 0,0 12,6M10,10A2,2 0 0,0 8,12V15H10V18H14V14H16V12A2,2 0 0,0 14,10H10Z" />
+              </svg>
+              <span>Ideal for: <span id="spec-ideal-for">Light Flow / Pre-Childbirth</span></span>
+            </div>
+          </div>
+
+          <!-- Checkout Buttons -->
+          <div class="product-action-box">
+            <div class="product-action-buttons">
+              <!-- Dynamic WhatsApp checkout link -->
+              <a href="https://wa.me/919558642815" target="_blank" rel="noopener noreferrer" class="btn btn-primary"
+                id="btn-buy-whatsapp">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.993L2 22l5.13-1.347a9.96 9.96 0 0 0 4.88 1.277h.005c5.505 0 9.988-4.478 9.99-9.985A9.97 9.97 0 0 0 12.012 2zm4.957 14.22c-.274.774-1.397 1.428-1.923 1.517-.457.078-.992.117-2.907-.639-2.45-.967-4.009-3.414-4.132-3.574-.12-.16-.991-1.294-.991-2.468 0-1.175.617-1.75.836-1.99.223-.242.484-.301.644-.301.163 0 .323.001.464.007.149.006.347-.057.542.404.201.477.689 1.652.75 1.773.06.12.101.26.021.42-.081.162-.121.26-.242.399-.12.141-.253.315-.361.424-.12.12-.246.252-.106.49.141.242.626 1.017 1.341 1.646.923.811 1.699 1.062 1.94 1.183.241.12.383.101.523-.061.141-.162.604-.69.765-.927.162-.239.323-.201.543-.12.22.081 1.402.652 1.643.771.241.12.402.181.463.283.06.1.06.58-.214 1.354z" />
+                </svg>
+                Order on WhatsApp
+              </a>
+              <a href="mailto:earthenterprise100@gmail.com?subject=Gallops%20Menstrual%20Cup%20Order%20Inquiry"
+                class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path
+                    d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" />
+                </svg>
+                Email Order
+              </a>
+            </div>
+
+            <div class="payment-badge-row">
+              <span>💳 Cash on Delivery / UPI Available</span>
+              <span>🔒 100% Safe Checkout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Gallery Section -->
+  <section id="gallery" class="gallery-showcase">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="subtitle">Gallery Showcase</span>
+        <h2>Gallops in Real Life</h2>
+        <p>Take a closer look at our medical-grade silicone cups and customer-trusted packaging.</p>
+      </div>
+
+      <div class="gallery-grid">
+        <!-- Gallery 1: Model Lifestyle -->
+        <div class="gallery-item reveal">
+          <img src="assets/lifestyle.jpg" alt="Gallops Menstrual Cup Packaging Box and Model Lifestyle presentation">
+          <div class="gallery-item-overlay">
+            <span>Gallops Lifestyle & Canister Box</span>
+          </div>
+        </div>
+        <!-- Gallery 2: Pink Cup -->
+        <div class="gallery-item reveal reveal-delay-1">
+          <img src="assets/product_pink.png" alt="Gallops Menstrual Cup Size Small - Pink">
+          <div class="gallery-item-overlay">
+            <span>Size Small (Pink Cup)</span>
+          </div>
+        </div>
+        <!-- Gallery 3: Purple Cup -->
+        <div class="gallery-item reveal reveal-delay-2">
+          <img src="assets/product_purple.png" alt="Gallops Menstrual Cup Size Large - Purple">
+          <div class="gallery-item-overlay">
+            <span>Size Large (Purple Cup)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How to Use Section -->
+  <section id="how-to-use" class="how-to-use">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="subtitle">Step-by-Step Guide</span>
+        <h2>How Simple Is It to Use?</h2>
+        <p>Switching is easy. It might take 1–2 cycles to get completely used to it, but soon you won't even remember
+          it's there.</p>
+      </div>
+
+      <div class="steps-container">
+        <!-- Step 1 -->
+        <div class="step-card reveal">
+          <div class="step-icon-outer">
+            <span class="step-number">1</span>
+            <img src="assets/how_to_use_fold.png" alt="Fold the Cup">
+          </div>
+          <h3>Fold the Cup</h3>
+          <p>Sanitize your hands. Fold the cup using a simple 'C-fold' or 'punch-down fold' to make it compact.</p>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-card reveal reveal-delay-1">
+          <div class="step-icon-outer">
+            <span class="step-number">2</span>
+            <img src="assets/how_to_use_insert.png" alt="Insert Comfortably">
+          </div>
+          <h3>Insert Comfortably</h3>
+          <p>Squat or put one leg up. Guide the folded cup into your vagina and release. It will open and create a
+            secure seal.</p>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-card reveal reveal-delay-2">
+          <div class="step-icon-outer">
+            <span class="step-number">3</span>
+            <img src="assets/how_to_use_wear.png" alt="Wear up to 12 Hours">
+          </div>
+          <h3>Wear up to 12 Hours</h3>
+          <p>Sleep, run, swim, and commute. Enjoy long hours of natural protection without leakages or dry spells.</p>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-card reveal reveal-delay-3">
+          <div class="step-icon-outer">
+            <span class="step-number">4</span>
+            <img src="assets/how_to_use_wash.png" alt="Remove, Wash & Reuse">
+          </div>
+          <h3>Remove, Wash & Reuse</h3>
+          <p>Pinch the base slightly to break the seal. Pull down gently, empty contents in toilet, rinse with clean
+            water, and reuse.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Reviews Section -->
+  <section id="reviews" class="reviews">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="subtitle">Reviews</span>
+        <h2>What Our Users Say</h2>
+        <p>Read honest feedback from women who switched to Gallops Menstrual Cup for a healthier, leak-free period.</p>
+      </div>
+
+      <div class="reviews-grid">
+        <!-- Review 1 -->
+        <div class="review-card reveal">
+          <div class="review-rating">
+            <div class="stars">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+            </div>
+          </div>
+          <p class="review-text">"Switching to Gallops was the best decision ever! I was skeptical at first, but it is
+            incredibly soft and comfortable. I don't feel a thing and it easily lasts 12 hours without leaks."</p>
+          <div class="review-user">
+            <div class="user-avatar">PS</div>
+            <div class="user-info">
+              <h4>Pooja Sharma</h4>
+              <p>Verified Buyer</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 2 -->
+        <div class="review-card reveal reveal-delay-1">
+          <div class="review-rating">
+            <div class="stars">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+            </div>
+          </div>
+          <p class="review-text">"Absolutely love the eco-friendly aspect and how much money I save. The silicone is
+            premium and feels very safe. Small size is perfect for me!"</p>
+          <div class="review-user">
+            <div class="user-avatar">AP</div>
+            <div class="user-info">
+              <h4>Anjali Patel</h4>
+              <p>Verified Buyer</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Review 3 -->
+        <div class="review-card reveal reveal-delay-2">
+          <div class="review-rating">
+            <div class="stars">
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+              <svg viewBox="0 0 24 24">
+                <path
+                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
+              </svg>
+            </div>
+          </div>
+          <p class="review-text">"As a gynaecologist, I highly recommend Gallops Menstrual Cup. It is made of certified
+            medical-grade silicone which prevents infections and maintains natural pH balance."</p>
+          <div class="review-user">
+            <div class="user-avatar doctor">SM</div>
+            <div class="user-info">
+              <h4>Dr. Sneha Mehta</h4>
+              <p>Consultant Gynaecologist</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section id="faq" class="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="subtitle">Got Questions?</span>
+        <h2>Frequently Asked Questions</h2>
+        <p>Everything you need to know about comfort, safety, sizing, and hygiene of using Gallops menstrual cups.</p>
+      </div>
+
+      <div class="faq-wrapper reveal">
+        <div class="faq-accordion">
+          <!-- FAQ 1 -->
+          <div class="faq-item">
+            <button class="faq-trigger">
+              How long can I wear it?
+              <span class="faq-icon-box">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel-inner">
+                <p>You can safely wear the Gallops Menstrual Cup for up to 12 hours straight. However, depending on your
+                  menstrual flow, you may need to empty it more frequently on heavy days.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 2 -->
+          <div class="faq-item">
+            <button class="faq-trigger">
+              Is it safe?
+              <span class="faq-icon-box">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel-inner">
+                <p>Yes, absolutely. The Gallops Menstrual Cup is made from 100% premium, biocompatible medical-grade
+                  silicone. It is completely free from BPA, latex, plastics, and toxins, making it hypoallergenic and
+                  fully safe to wear inside the body.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 3 -->
+          <div class="faq-item">
+            <button class="faq-trigger">
+              How long does one cup last?
+              <span class="faq-icon-box">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel-inner">
+                <p>With proper care, cleaning, and storage, a single Gallops menstrual cup can last between 5 to 10
+                  years. This makes it an incredibly cost-effective and environmentally friendly hygiene option.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 4 -->
+          <div class="faq-item">
+            <button class="faq-trigger">
+              How do I sterilize the menstrual cup?
+              <span class="faq-icon-box">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel-inner">
+                <p>Before using it for the first time at the start of your cycle, boil it in clean water for 3–5
+                  minutes. Make sure the cup doesn't touch the bottom of the pot. Between uses during your period,
+                  simply wash it with clean warm water and a mild, unscented soap.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ 5 -->
+          <div class="faq-item">
+            <button class="faq-trigger">
+              Can I use it while sleeping or playing sports?
+              <span class="faq-icon-box">
+                <svg viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
+                </svg>
+              </span>
+            </button>
+            <div class="faq-panel">
+              <div class="faq-panel-inner">
+                <p>Yes, definitely! The airtight seal keeps it secure during runs, swimming, high-intensity workouts,
+                  and up to 12 hours of sleep. It adjusts to your physical movements and stays leak-free.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Order Tracking Section -->
+      <section id="tracking" class="tracking">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="subtitle">Track Order</span>
+            <h2>Customer Order Tracking</h2>
+            <p>Keep an eye on your delivery status. Enter your consignment details below to track your package status
+              instantly.</p>
+          </div>
+
+          <div class="tracking-container reveal">
+            <div class="tracking-card">
+              <div class="tracking-info-brand">
+                <div class="tracking-brand-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"
+                    fill="currentColor">
+                    <path
+                      d="M20,8H17V4H3C1.89,4 1,4.89 1,6V17H3A3,3 0 0,0 6,20A3,3 0 0,0 9,17H15A3,3 0 0,0 18,20A3,3 0 0,0 21,17H23V12L20,8M6,18.5A1.5,1.5 0 0,1 4.5,17A1.5,1.5 0 0,1 6,15.5A1.5,1.5 0 0,1 7.5,17A1.5,1.5 0 0,1 6,18.5M17,12L18.5,10H20V12H17M18,18.5A1.5,1.5 0 0,1 16.5,17A1.5,1.5 0 0,1 18,15.5A1.5,1.5 0 0,1 19.5,17A1.5,1.5 0 0,1 18,18.5Z" />
+                  </svg>
+                </div>
+                <div class="tracking-brand-text">
+                  <h3>DTDC Express Logistics</h3>
+                  <p>Majority of our orders are dispatched only via <strong>DTDC Courier</strong> to ensure safe, fast,
+                    and secure delivery across India.</p>
+                </div>
+              </div>
+
+              <form id="tracking-form" class="tracking-form">
+                <div class="form-group">
+                  <label for="tracking-id-input">DTDC AWB / Consignment Number</label>
+                  <div class="tracking-input-wrapper">
+                    <input type="text" id="tracking-id-input" class="form-control"
+                      placeholder="Enter your DTDC Tracking Number (e.g. D12345678)" required>
+                    <button type="submit" id="btn-track-order" class="btn btn-primary">Track Now</button>
+                  </div>
+                </div>
+              </form>
+              <div id="tracking-status-msg" class="tracking-status-msg"
+                style="display: none; margin-top: 1.5rem; padding: 1rem; border-radius: var(--radius-sm); font-size: 0.95rem; line-height: 1.5; font-weight: 600; text-align: center; background: rgba(37, 211, 102, 0.1); border: 1px solid rgba(37, 211, 102, 0.2); color: #1ebea5;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact">
+        <div class="container">
+          <div class="section-header reveal">
+            <span class="subtitle">Contact Us</span>
+            <h2>We are Here to Support You</h2>
+            <p>Have a question about sizing, ordering, or delivery? Reach out to us via WhatsApp, email, or send us a
+              direct message below.</p>
+          </div>
+
+          <div class="contact-grid">
+            <!-- Contact Info Cards -->
+            <div class="contact-info reveal">
+              <!-- Card 1: WhatsApp -->
+              <div class="contact-card">
+                <div class="contact-card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.993L2 22l5.13-1.347a9.96 9.96 0 0 0 4.88 1.277h.005c5.505 0 9.988-4.478 9.99-9.985A9.97 9.97 0 0 0 12.012 2zm4.957 14.22c-.274.774-1.397 1.428-1.923 1.517-.457.078-.992.117-2.907-.639-2.45-.967-4.009-3.414-4.132-3.574-.12-.16-.991-1.294-.991-2.468 0-1.175.617-1.75.836-1.99.223-.242.484-.301.644-.301.163 0 .323.001.464.007.149.006.347-.057.542.404.201.477.689 1.652.75 1.773.06.12.101.26.021.42-.081.162-.121.26-.242.399-.12.141-.253.315-.361.424-.12.12-.246.252-.106.49.141.242.626 1.017 1.341 1.646.923.811 1.699 1.062 1.94 1.183.241.12.383.101.523-.061.141-.162.604-.69.765-.927.162-.239.323-.201.543-.12.22.081 1.402.652 1.643.771.241.12.402.181.463.283.06.1.06.58-.214 1.354z" />
+                  </svg>
+                </div>
+                <div class="contact-card-details">
+                  <h4>WhatsApp Support</h4>
+                  <p>Chat directly with our support team for orders or size consulting.</p>
+                  <a href="https://wa.me/919558642815" target="_blank" rel="noopener noreferrer" class="link">
+                    +91 95586 42815
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Card 2: Email -->
+              <div class="contact-card">
+                <div class="contact-card-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" />
+                  </svg>
+                </div>
+                <div class="contact-card-details">
+                  <h4>Email Orders & Queries</h4>
+                  <p>Send your corporate inquiries or order details straight to our inbox.</p>
+                  <a href="mailto:earthenterprise100@gmail.com" class="link">
+                    earthenterprise100@gmail.com
+                    <svg viewBox="0 0 24 24">
+                      <path
+                        d="M14,3V5H17.59L7.76,14.83L9.17,16.24L19,6.41V10H21V3M19,19H5V5H12V3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V12H19V19Z" />
+                    </svg>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <!-- Contact Form Side -->
+            <div class="contact-form-container reveal reveal-delay-1">
+              <h3>Send a Message</h3>
+              <form id="contact-form" action="mailto:earthenterprise100@gmail.com" method="post" enctype="text/plain">
+                <div class="form-group">
+                  <label for="form-name">Your Name</label>
+                  <input type="text" id="form-name" name="name" class="form-control" placeholder="Enter your full name"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label for="form-email">Email Address</label>
+                  <input type="email" id="form-email" name="email" class="form-control" placeholder="Enter your email"
+                    required>
+                </div>
+                <div class="form-group">
+                  <label for="form-message">Your Message</label>
+                  <textarea id="form-message" name="message" class="form-control" placeholder="How can we help you?"
+                    required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Inquiry</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <div class="container">
+          <div class="footer-grid">
+            <!-- Brand Info -->
+            <div class="footer-brand">
+              <a href="#home" class="logo">
+                <img src="assets/LOGO.png" alt="Gallops Logo">
+              </a>
+              <p>Providing premium, medical-grade period care solutions that combine body comfort with care for our
+                planet.</p>
+              <div class="footer-socials">
+                <a href="https://wa.me/919558642815" class="social-icon" aria-label="WhatsApp">
+                  <svg viewBox="0 0 24 24">
+                    <path
+                      d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.993L2 22l5.13-1.347a9.96 9.96 0 0 0 4.88 1.277h.005c5.505 0 9.988-4.478 9.99-9.985A9.97 9.97 0 0 0 12.012 2zm4.957 14.22c-.274.774-1.397 1.428-1.923 1.517-.457.078-.992.117-2.907-.639-2.45-.967-4.009-3.414-4.132-3.574-.12-.16-.991-1.294-.991-2.468 0-1.175.617-1.75.836-1.99.223-.242.484-.301.644-.301.163 0 .323.001.464.007.149.006.347-.057.542.404.201.477.689 1.652.75 1.773.06.12.101.26.021.42-.081.162-.121.26-.242.399-.12.141-.253.315-.361.424-.12.12-.246.252-.106.49.141.242.626 1.017 1.341 1.646.923.811 1.699 1.062 1.94 1.183.241.12.383.101.523-.061.141-.162.604-.69.765-.927.162-.239.323-.201.543-.12.22.081 1.402.652 1.643.771.241.12.402.181.463.283.06.1.06.58-.214 1.354z" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-links">
+              <h4>Quick Navigation</h4>
+              <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#benefits">Why Gallops</a></li>
+                <li><a href="#about">About Cup</a></li>
+                <li><a href="#products">Shop Sizes</a></li>
+                <li><a href="#how-to-use">How To Use</a></li>
+                <li><a href="#faq">FAQ</a></li>
+                <li><a href="#tracking">Track Order</a></li>
+              </ul>
+            </div>
+
+            <!-- Newsletter / Trust Badges -->
+            <div class="footer-newsletter">
+              <h4>Join the Movement</h4>
+              <p>Subscribe to receive tips on period hygiene, environment benefits, and exclusive offers.</p>
+              <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Thank you for subscribing!');">
+                <input type="email" class="form-control" placeholder="Your email address" required
+                  aria-label="Email address">
+                <button type="submit" class="btn btn-primary">Join</button>
+              </form>
+            </div>
+          </div>
+
+          <!-- Footer Bottom -->
+          <div class="footer-bottom">
+            <p>&copy; 2026 Gallops / Earth Enterprise. All Rights Reserved. Crafted for safety and earth balance.</p>
+            <div class="footer-bottom-links">
+              <a href="#home">Privacy Policy</a>
+              <a href="#home">Terms of Service</a>
+              <a href="#contact">Support</a>
+            </div>
+          </div>
+        </div>
+      </footer>
+
+      <!-- Floating WhatsApp Widget -->
+      <div class="whatsapp-floating">
+        <span class="whatsapp-tooltip">Chat on WhatsApp</span>
+        <!-- Global floating button links to WhatsApp chat -->
+        <a href="https://wa.me/919558642815?text=Hi%20Gallops!%20I%20have%20a%20question%20about%20your%20menstrual%20cups."
+          target="_blank" rel="noopener noreferrer" class="whatsapp-floating-btn"
+          aria-label="Chat with Gallops on WhatsApp">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path
+              d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.993L2 22l5.13-1.347a9.96 9.96 0 0 0 4.88 1.277h.005c5.505 0 9.988-4.478 9.99-9.985A9.97 9.97 0 0 0 12.012 2zm4.957 14.22c-.274.774-1.397 1.428-1.923 1.517-.457.078-.992.117-2.907-.639-2.45-.967-4.009-3.414-4.132-3.574-.12-.16-.991-1.294-.991-2.468 0-1.175.617-1.75.836-1.99.223-.242.484-.301.644-.301.163 0 .323.001.464.007.149.006.347-.057.542.404.201.477.689 1.652.75 1.773.06.12.101.26.021.42-.081.162-.121.26-.242.399-.12.141-.253.315-.361.424-.12.12-.246.252-.106.49.141.242.626 1.017 1.341 1.646.923.811 1.699 1.062 1.94 1.183.241.12.383.101.523-.061.141-.162.604-.69.765-.927.162-.239.323-.201.543-.12.22.081 1.402.652 1.643.771.241.12.402.181.463.283.06.1.06.58-.214 1.354z" />
+          </svg>
+        </a>
+      </div>
+
+      <script src="script.js"></script>
+</body>
+
+</html>
