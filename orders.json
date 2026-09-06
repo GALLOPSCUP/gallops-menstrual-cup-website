@@ -1,0 +1,130 @@
+{
+  "orders": [
+    {
+      "orderId": "G-1001",
+      "phone": "9558642815",
+      "customerName": "Priya Patel",
+      "status": "in_transit",
+      "courier": "DTDC Express Logistics",
+      "trackingNumber": "D12345678",
+      "trackingUrl": "https://www.dtdc.in/",
+      "estimatedDelivery": "July 26, 2026",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "date": "July 22, 2026 - 10:30 AM",
+          "description": "Your order has been received and confirmed. We are preparing your Gallops Menstrual Cup.",
+          "completed": true
+        },
+        {
+          "status": "Dispatched",
+          "date": "July 23, 2026 - 02:15 PM",
+          "description": "Your order has been packed and handed over to DTDC Courier partner.",
+          "completed": true
+        },
+        {
+          "status": "In Transit",
+          "date": "July 24, 2026 - 09:45 AM",
+          "description": "Shipment is in transit to destination hub.",
+          "completed": true
+        },
+        {
+          "status": "Out for Delivery",
+          "date": "",
+          "description": "Your package will be out for delivery with the local DTDC courier agent soon.",
+          "completed": false
+        },
+        {
+          "status": "Delivered",
+          "date": "",
+          "description": "Package delivered successfully to the recipient.",
+          "completed": false
+        }
+      ]
+    },
+    {
+      "orderId": "G-1002",
+      "phone": "9876543210",
+      "customerName": "Sneha Reddy",
+      "status": "delivered",
+      "courier": "DTDC Express Logistics",
+      "trackingNumber": "D87654321",
+      "trackingUrl": "https://www.dtdc.in/",
+      "estimatedDelivery": "July 21, 2026",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "date": "July 18, 2026 - 09:00 AM",
+          "description": "Your order has been received and confirmed.",
+          "completed": true
+        },
+        {
+          "status": "Dispatched",
+          "date": "July 19, 2026 - 11:30 AM",
+          "description": "Handed over to DTDC Courier.",
+          "completed": true
+        },
+        {
+          "status": "In Transit",
+          "date": "July 20, 2026 - 04:20 PM",
+          "description": "In transit to the delivery branch.",
+          "completed": true
+        },
+        {
+          "status": "Out for Delivery",
+          "date": "July 21, 2026 - 08:30 AM",
+          "description": "Shipment is out with the delivery agent.",
+          "completed": true
+        },
+        {
+          "status": "Delivered",
+          "date": "July 21, 2026 - 02:45 PM",
+          "description": "Package delivered and received by the customer.",
+          "completed": true
+        }
+      ]
+    },
+    {
+      "orderId": "G-1003",
+      "phone": "9123456789",
+      "customerName": "Kavita Sharma",
+      "status": "placed",
+      "courier": "DTDC Express Logistics",
+      "trackingNumber": "Pending",
+      "trackingUrl": "https://www.dtdc.in/",
+      "estimatedDelivery": "Pending Dispatch",
+      "timeline": [
+        {
+          "status": "Order Placed",
+          "date": "July 23, 2026 - 04:00 PM",
+          "description": "Your order has been received. Our team is packing your product.",
+          "completed": true
+        },
+        {
+          "status": "Dispatched",
+          "date": "",
+          "description": "Order will be dispatched via DTDC shortly.",
+          "completed": false
+        },
+        {
+          "status": "In Transit",
+          "date": "",
+          "description": "In transit information will update once dispatched.",
+          "completed": false
+        },
+        {
+          "status": "Out for Delivery",
+          "date": "",
+          "description": "Out for delivery information.",
+          "completed": false
+        },
+        {
+          "status": "Delivered",
+          "date": "",
+          "description": "Delivered information.",
+          "completed": false
+        }
+      ]
+    }
+  ]
+}

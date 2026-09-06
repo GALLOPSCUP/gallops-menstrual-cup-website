@@ -1,0 +1,7 @@
+# Old assets folder (duplicates)
+assets/
+
+# System files
+Thumbs.db
+.DS_Store
+desktop.ini

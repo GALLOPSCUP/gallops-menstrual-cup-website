@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://gallopscup.github.io/gallops-menstrual-cup-website/sitemap.xml
