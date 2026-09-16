@@ -1,4 +1,4 @@
-document.addEventListener('DOMContentLoaded', () => {
+﻿document.addEventListener('DOMContentLoaded', () => {
   // ==========================================
   // 1. Header Scroll Effect
   // ==========================================
@@ -103,7 +103,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const productData = {
     small: {
-      image: 'box_small.webp',
+      image: 'assets/box_small.webp',
       capacity: '25 ml',
       diameter: '42 mm',
       length: '65 mm',
@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
       message: "Hi Gallops! I'm interested in ordering the Gallops Menstrual Cup in Size Small. Please guide me on payment and delivery."
     },
     medium: {
-      image: 'box_medium.webp',
+      image: 'assets/box_medium.webp',
       capacity: '28 ml',
       diameter: '43 mm',
       length: '68 mm',
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', () => {
       message: "Hi Gallops! I'm interested in ordering the Gallops Menstrual Cup in Size Medium. Please guide me on payment and delivery."
     },
     large: {
-      image: 'box_large.webp',
+      image: 'assets/box_large.webp',
       capacity: '30 ml',
       diameter: '45 mm',
       length: '70 mm',
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Copy tracking ID to clipboard automatically
         navigator.clipboard.writeText(trackingId).then(() => {
           if (trackingStatus) {
-            trackingStatus.textContent = `📋 Consignment ID "${trackingId}" copied to clipboard! Opening DTDC portal... please paste it in the search box.`;
+            trackingStatus.textContent = `ðŸ“‹ Consignment ID "${trackingId}" copied to clipboard! Opening DTDC portal... please paste it in the search box.`;
             trackingStatus.style.display = 'block';
           }
         }).catch(err => {

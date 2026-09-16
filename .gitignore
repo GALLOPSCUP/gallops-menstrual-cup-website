@@ -1,7 +1,4 @@
-# Old assets folder (duplicates)
-assets/
-
-# System files
+﻿# System files
 Thumbs.db
 .DS_Store
 desktop.ini
