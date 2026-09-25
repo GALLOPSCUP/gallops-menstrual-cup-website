@@ -522,7 +522,7 @@ header.scrolled .logo img {
 .benefit-card {
   background: var(--white);
   border: 1px solid rgba(240, 98, 146, 0.08);
-  padding: 3rem 2rem;
+  padding: 0 0 2rem 0;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   transition: var(--transition-normal);
@@ -562,6 +562,32 @@ header.scrolled .logo img {
   width: 28px;
   height: 28px;
   fill: currentColor;
+}
+
+.benefit-img {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  margin-bottom: 1.75rem;
+}
+
+.benefit-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+  display: block;
+}
+
+.benefit-card:hover .benefit-img img {
+  transform: scale(1.06);
+}
+
+.benefit-card h3,
+.benefit-card p {
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
 }
 
 .benefit-card h3 {
