@@ -411,34 +411,52 @@
 
     var sub = currentPrice * qty;
     var now = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-    var orderId = 'GC-' + new Date().getFullYear().toString().slice(-2) + ('0'+(new Date().getMonth()+1)).slice(-2) + ('0'+new Date().getDate()).slice(-2) + '-' + Math.floor(1000 + Math.random()*9000);
+    var d = new Date();
+    var orderId = 'GC-' + d.getFullYear().toString().slice(-2) + ('0'+(d.getMonth()+1)).slice(-2) + ('0'+d.getDate()).slice(-2) + '-' + Math.floor(1000 + Math.random()*9000);
 
     var order = { id:orderId, date:now, name:fn+' '+ln, mobile:mob, email:em, address:addr, landmark:near, city:city, state:state, pincode:pin, size:currentSize, qty:qty, total:sub, payment:pay, notes:notes, howHeard:howHeard, status:'New' };
 
-    // Save to localStorage
-    var orders = JSON.parse(localStorage.getItem('gallops_orders') || '[]');
-    orders.unshift(order);
-    localStorage.setItem('gallops_orders', JSON.stringify(orders));
+    // Build WhatsApp message
+    var msg = 'NEW GALLOPS ORDER ' + orderId
+      + '\n\nName: ' + fn + ' ' + ln
+      + '\nMobile: ' + mob
+      + '\nEmail: ' + em
+      + '\n\nAddress: ' + addr
+      + '\nLandmark: ' + near
+      + '\nCity: ' + city
+      + '\nState: ' + state
+      + '\nPIN: ' + pin
+      + '\n\nProduct: Gallops Cup - ' + currentSize
+      + '\nQty: ' + qty
+      + '\nTotal: Rs.' + sub
+      + '\nPayment: ' + pay
+      + (notes ? '\nNotes: ' + notes : '')
+      + '\nOrdered at: ' + now;
 
-    // Send email via EmailJS
-    try {
-      emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
-        order_id: orderId, customer: order.name, mobile: mob, email: em,
-        address: addr + ', Near: ' + near + ', ' + city + ', ' + state + ' - ' + pin,
-        product: currentSize + ' Cup x' + qty, total: 'Rs.' + sub,
-        payment: pay, notes: notes || 'None', order_time: now
-      });
-    } catch(e) { console.warn('EmailJS not configured:', e); }
-
-    var msg = 'NEW GALLOPS ORDER ' + orderId + '\n\nName: ' + fn + ' ' + ln + '\nMobile: ' + mob + '\nEmail: ' + em + '\n\nAddress: ' + addr + '\nLandmark: ' + near + '\nCity: ' + city + '\nState: ' + state + '\nPIN: ' + pin + '\n\nProduct: Gallops Cup - ' + currentSize + '\nQty: ' + qty + '\nTotal: Rs.' + sub + '\nPayment: ' + pay + (notes ? '\nNotes: ' + notes : '') + '\nOrdered at: ' + now;
-
+    // Show success popup immediately
     document.getElementById('successMsg').textContent = 'Thank you ' + fn + '! Order ' + orderId + ' placed for ' + qty + ' x Gallops ' + currentSize + ' Cup (Rs.' + sub + '). We will contact you on ' + mob + ' within 24 hours.';
     document.getElementById('successOverlay').classList.add('show');
-    setTimeout(function() { window.open('https://wa.me/919558642815?text=' + encodeURIComponent(msg), '_blank'); }, 800);
+
+    // Send to Google Sheets (replace with your deployed Apps Script URL)
+    var SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+    if (SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(order)
+      }).catch(function(err) { console.warn('Google Sheet save failed:', err); });
+    }
+
+    // Open WhatsApp after short delay
+    setTimeout(function() {
+      window.open('https://wa.me/919558642815?text=' + encodeURIComponent(msg), '_blank');
+    }, 600);
   });
 
   document.getElementById('successOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('show'); });
 </script>
 </body>
 </html>
+
 

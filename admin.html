@@ -7,170 +7,162 @@
   <link rel="icon" href="assets/favicon-32x32.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
-    :root {
-      --pink: hsl(340,85%,62%);
-      --purple: hsl(275,60%,45%);
-      --grad: linear-gradient(135deg, hsl(340,85%,62%) 0%, hsl(275,60%,45%) 100%);
-      --bg: #0f0f1a;
-      --surface: #1a1a2e;
-      --surface2: #22223a;
-      --text: #f0f0f8;
-      --muted: #8888aa;
-      --border: #2e2e4e;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    :root { --pink:hsl(340,85%,62%); --purple:hsl(275,60%,45%); --grad:linear-gradient(135deg,hsl(340,85%,62%) 0%,hsl(275,60%,45%) 100%); --bg:#0f0f1a; --surface:#1a1a2e; --surface2:#22223a; --text:#f0f0f8; --muted:#8888aa; --border:#2e2e4e; }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;}
 
-    /* LOGIN */
-    .login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-    .login-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 3rem 2.5rem; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
-    .login-box .logo { width: 60px; height: 60px; background: var(--grad); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
-    .login-box .logo svg { fill: #fff; }
-    .login-box h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem; }
-    .login-box p { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.8rem; }
-    .login-box input { width: 100%; padding: 0.85rem 1rem; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; color: var(--text); font-family: inherit; font-size: 1rem; outline: none; margin-bottom: 1rem; text-align: center; letter-spacing: 0.15em; }
-    .login-box input:focus { border-color: var(--pink); }
-    .login-box button { width: 100%; padding: 0.85rem; background: var(--grad); color: #fff; border: none; border-radius: 50px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform .2s, box-shadow .2s; }
-    .login-box button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(240,98,146,0.4); }
-    .login-err { color: #ff6b6b; font-size: 0.82rem; margin-top: -0.5rem; margin-bottom: 0.8rem; display: none; }
-    .login-err.show { display: block; }
+    .login-screen{position:fixed;inset:0;background:var(--bg);display:flex;align-items:center;justify-content:center;z-index:9999;}
+    .login-box{background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:3rem 2.5rem;width:100%;max-width:400px;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+    .login-logo{width:64px;height:64px;background:var(--grad);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;}
+    .login-logo svg{fill:#fff;}
+    .login-box h1{font-size:1.5rem;font-weight:800;margin-bottom:0.3rem;}
+    .login-box p{color:var(--muted);font-size:0.88rem;margin-bottom:1.8rem;}
+    .login-box input{width:100%;padding:0.85rem 1rem;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:inherit;font-size:1rem;outline:none;margin-bottom:1rem;text-align:center;letter-spacing:0.1em;}
+    .login-box input:focus{border-color:var(--pink);}
+    .login-box button{width:100%;padding:0.9rem;background:var(--grad);color:#fff;border:none;border-radius:50px;font-family:inherit;font-size:1rem;font-weight:700;cursor:pointer;transition:transform .2s,box-shadow .2s;}
+    .login-box button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(240,98,146,0.4);}
+    .login-err{color:#ff6b6b;font-size:0.82rem;margin-top:-0.5rem;margin-bottom:0.8rem;display:none;}
+    .login-err.show{display:block;}
 
-    /* ADMIN HEADER */
-    .admin-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
-    .admin-brand { display: flex; align-items: center; gap: 0.8rem; }
-    .admin-brand .dot { width: 10px; height: 10px; background: #25d366; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
-    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
-    .admin-brand h1 { font-size: 1.05rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .header-actions { display: flex; gap: 0.8rem; align-items: center; }
-    .hdr-btn { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 50px; border: none; font-family: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all .2s; }
-    .hdr-btn.export { background: #25d366; color: #fff; }
-    .hdr-btn.logout { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
-    .hdr-btn:hover { transform: translateY(-1px); }
-    .back-site { color: var(--pink); text-decoration: none; font-size: 0.82rem; font-weight: 600; }
+    /* SETUP BANNER */
+    .setup-banner{background:linear-gradient(135deg,#1a1a2e,#22223a);border:1.5px solid #f6ad5560;border-radius:14px;padding:1.2rem 1.5rem;margin:1rem 2rem;display:none;}
+    .setup-banner.show{display:block;}
+    .setup-banner h3{color:#f6ad55;font-size:0.95rem;font-weight:800;margin-bottom:0.6rem;}
+    .setup-banner ol{color:var(--muted);font-size:0.85rem;line-height:1.8;padding-left:1.2rem;}
+    .setup-banner ol li b{color:var(--text);}
+    .setup-banner .url-input{width:100%;padding:0.6rem 0.9rem;background:var(--bg);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.85rem;outline:none;margin-top:0.8rem;}
+    .setup-banner .url-input:focus{border-color:var(--pink);}
+    .setup-banner .save-url-btn{margin-top:0.6rem;padding:0.5rem 1.2rem;background:var(--grad);color:#fff;border:none;border-radius:50px;font-family:inherit;font-size:0.82rem;font-weight:700;cursor:pointer;}
 
-    /* STATS */
-    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 2rem 0; }
-    @media (max-width: 900px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
-    @media (max-width: 500px) { .stats-row { grid-template-columns: 1fr 1fr; } }
-    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; }
-    .stat-card .stat-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
-    .stat-card .stat-val { font-size: 1.8rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .stat-card .stat-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+    .admin-header{background:var(--surface);border-bottom:1px solid var(--border);padding:0.9rem 2rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
+    .brand{display:flex;align-items:center;gap:0.8rem;}
+    .live-dot{width:10px;height:10px;background:#25d366;border-radius:50%;animation:blink 2s ease-in-out infinite;}
+    @keyframes blink{0%,100%{opacity:1;}50%{opacity:0.3;}}
+    .brand h1{font-size:1rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .hdr-actions{display:flex;gap:0.6rem;align-items:center;}
+    .hbtn{display:flex;align-items:center;gap:0.4rem;padding:0.45rem 0.9rem;border-radius:50px;border:none;font-family:inherit;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all .2s;}
+    .hbtn.refresh{background:#63b3ed22;color:#63b3ed;border:1px solid #63b3ed44;}
+    .hbtn.export{background:#25d36622;color:#25d366;border:1px solid #25d36644;}
+    .hbtn.setup{background:#f6ad5522;color:#f6ad55;border:1px solid #f6ad5544;}
+    .hbtn.logout{background:var(--surface2);color:var(--muted);border:1px solid var(--border);}
+    .hbtn:hover{transform:translateY(-1px);}
+    .back-link{color:var(--pink);text-decoration:none;font-size:0.82rem;font-weight:600;}
 
-    /* FILTER & SEARCH */
-    .toolbar { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 2rem; flex-wrap: wrap; }
-    .search-box { flex: 1; min-width: 200px; position: relative; }
-    .search-box input { width: 100%; padding: 0.65rem 1rem 0.65rem 2.5rem; background: var(--surface); border: 1.5px solid var(--border); border-radius: 50px; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; }
-    .search-box input:focus { border-color: var(--pink); }
-    .search-box svg { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); fill: var(--muted); pointer-events: none; }
-    .filter-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .fbtn { padding: 0.5rem 1rem; border-radius: 50px; border: 1.5px solid var(--border); background: transparent; color: var(--muted); font-family: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all .2s; }
-    .fbtn.active, .fbtn:hover { background: var(--grad); color: #fff; border-color: transparent; }
-    .count-badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 50px; padding: 0.5rem 1rem; font-size: 0.82rem; color: var(--muted); font-weight: 700; white-space: nowrap; }
+    .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;padding:1.2rem 2rem 0;}
+    @media(max-width:900px){.stats-row{grid-template-columns:repeat(2,1fr);}}
+    .stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.1rem 1.3rem;}
+    .stat-label{font-size:0.72rem;font-weight:800;color:var(--muted);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:0.3rem;}
+    .stat-val{font-size:1.8rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+    .stat-sub{font-size:0.75rem;color:var(--muted);margin-top:0.15rem;}
 
-    /* TABLE */
-    .table-wrap { padding: 0 2rem 2rem; overflow-x: auto; }
-    table { width: 100%; border-collapse: collapse; }
-    thead th { background: var(--surface); border-bottom: 2px solid var(--border); padding: 0.8rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); white-space: nowrap; }
-    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
-    tbody tr:hover { background: var(--surface); }
-    tbody td { padding: 0.9rem 1rem; font-size: 0.88rem; vertical-align: top; }
-    .order-id-cell { font-weight: 800; color: var(--pink); font-size: 0.82rem; }
-    .customer-name { font-weight: 700; }
-    .customer-contact { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
-    .address-cell { font-size: 0.82rem; color: var(--muted); max-width: 200px; }
-    .product-cell { font-weight: 700; }
-    .product-cell .qty { color: var(--muted); font-size: 0.78rem; }
-    .total-cell { font-weight: 800; color: #60d394; }
-    .payment-cell { font-size: 0.78rem; background: var(--surface2); border-radius: 50px; padding: 0.2rem 0.7rem; display: inline-block; }
-    .date-cell { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
-    .status-select { background: var(--surface2); border: 1.5px solid var(--border); border-radius: 50px; color: var(--text); font-family: inherit; font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.6rem; cursor: pointer; outline: none; }
-    .status-select.New    { border-color: #f6ad55; color: #f6ad55; }
-    .status-select.Confirmed { border-color: #63b3ed; color: #63b3ed; }
-    .status-select.Dispatched { border-color: #9f7aea; color: #9f7aea; }
-    .status-select.Delivered { border-color: #68d391; color: #68d391; }
-    .status-select.Cancelled  { border-color: #fc8181; color: #fc8181; }
-    .action-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
-    .act-btn { padding: 0.3rem 0.7rem; border-radius: 50px; border: none; font-family: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 0.3rem; }
-    .act-btn.wa  { background: #25d366; color: #fff; }
-    .act-btn.del { background: #fc818133; color: #fc8181; }
-    .act-btn:hover { transform: translateY(-1px); }
+    .toolbar{display:flex;align-items:center;gap:0.8rem;padding:1rem 2rem;flex-wrap:wrap;}
+    .search-box{flex:1;min-width:200px;position:relative;}
+    .search-box input{width:100%;padding:0.6rem 1rem 0.6rem 2.4rem;background:var(--surface);border:1.5px solid var(--border);border-radius:50px;color:var(--text);font-family:inherit;font-size:0.88rem;outline:none;}
+    .search-box input:focus{border-color:var(--pink);}
+    .search-icon{position:absolute;left:0.8rem;top:50%;transform:translateY(-50%);fill:var(--muted);}
+    .filter-btns{display:flex;gap:0.35rem;flex-wrap:wrap;}
+    .fbtn{padding:0.4rem 0.9rem;border-radius:50px;border:1.5px solid var(--border);background:transparent;color:var(--muted);font-family:inherit;font-size:0.8rem;font-weight:700;cursor:pointer;transition:all .2s;}
+    .fbtn.active,.fbtn:hover{background:var(--grad);color:#fff;border-color:transparent;}
+    .count-badge{background:var(--surface2);border:1px solid var(--border);border-radius:50px;padding:0.4rem 0.9rem;font-size:0.8rem;color:var(--muted);font-weight:700;white-space:nowrap;}
 
-    /* EMPTY */
-    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
-    .empty-state svg { fill: var(--muted); opacity: 0.3; margin-bottom: 1rem; }
-    .empty-state p { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .loading-bar{height:3px;background:var(--grad);width:0;transition:width 0.3s;position:fixed;top:0;left:0;z-index:9999;}
 
-    /* NOTIFICATION TOAST */
-    .toast { position: fixed; bottom: 2rem; right: 2rem; background: #25d366; color: #fff; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.3); transform: translateY(100px); opacity: 0; transition: all .3s; z-index: 9998; }
-    .toast.show { transform: translateY(0); opacity: 1; }
+    .table-wrap{padding:0 2rem 2rem;overflow-x:auto;}
+    table{width:100%;border-collapse:collapse;min-width:900px;}
+    thead th{background:var(--surface);border-bottom:2px solid var(--border);padding:0.75rem 0.9rem;text-align:left;font-size:0.72rem;font-weight:800;text-transform:uppercase;letter-spacing:0.08em;color:var(--muted);white-space:nowrap;}
+    tbody tr{border-bottom:1px solid var(--border);transition:background .15s;}
+    tbody tr:hover{background:var(--surface);}
+    tbody td{padding:0.8rem 0.9rem;font-size:0.86rem;vertical-align:top;}
+    .oid{font-weight:800;color:var(--pink);font-size:0.8rem;white-space:nowrap;}
+    .cname{font-weight:700;}
+    .cinfo{font-size:0.76rem;color:var(--muted);margin-top:0.2rem;}
+    .addr-cell{font-size:0.78rem;color:var(--muted);max-width:180px;line-height:1.5;}
+    .prod-cell{font-weight:700;font-size:0.86rem;}
+    .qty-tag{color:var(--muted);font-size:0.75rem;}
+    .total-cell{font-weight:800;color:#60d394;white-space:nowrap;}
+    .pay-tag{font-size:0.75rem;background:var(--surface2);border-radius:50px;padding:0.2rem 0.6rem;display:inline-block;white-space:nowrap;}
+    .date-cell{font-size:0.75rem;color:var(--muted);white-space:nowrap;}
+    .notes-cell{font-size:0.76rem;color:var(--muted);font-style:italic;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .status-sel{background:var(--surface2);border:1.5px solid var(--border);border-radius:50px;color:var(--text);font-family:inherit;font-size:0.76rem;font-weight:700;padding:0.22rem 0.5rem;cursor:pointer;outline:none;}
+    .status-sel.New{border-color:#f6ad55;color:#f6ad55;}
+    .status-sel.Confirmed{border-color:#63b3ed;color:#63b3ed;}
+    .status-sel.Dispatched{border-color:#9f7aea;color:#9f7aea;}
+    .status-sel.Delivered{border-color:#68d391;color:#68d391;}
+    .status-sel.Cancelled{border-color:#fc8181;color:#fc8181;}
+    .act-row{display:flex;gap:0.3rem;flex-wrap:wrap;}
+    .abtn{padding:0.28rem 0.6rem;border-radius:50px;border:none;font-family:inherit;font-size:0.72rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:0.25rem;white-space:nowrap;}
+    .abtn.wa{background:#25d36622;color:#25d366;border:1px solid #25d36644;}
+    .abtn.del{background:#fc818122;color:#fc8181;border:1px solid #fc818144;}
+    .abtn:hover{transform:translateY(-1px);}
 
-    /* NOTES CELL */
-    .notes-cell { font-size: 0.78rem; color: var(--muted); font-style: italic; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);}
+    .empty-state svg{fill:var(--muted);opacity:0.25;margin-bottom:1rem;}
+    .empty-state h3{font-size:1.1rem;font-weight:700;margin-bottom:0.4rem;color:var(--text);}
+
+    .toast{position:fixed;bottom:2rem;right:2rem;background:#25d366;color:#fff;padding:0.75rem 1.4rem;border-radius:50px;font-weight:700;font-size:0.88rem;box-shadow:0 8px 24px rgba(0,0,0,0.3);transform:translateY(100px);opacity:0;transition:all .3s;z-index:9998;}
+    .toast.show{transform:translateY(0);opacity:1;}
+    .toast.error{background:#e53e3e;}
   </style>
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div class="login-screen" id="loginScreen">
   <div class="login-box">
-    <div class="logo">
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"/></svg>
+    <div class="login-logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"/></svg>
     </div>
-    <h1>Admin Access</h1>
-    <p>Enter your password to view orders</p>
-    <input type="password" id="pwdInput" placeholder="Enter password" />
-    <span class="login-err" id="loginErr">Incorrect password. Try again.</span>
-    <button id="loginBtn">Login to Dashboard</button>
+    <h1>Admin Dashboard</h1>
+    <p>Gallops Order Management</p>
+    <input type="password" id="pwdInput" placeholder="Enter admin password" />
+    <div class="login-err" id="loginErr">Wrong password. Please try again.</div>
+    <button id="loginBtn">Login</button>
   </div>
 </div>
 
-<!-- ADMIN CONTENT -->
+<!-- ADMIN APP -->
 <div id="adminApp" style="display:none;">
+  <div class="loading-bar" id="loadingBar"></div>
 
   <header class="admin-header">
-    <div class="admin-brand">
-      <div class="dot"></div>
+    <div class="brand">
+      <div class="live-dot"></div>
       <h1>Gallops Order Dashboard</h1>
     </div>
-    <div class="header-actions">
-      <a href="index.html" class="back-site">&#8592; Back to Website</a>
-      <button class="hdr-btn export" id="exportBtn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L8,17L10,15V17H14V15L16,17L14,19V17H10V19Z"/></svg>
-        Export CSV
-      </button>
-      <button class="hdr-btn logout" id="logoutBtn">Logout</button>
+    <div class="hdr-actions">
+      <a href="index.html" class="back-link">Back to Site</a>
+      <button class="hbtn setup" id="setupBtn">Setup Google Sheets</button>
+      <button class="hbtn refresh" id="refreshBtn">Refresh</button>
+      <button class="hbtn export" id="exportBtn">Export CSV</button>
+      <button class="hbtn logout" id="logoutBtn">Logout</button>
     </div>
   </header>
 
-  <!-- Stats -->
-  <div class="stats-row" id="statsRow">
-    <div class="stat-card">
-      <div class="stat-label">Total Orders</div>
-      <div class="stat-val" id="statTotal">0</div>
-      <div class="stat-sub">All time</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Revenue</div>
-      <div class="stat-val" id="statRevenue">Rs.0</div>
-      <div class="stat-sub">From all orders</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">New Orders</div>
-      <div class="stat-val" id="statNew">0</div>
-      <div class="stat-sub">Awaiting confirmation</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">Delivered</div>
-      <div class="stat-val" id="statDelivered">0</div>
-      <div class="stat-sub">Successfully completed</div>
-    </div>
+  <!-- Google Sheets Setup Banner -->
+  <div class="setup-banner" id="setupBanner">
+    <h3>Connect Google Sheets (One-time setup to see orders from all customers)</h3>
+    <ol>
+      <li>Go to <b>script.google.com</b> and sign in with your Gmail</li>
+      <li>Click <b>New Project</b>, paste the code from <b>google_apps_script.gs</b> file</li>
+      <li>Click <b>Deploy > New Deployment > Web App</b></li>
+      <li>Set <b>Execute as: Me</b> and <b>Who has access: Anyone</b></li>
+      <li>Click <b>Deploy</b> and copy the <b>Web App URL</b></li>
+      <li>Paste the URL below and click Save</li>
+    </ol>
+    <input type="text" class="url-input" id="scriptUrlInput" placeholder="Paste your Google Apps Script Web App URL here..." />
+    <button class="save-url-btn" id="saveScriptUrl">Save URL</button>
   </div>
 
-  <!-- Toolbar -->
+  <div class="stats-row">
+    <div class="stat-card"><div class="stat-label">Total Orders</div><div class="stat-val" id="statTotal">0</div><div class="stat-sub">All time</div></div>
+    <div class="stat-card"><div class="stat-label">Revenue</div><div class="stat-val" id="statRevenue">Rs.0</div><div class="stat-sub">All orders</div></div>
+    <div class="stat-card"><div class="stat-label">New Orders</div><div class="stat-val" id="statNew">0</div><div class="stat-sub">Need confirmation</div></div>
+    <div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-val" id="statDelivered">0</div><div class="stat-sub">Completed</div></div>
+  </div>
+
   <div class="toolbar">
     <div class="search-box">
-      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>
+      <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>
       <input type="text" id="searchInput" placeholder="Search by name, mobile, city, order ID..." />
     </div>
     <div class="filter-btns">
@@ -184,38 +176,29 @@
     <span class="count-badge" id="countBadge">0 orders</span>
   </div>
 
-  <!-- Table -->
   <div class="table-wrap">
-    <table id="ordersTable">
-      <thead>
-        <tr>
-          <th>Order ID</th>
-          <th>Date</th>
-          <th>Customer</th>
-          <th>Address</th>
-          <th>Product</th>
-          <th>Total</th>
-          <th>Payment</th>
-          <th>Notes</th>
-          <th>Status</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
+    <table>
+      <thead><tr>
+        <th>Order ID</th><th>Date</th><th>Customer</th><th>Address</th>
+        <th>Product</th><th>Total</th><th>Payment</th><th>Notes</th>
+        <th>Status</th><th>Actions</th>
+      </tr></thead>
       <tbody id="ordersBody"></tbody>
     </table>
     <div class="empty-state" id="emptyState" style="display:none;">
       <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"><path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/></svg>
-      <p>No orders found</p>
-      <span>Orders will appear here when customers place them</span>
+      <h3>No orders yet</h3>
+      <p>Orders placed by customers will appear here automatically</p>
     </div>
   </div>
-
 </div>
 
 <div class="toast" id="toast"></div>
 
 <script>
-  var ADMIN_PASSWORD = 'gallops2024'; // Change this password!
+  var ADMIN_PASSWORD = 'gallops2024';
+  var SCRIPT_URL_KEY = 'gallops_script_url';
+  var allOrders = [];
   var currentFilter = 'All';
   var currentSearch = '';
 
@@ -223,72 +206,112 @@
   function doLogin() {
     var pwd = document.getElementById('pwdInput').value;
     if (pwd === ADMIN_PASSWORD) {
-      sessionStorage.setItem('gallops_admin', '1');
+      sessionStorage.setItem('g_admin', '1');
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('adminApp').style.display = 'block';
-      renderAll();
-      checkForNewOrders();
+      init();
     } else {
       document.getElementById('loginErr').classList.add('show');
       document.getElementById('pwdInput').value = '';
-      document.getElementById('pwdInput').focus();
     }
   }
-
-  document.getElementById('loginBtn').addEventListener('click', doLogin);
-  document.getElementById('pwdInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
-
-  document.getElementById('logoutBtn').addEventListener('click', function() {
-    sessionStorage.removeItem('gallops_admin');
-    document.getElementById('adminApp').style.display = 'none';
-    document.getElementById('loginScreen').style.display = 'flex';
-    document.getElementById('pwdInput').value = '';
-  });
-
-  // Auto login if session active
-  if (sessionStorage.getItem('gallops_admin')) {
+  document.getElementById('loginBtn').onclick = doLogin;
+  document.getElementById('pwdInput').onkeydown = function(e) { if(e.key==='Enter') doLogin(); };
+  document.getElementById('logoutBtn').onclick = function() {
+    sessionStorage.removeItem('g_admin');
+    location.reload();
+  };
+  if (sessionStorage.getItem('g_admin')) {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('adminApp').style.display = 'block';
-    renderAll();
-    checkForNewOrders();
+    init();
   }
 
-  // GET ORDERS
-  function getOrders() {
-    return JSON.parse(localStorage.getItem('gallops_orders') || '[]');
-  }
-
-  // SAVE ORDERS
-  function saveOrders(orders) {
-    localStorage.setItem('gallops_orders', JSON.stringify(orders));
-  }
+  // SETUP BANNER
+  var setupOpen = false;
+  document.getElementById('setupBtn').onclick = function() {
+    setupOpen = !setupOpen;
+    var b = document.getElementById('setupBanner');
+    b.classList.toggle('show', setupOpen);
+    var sv = localStorage.getItem(SCRIPT_URL_KEY);
+    if (sv) document.getElementById('scriptUrlInput').value = sv;
+  };
+  document.getElementById('saveScriptUrl').onclick = function() {
+    var url = document.getElementById('scriptUrlInput').value.trim();
+    if (!url) return;
+    localStorage.setItem(SCRIPT_URL_KEY, url);
+    showToast('Google Sheets URL saved! Refreshing orders...');
+    document.getElementById('setupBanner').classList.remove('show');
+    setupOpen = false;
+    loadOrders();
+  };
 
   // TOAST
-  function showToast(msg) {
+  function showToast(msg, isError) {
     var t = document.getElementById('toast');
     t.textContent = msg;
-    t.classList.add('show');
-    setTimeout(function() { t.classList.remove('show'); }, 3000);
+    t.className = 'toast show' + (isError ? ' error' : '');
+    setTimeout(function() { t.className = 'toast'; }, 3500);
+  }
+
+  // LOADING BAR
+  function setLoading(pct) {
+    document.getElementById('loadingBar').style.width = pct + '%';
+  }
+
+  // LOAD ORDERS
+  function loadOrders() {
+    var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
+    if (!scriptUrl) {
+      // Show demo/instructions
+      allOrders = [];
+      renderAll();
+      document.getElementById('setupBanner').classList.add('show');
+      setupOpen = true;
+      return;
+    }
+    setLoading(30);
+    fetch(scriptUrl)
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        setLoading(100);
+        allOrders = data.orders || [];
+        renderAll();
+        if (allOrders.length > 0) {
+          var newOrd = allOrders.filter(function(o) { return o.status === 'New'; }).length;
+          if (newOrd > 0) showToast(newOrd + ' new order' + (newOrd > 1 ? 's' : '') + ' waiting!');
+        }
+        setTimeout(function() { setLoading(0); }, 500);
+      })
+      .catch(function(err) {
+        setLoading(0);
+        showToast('Could not load orders. Check your Script URL.', true);
+      });
+  }
+
+  // INIT
+  function init() {
+    loadOrders();
+    // Auto-refresh every 60 seconds
+    setInterval(loadOrders, 60000);
   }
 
   // STATS
-  function renderStats(orders) {
-    var total = orders.length;
-    var revenue = orders.reduce(function(s, o) { return s + (parseInt(o.total) || 0); }, 0);
-    var newCount = orders.filter(function(o) { return o.status === 'New'; }).length;
-    var delivered = orders.filter(function(o) { return o.status === 'Delivered'; }).length;
+  function renderStats() {
+    var total = allOrders.length;
+    var revenue = allOrders.reduce(function(s, o) { return s + (parseInt(o.total) || 0); }, 0);
+    var newCount = allOrders.filter(function(o) { return String(o.status) === 'New'; }).length;
+    var delivered = allOrders.filter(function(o) { return String(o.status) === 'Delivered'; }).length;
     document.getElementById('statTotal').textContent = total;
     document.getElementById('statRevenue').textContent = 'Rs.' + revenue;
     document.getElementById('statNew').textContent = newCount;
     document.getElementById('statDelivered').textContent = delivered;
   }
 
-  // FILTER + SEARCH
+  // FILTER
   function getFiltered() {
-    var orders = getOrders();
-    if (currentFilter !== 'All') {
-      orders = orders.filter(function(o) { return o.status === currentFilter; });
-    }
+    var orders = allOrders.slice();
+    if (currentFilter !== 'All') orders = orders.filter(function(o) { return String(o.status) === currentFilter; });
     if (currentSearch) {
       var q = currentSearch.toLowerCase();
       orders = orders.filter(function(o) {
@@ -296,7 +319,6 @@
                (o.mobile||'').includes(q) ||
                (o.city||'').toLowerCase().includes(q) ||
                (o.id||'').toLowerCase().includes(q) ||
-               (o.state||'').toLowerCase().includes(q) ||
                (o.email||'').toLowerCase().includes(q);
       });
     }
@@ -307,127 +329,94 @@
   function renderTable() {
     var orders = getFiltered();
     var tbody = document.getElementById('ordersBody');
-    var empty = document.getElementById('emptyState');
     document.getElementById('countBadge').textContent = orders.length + ' order' + (orders.length !== 1 ? 's' : '');
-
-    if (orders.length === 0) {
+    if (!orders.length) {
       tbody.innerHTML = '';
-      empty.style.display = 'block';
+      document.getElementById('emptyState').style.display = 'block';
       return;
     }
-    empty.style.display = 'none';
-
-    tbody.innerHTML = orders.map(function(o) {
+    document.getElementById('emptyState').style.display = 'none';
+    tbody.innerHTML = orders.map(function(o, idx) {
+      var st = String(o.status || 'New');
       return '<tr>' +
-        '<td class="order-id-cell">' + (o.id || '-') + '</td>' +
-        '<td class="date-cell">' + (o.date || '-') + '</td>' +
-        '<td><div class="customer-name">' + (o.name || '-') + '</div>' +
-          '<div class="customer-contact">' + (o.mobile || '') + '<br>' + (o.email || '') + '</div></td>' +
-        '<td class="address-cell">' + (o.address || '') + ', ' + (o.landmark ? 'Near ' + o.landmark + ', ' : '') + (o.city || '') + ', ' + (o.state || '') + ' - ' + (o.pincode || '') + '</td>' +
-        '<td class="product-cell">Gallops ' + (o.size || '') + ' Cup<div class="qty">Qty: ' + (o.qty || 1) + '</div></td>' +
-        '<td class="total-cell">Rs.' + (o.total || 0) + '</td>' +
-        '<td><span class="payment-cell">' + (o.payment || '-') + '</span></td>' +
-        '<td class="notes-cell" title="' + (o.notes || '') + '">' + (o.notes || '-') + '</td>' +
-        '<td><select class="status-select ' + (o.status||'New') + '" data-id="' + o.id + '" onchange="changeStatus(this)">' +
+        '<td class="oid">' + (o.id||'-') + '</td>' +
+        '<td class="date-cell">' + (o.date||'-') + '</td>' +
+        '<td><div class="cname">' + (o.name||'-') + '</div><div class="cinfo">' + (o.mobile||'') + '<br>' + (o.email||'') + '</div></td>' +
+        '<td class="addr-cell">' + (o.address||'') + (o.landmark ? ', Near '+o.landmark : '') + ', ' + (o.city||'') + ', ' + (o.state||'') + ' - ' + (o.pincode||'') + '</td>' +
+        '<td class="prod-cell">Gallops ' + (o.size||'') + ' Cup<br><span class="qty-tag">Qty: ' + (o.qty||1) + '</span></td>' +
+        '<td class="total-cell">Rs.' + (o.total||0) + '</td>' +
+        '<td><span class="pay-tag">' + (o.payment||'-') + '</span></td>' +
+        '<td class="notes-cell" title="' + (o.notes||'') + '">' + (o.notes||'-') + '</td>' +
+        '<td><select class="status-sel ' + st + '" data-id="' + (o.id||'') + '" onchange="changeStatus(this)">' +
           ['New','Confirmed','Dispatched','Delivered','Cancelled'].map(function(s) {
-            return '<option value="' + s + '"' + (o.status === s ? ' selected' : '') + '>' + s + '</option>';
-          }).join('') +
-        '</select></td>' +
-        '<td><div class="action-btns">' +
-          '<button class="act-btn wa" onclick="sendWA(\'' + o.id + '\')">WhatsApp</button>' +
-          '<button class="act-btn del" onclick="deleteOrder(\'' + o.id + '\')">Delete</button>' +
+            return '<option value="' + s + '"' + (st === s ? ' selected' : '') + '>' + s + '</option>';
+          }).join('') + '</select></td>' +
+        '<td><div class="act-row">' +
+          '<button class="abtn wa" onclick="sendWA(\'' + (o.id||'') + '\')">WhatsApp</button>' +
+          '<button class="abtn del" onclick="delOrder(' + idx + ')">Delete</button>' +
         '</div></td>' +
       '</tr>';
     }).join('');
   }
 
-  function renderAll() {
-    renderStats(getOrders());
-    renderTable();
+  function renderAll() { renderStats(); renderTable(); }
+
+  // STATUS CHANGE
+  function changeStatus(sel) {
+    sel.className = 'status-sel ' + sel.value;
+    var id = sel.dataset.id;
+    var order = allOrders.find(function(o) { return o.id === id; });
+    if (order) order.status = sel.value;
+    renderStats();
+    showToast('Status updated to ' + sel.value);
   }
 
-  // CHANGE STATUS
-  function changeStatus(select) {
-    var id = select.dataset.id;
-    var newStatus = select.value;
-    var orders = getOrders();
-    orders = orders.map(function(o) { if (o.id === id) o.status = newStatus; return o; });
-    saveOrders(orders);
-    select.className = 'status-select ' + newStatus;
-    renderStats(orders);
-    showToast('Order ' + id + ' marked as ' + newStatus);
-  }
-
-  // WHATSAPP QUICK REPLY
+  // WHATSAPP
   function sendWA(id) {
-    var orders = getOrders();
-    var o = orders.find(function(x) { return x.id === id; });
+    var o = allOrders.find(function(x) { return x.id === id; });
     if (!o) return;
-    var msg = 'Hello ' + o.name + '! Your Gallops Menstrual Cup order ' + o.id + ' has been confirmed. We will dispatch your order of Gallops ' + o.size + ' Cup (x' + o.qty + ') at Rs.' + o.total + ' soon. Thank you for choosing Gallops!';
-    window.open('https://wa.me/91' + o.mobile + '?text=' + encodeURIComponent(msg), '_blank');
+    var msg = 'Hello ' + o.name + '! Your Gallops Menstrual Cup order ' + o.id + ' has been confirmed! We will dispatch your Gallops ' + o.size + ' Cup (x' + o.qty + ', Rs.' + o.total + ') within 24-48 hours. Thank you for choosing Gallops!';
+    window.open('https://wa.me/91' + o.mobile.replace(/\D/g,'') + '?text=' + encodeURIComponent(msg), '_blank');
   }
 
-  // DELETE ORDER
-  function deleteOrder(id) {
-    if (!confirm('Delete order ' + id + '? This cannot be undone.')) return;
-    var orders = getOrders().filter(function(o) { return o.id !== id; });
-    saveOrders(orders);
+  // DELETE (local only)
+  function delOrder(idx) {
+    if (!confirm('Remove this order from view?')) return;
+    var filtered = getFiltered();
+    var order = filtered[idx];
+    allOrders = allOrders.filter(function(o) { return o.id !== order.id; });
     renderAll();
-    showToast('Order deleted');
+    showToast('Order removed from view');
   }
 
   // EXPORT CSV
-  document.getElementById('exportBtn').addEventListener('click', function() {
-    var orders = getOrders();
-    if (!orders.length) { showToast('No orders to export'); return; }
-    var header = ['Order ID','Date','Name','Mobile','Email','Address','Landmark','City','State','PIN','Size','Qty','Total','Payment','Notes','How Heard','Status'];
-    var rows = orders.map(function(o) {
-      return [o.id, o.date, o.name, o.mobile, o.email, '"'+o.address+'"', o.landmark, o.city, o.state, o.pincode, o.size, o.qty, o.total, o.payment, '"'+(o.notes||'')+'"', o.howHeard, o.status];
+  document.getElementById('exportBtn').onclick = function() {
+    if (!allOrders.length) { showToast('No orders to export', true); return; }
+    var h = ['Order ID','Date','Name','Mobile','Email','Address','Landmark','City','State','PIN','Size','Qty','Total','Payment','Notes','How Heard','Status'];
+    var rows = allOrders.map(function(o) {
+      return [o.id, o.date, o.name, o.mobile, o.email, '"'+(o.address||'')+'"', o.landmark, o.city, o.state, o.pincode, o.size, o.qty, o.total, o.payment, '"'+(o.notes||'')+'"', o.howHeard, o.status].join(',');
     });
-    var csv = [header].concat(rows).map(function(r) { return r.join(','); }).join('\n');
+    var csv = [h.join(',')].concat(rows).join('\n');
     var a = document.createElement('a');
     a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
     a.download = 'gallops_orders_' + new Date().toISOString().slice(0,10) + '.csv';
     a.click();
-    showToast('CSV exported!');
-  });
+    showToast('Exported ' + allOrders.length + ' orders!');
+  };
 
-  // SEARCH
-  document.getElementById('searchInput').addEventListener('input', function() {
-    currentSearch = this.value.trim();
-    renderTable();
-  });
+  // REFRESH
+  document.getElementById('refreshBtn').onclick = function() { loadOrders(); showToast('Refreshing...'); };
 
-  // FILTER BUTTONS
-  document.querySelectorAll('.fbtn').forEach(function(btn) {
-    btn.addEventListener('click', function() {
-      document.querySelectorAll('.fbtn').forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      currentFilter = btn.dataset.filter;
+  // SEARCH + FILTER
+  document.getElementById('searchInput').oninput = function() { currentSearch = this.value.trim(); renderTable(); };
+  document.querySelectorAll('.fbtn').forEach(function(b) {
+    b.onclick = function() {
+      document.querySelectorAll('.fbtn').forEach(function(x) { x.classList.remove('active'); });
+      b.classList.add('active');
+      currentFilter = b.dataset.filter;
       renderTable();
-    });
+    };
   });
-
-  // CHECK FOR NEW ORDERS (notification)
-  function checkForNewOrders() {
-    var lastSeen = parseInt(localStorage.getItem('gallops_last_seen') || '0');
-    var orders = getOrders();
-    var newOrders = orders.filter(function(o) { return o.status === 'New'; });
-    if (newOrders.length > 0) {
-      showToast(newOrders.length + ' new order' + (newOrders.length > 1 ? 's' : '') + ' waiting!');
-    }
-    localStorage.setItem('gallops_last_seen', Date.now());
-
-    // Poll for new orders every 30 seconds
-    setInterval(function() {
-      var current = getOrders().filter(function(o) { return o.status === 'New'; }).length;
-      if (current > newOrders.length) {
-        showToast('New order received!');
-        renderAll();
-        newOrders = getOrders().filter(function(o) { return o.status === 'New'; });
-      }
-    }, 30000);
-  }
 </script>
 </body>
 </html>
