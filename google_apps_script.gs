@@ -12,10 +12,30 @@ function cors(output) {
 }
 
 function getOrCreateSheet() {
-  var ss    = SpreadsheetApp.getActiveSpreadsheet();
-  var sheet = ss.getSheetByName(SHEET_NAME);
-  if (!sheet) {
-    sheet = ss.insertSheet(SHEET_NAME);
+  var props = PropertiesService.getScriptProperties();
+  var sheetId = props.getProperty('SHEET_ID');
+  var ss;
+  
+  if (sheetId) {
+    try {
+      ss = SpreadsheetApp.openById(sheetId);
+    } catch(e) {
+      sheetId = null; // ID is invalid or deleted
+    }
+  }
+  
+  if (!sheetId) {
+    ss = SpreadsheetApp.create("Gallops Orders Database");
+    props.setProperty('SHEET_ID', ss.getId());
+  }
+  
+  var sheet = ss.getSheetByName(SHEET_NAME) || ss.getSheets()[0];
+  if (sheet.getName() !== SHEET_NAME) {
+    sheet.setName(SHEET_NAME);
+  }
+  
+  // Create headers if empty
+  if (sheet.getLastRow() === 0) {
     var h = ['Order ID','Date','Name','Mobile','Email','Address',
              'Landmark','City','State','PIN','Size','Qty','Total (Rs)',
              'Payment','Notes','How Heard','Status'];
@@ -108,3 +128,4 @@ function doPost(e) {
   }
   return out;
 }
+
