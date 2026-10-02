@@ -51,10 +51,22 @@
       transform: translateY(-5px);
       box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     }
-    .blog-image {
+    .blog-image-wrapper {
       width: 100%;
       height: 220px;
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .blog-image-wrapper img {
+      max-height: 85%;
+      max-width: 85%;
       object-fit: contain;
+      mix-blend-mode: multiply;
+      filter: contrast(1.1) brightness(0.95);
     }
     .blog-content {
       padding: 25px;
@@ -191,7 +203,7 @@
   <div class="blog-grid">
     <!-- Card 1 -->
     <a href="#" class="blog-card" onclick="openBlog(1); return false;">
-      <img src="assets/cup_upright_real.png" alt="Sustainability" class="blog-image">
+      <div class="blog-image-wrapper" style="background-image: url('assets/blog_nature.jpg');"><img src="assets/cup_upright_real.png" alt="Sustainability"></div>
       <div class="blog-content">
         <span class="blog-tag">Sustainability</span>
         <h3 class="blog-title">Menstrual Cups: A Smarter Choice</h3>
@@ -205,7 +217,7 @@
 
     <!-- Card 2 -->
     <a href="#" class="blog-card" onclick="openBlog(2); return false;">
-      <img src="assets/cup_tilted_real.png" alt="Beginner Guide" class="blog-image">
+      <div class="blog-image-wrapper" style="background-image: url('assets/blog_lifestyle.jpg');"><img src="assets/cup_tilted_real.png" alt="Beginner Guide"></div>
       <div class="blog-content">
         <span class="blog-tag">Beginner Guide</span>
         <h3 class="blog-title">How to Use a Menstrual Cup</h3>
@@ -219,7 +231,7 @@
 
     <!-- Card 3 -->
     <a href="#" class="blog-card" onclick="openBlog(3); return false;">
-      <img src="assets/cup_upright_real.png" alt="Comparison" class="blog-image">
+      <div class="blog-image-wrapper" style="background-image: url('assets/blog_clean.jpg');"><img src="assets/cup_upright_real.png" alt="Comparison"></div>
       <div class="blog-content">
         <span class="blog-tag">Comparison</span>
         <h3 class="blog-title">Menstrual Cup vs. Pads</h3>
@@ -233,7 +245,7 @@
 
     <!-- Card 4 -->
     <a href="#" class="blog-card" onclick="openBlog(4); return false;">
-      <img src="assets/cup_upright_real.png" alt="Hygiene" class="blog-image">
+      <div class="blog-image-wrapper" style="background-image: url('assets/blog_clean.jpg');"><img src="assets/cup_upright_real.png" alt="Hygiene"></div>
       <div class="blog-content">
         <span class="blog-tag">Hygiene</span>
         <h3 class="blog-title">How to Clean and Care</h3>
@@ -247,7 +259,7 @@
 
     <!-- Card 5 -->
     <a href="#" class="blog-card" onclick="openBlog(5); return false;">
-      <img src="assets/cup_upright_real.png" alt="Myths & Facts" class="blog-image">
+      <div class="blog-image-wrapper" style="background-image: url('assets/blog_nature.jpg');"><img src="assets/cup_upright_real.png" alt="Myths & Facts"></div>
       <div class="blog-content">
         <span class="blog-tag">Myths & Facts</span>
         <h3 class="blog-title">Common Questions Answered</h3>
@@ -261,7 +273,7 @@
 
     <!-- Card 6 -->
     <a href="#" class="blog-card" onclick="openBlog(6); return false;">
-      <img src="assets/cup_tilted_real.png" alt="Choice" class="blog-image">
+      <div class="blog-image-wrapper" style="background-image: url('assets/blog_lifestyle.jpg');"><img src="assets/cup_tilted_real.png" alt="Choice"></div>
       <div class="blog-content">
         <span class="blog-tag">Why Choose Us</span>
         <h3 class="blog-title">Why Choose a Reusable Cup?</h3>
@@ -275,7 +287,7 @@
 
     <!-- Card 7 -->
     <a href="#" class="blog-card" onclick="openBlog(7); return false;">
-      <img src="assets/cup_upright_real.png" alt="First Use" class="blog-image">
+      <div class="blog-image-wrapper" style="background-image: url('assets/blog_nature.jpg');"><img src="assets/cup_upright_real.png" alt="First Use"></div>
       <div class="blog-content">
         <span class="blog-tag">First Use</span>
         <h3 class="blog-title">Things to Know Before First Use</h3>
@@ -459,6 +471,7 @@
   </script>
 </body>
 </html>
+
 
 
 
