@@ -765,6 +765,53 @@ header.scrolled .logo img {
   background-color: var(--white);
 }
 
+.product.hero-product {
+  padding-top: calc(var(--header-height) + 2.5rem);
+  padding-bottom: 6rem;
+  background: radial-gradient(circle at 85% 15%, rgba(255, 210, 220, 0.4) 0%, rgba(255, 255, 255, 0) 60%),
+              radial-gradient(circle at 15% 40%, rgba(230, 210, 255, 0.3) 0%, rgba(255, 255, 255, 0) 50%),
+              var(--white);
+}
+
+.hero-header-center {
+  text-align: center;
+  max-width: 840px;
+  margin: 0 auto 3.5rem auto;
+}
+
+.hero-header-center .hero-badge {
+  display: inline-flex;
+  margin: 0 auto 1.25rem auto;
+}
+
+.hero-header-center h1 {
+  font-size: clamp(2.1rem, 4vw, 3.4rem);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 0.9rem;
+  color: var(--text-dark);
+}
+
+.hero-header-center h1 span {
+  background: var(--pink-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline;
+}
+
+.hero-header-center p {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.hero.hero-secondary {
+  min-height: auto;
+  padding: 6rem 0;
+  background: var(--bg-light-pink);
+}
+
 .product-panel {
   display: grid;
   grid-template-columns: 1fr 1.1fr;

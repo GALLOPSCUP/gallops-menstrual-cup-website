@@ -78,8 +78,8 @@
 
       <nav>
         <ul class="nav-links">
-          <li><a href="#home" class="active">Home</a></li>
-          <li><a href="#products">Products</a></li>
+          <li><a href="#products" class="active">Products</a></li>
+          <li><a href="#home">Home</a></li>
           <li><a href="#benefits">Benefits</a></li>
           <li><a href="#about">About</a></li>
           <li><a href="#how-to-use">How To Use</a></li>
@@ -89,7 +89,7 @@
       </nav>
 
       <div class="nav-actions">
-        <a href="#products" class="btn btn-primary btn-sm">Shop Now</a>
+        <a href="order.html" class="btn btn-primary btn-sm">Order Now</a>
         <button class="burger" aria-label="Toggle Navigation">
           <span class="line1"></span>
           <span class="line2"></span>
@@ -99,10 +99,10 @@
     </div>
   </header>
 
-  <!-- Hero Section -->
-  <section id="home" class="hero">
+  <!-- Products Hero Section (Photo 2 & Order Now) -->
+  <section id="products" class="product hero-product">
     <div class="container">
-      <div class="hero-content reveal">
+      <div class="section-header reveal hero-header-center">
         <div class="hero-badge">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path
@@ -110,12 +110,169 @@
           </svg>
           100% Medical-Grade Silicone
         </div>
-        <h1>Gallops Menstrual Cup – <span>Safe, Comfortable</span> & Eco-Friendly</h1>
+        <h1>Gallops Menstrual Cup – <span>Safe, Comfortable</span> &amp; Eco-Friendly</h1>
         <p>Enjoy up to 12 hours of leak-free protection with a reusable menstrual cup designed for active lifestyles and
           body comfort.</p>
+      </div>
+
+      <div class="product-panel reveal">
+        <!-- Image Gallery Side -->
+        <div class="product-gallery-side">
+          <span class="product-badge">Best Seller</span>
+          <div class="product-image-container">
+            <img src="assets/box_small.webp" alt="Gallops Menstrual Cup - Size Small" id="product-image"
+              class="product-img-display">
+          </div>
+          <div class="product-thumbnails">
+            <button class="thumb-btn active" data-src="box" aria-label="View box packaging">
+              <img src="assets/box_small.webp" alt="Packaging Box" id="thumb-box-img">
+            </button>
+            <button class="thumb-btn" data-src="assets/cup_upright_real.png" aria-label="View cup upright">
+              <img src="assets/cup_upright_real.png" alt="Upright Cup">
+            </button>
+            <button class="thumb-btn" data-src="assets/cup_tilted_real.png" aria-label="View cup showing design">
+              <img src="assets/cup_tilted_real.png" alt="Angle Cup">
+            </button>
+          </div>
+        </div>
+
+        <!-- Info / Selector Side -->
+        <div class="product-info-side">
+          <h3 class="product-title">Gallops Menstrual Cup</h3>
+
+          <div class="product-rating">
+            <div class="stars">
+              <!-- SVG Stars (5) -->
+              <svg viewBox="0 0 24 24"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>
+              <svg viewBox="0 0 24 24"><path d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" /></svg>
+            </div>
+            <span class="rating-text">(4.9/5 stars based on 1,200+ users)</span>
+          </div>
+
+          <div class="product-price">
+            <span class="price-current">₹199<span class="price-shipping-note">+ Courier Charges</span></span>
+            <span class="price-original">₹599</span>
+            <span class="price-tag">80% OFF</span>
+          </div>
+
+          <p class="product-description">Say goodbye to dry spells, plastic waste, and odor. The Gallops menstrual cup
+            sits comfortably inside, providing a secure seal so you can sleep, exercise, and run errands leak-free.</p>
+
+          <!-- Size Selector -->
+          <div class="product-selector-label">Select Size</div>
+          <div class="size-selector-tabs">
+            <!-- Size Small Tab -->
+            <button class="size-tab active" data-size="small" aria-label="Select size Small">
+              <div class="size-tab-header">
+                <span class="size-name">Size Small (Pink)</span>
+                <span class="size-radio"></span>
+              </div>
+              <div class="size-desc">Capacity: 25ml. Ideal for users under 30 or pre-childbirth.</div>
+            </button>
+
+            <!-- Size Medium Tab -->
+            <button class="size-tab" data-size="medium" aria-label="Select size Medium">
+              <div class="size-tab-header">
+                <span class="size-name">Size Medium (Pink)</span>
+                <span class="size-radio"></span>
+              </div>
+              <div class="size-desc">Capacity: 28ml. Ideal for general flow or almost all body types.</div>
+            </button>
+
+            <!-- Size Large Tab -->
+            <button class="size-tab" data-size="large" aria-label="Select size Large">
+              <div class="size-tab-header">
+                <span class="size-name">Size Large (Pink)</span>
+                <span class="size-radio"></span>
+              </div>
+              <div class="size-desc">Capacity: 30ml. Ideal for users over 30 or post-childbirth.</div>
+            </button>
+          </div>
+
+          <!-- Specs Summary -->
+          <div class="product-selector-label">Specifications</div>
+          <div class="product-specs">
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8V12L15.22,14.22L16.22,12.78L13.5,11.22V8H12Z" />
+              </svg>
+              <span>Capacity: <span id="spec-capacity">25 ml</span></span>
+            </div>
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M12,20A8,8 0 1,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2Z" />
+              </svg>
+              <span>Diameter: <span id="spec-diameter">42 mm</span></span>
+            </div>
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M10.59,4.58L9.17,6L11.17,8H8.83L10.83,6L9.41,4.58L6,8H2V10H6L9.41,13.41L10.83,12L8.83,10H11.17L9.17,12L10.59,13.41L14,10H22V8H14L10.59,4.58Z" />
+              </svg>
+              <span>Total Length: <span id="spec-length">65 mm</span></span>
+            </div>
+            <div class="spec-line">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path
+                  d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A1.5,1.5 0 0,0 10.5,7.5A1.5,1.5 0 0,0 12,9A1.5,1.5 0 0,0 13.5,7.5A1.5,1.5 0 0,0 12,6M10,10A2,2 0 0,0 8,12V15H10V18H14V14H16V12A2,2 0 0,0 14,10H10Z" />
+              </svg>
+              <span>Ideal for: <span id="spec-ideal-for">Light Flow / Pre-Childbirth</span></span>
+            </div>
+          </div>
+
+          <!-- Checkout Buttons -->
+          <div class="product-action-box">
+            <div class="product-action-buttons">
+              <!-- ORDER NOW button -->
+              <a href="order.html" class="btn btn-order-now" id="btn-order-now">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
+                </svg>
+                Order Now
+              </a>
+              <!-- Dynamic WhatsApp checkout link -->
+              <a href="https://wa.me/919558642815" target="_blank" rel="noopener noreferrer" class="btn btn-primary"
+                id="btn-buy-whatsapp">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.993L2 22l5.13-1.347a9.96 9.96 0 0 0 4.88 1.277h.005c5.505 0 9.988-4.478 9.99-9.985A9.97 9.97 0 0 0 12.012 2zm4.957 14.22c-.274.774-1.397 1.428-1.923 1.517-.457.078-.992.117-2.907-.639-2.45-.967-4.009-3.414-4.132-3.574-.12-.16-.991-1.294-.991-2.468 0-1.175.617-1.75.836-1.99.223-.242.484-.301.644-.301.163 0 .323.001.464.007.149.006.347-.057.542.404.201.477.689 1.652.75 1.773.06.12.101.26.021.42-.081.162-.121.26-.242.399-.12.141-.253.315-.361.424-.12.12-.246.252-.106.49.141.242.626 1.017 1.341 1.646.923.811 1.699 1.062 1.94 1.183.241.12.383.101.523-.061.141-.162.604-.69.765-.927.162-.239.323-.201.543-.12.22.081 1.402.652 1.643.771.241.12.402.181.463.283.06.1.06.58-.214 1.354z" />
+                </svg>
+                Order on WhatsApp
+              </a>
+              <a href="mailto:earthenterprise100@gmail.com?subject=Gallops%20Menstrual%20Cup%20Order%20Inquiry"
+                class="btn btn-secondary">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                  <path
+                    d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" />
+                </svg>
+                Email Order
+              </a>
+            </div>
+
+            <div class="payment-badge-row">
+              <span>💳 Cash on Delivery / UPI Available</span>
+              <span>🔒 100% Safe Checkout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lifestyle & Brand Section (Home) -->
+  <section id="home" class="hero hero-secondary">
+    <div class="container">
+      <div class="hero-content reveal">
+        <span class="subtitle">Experience Period Freedom</span>
+        <h2>Designed for <span>Every Movement</span> &amp; Body Type</h2>
+        <p>Switch to Gallops and experience complete peace of mind. Ultra-soft medical-grade silicone conforms to your body for all-day comfort whether running, swimming, or sleeping.</p>
 
         <div class="hero-ctas">
-          <a href="#products" class="btn btn-primary">Shop Now</a>
+          <a href="#products" class="btn btn-primary">Order Now</a>
           <a href="https://wa.me/919558642815" target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
               <path
@@ -136,7 +293,7 @@
           </div>
           <div class="stat-item">
             <h4>0%</h4>
-            <p>Toxins & BPA</p>
+            <p>Toxins &amp; BPA</p>
           </div>
         </div>
       </div>
@@ -260,178 +417,7 @@
     </div>
   </section>
 
-  <!-- Product Section / Gallery -->
-  <section id="products" class="product">
-    <div class="container">
-      <div class="section-header reveal">
-        <span class="subtitle">E-commerce Shop</span>
-        <h2>Choose Your Perfect Gallops Cup</h2>
-        <p>Available in three sizes carefully engineered to match your biological cycle and body shape. Select a size to
-          view specifications and order.</p>
-      </div>
 
-      <div class="product-panel reveal">
-        <!-- Image Gallery Side -->
-        <div class="product-gallery-side">
-          <span class="product-badge">Best Seller</span>
-          <div class="product-image-container">
-            <img src="assets/box_small.webp" alt="Gallops Menstrual Cup - Size Small" id="product-image"
-              class="product-img-display">
-          </div>
-          <div class="product-thumbnails">
-            <button class="thumb-btn active" data-src="box" aria-label="View box packaging">
-              <img src="assets/box_small.webp" alt="Packaging Box" id="thumb-box-img">
-            </button>
-            <button class="thumb-btn" data-src="assets/cup_upright_real.png" aria-label="View cup upright">
-              <img src="assets/cup_upright_real.png" alt="Upright Cup">
-            </button>
-            <button class="thumb-btn" data-src="assets/cup_tilted_real.png" aria-label="View cup showing design">
-              <img src="assets/cup_tilted_real.png" alt="Angle Cup">
-            </button>
-          </div>
-        </div>
-
-        <!-- Info / Selector Side -->
-        <div class="product-info-side">
-          <h3 class="product-title">Gallops Menstrual Cup</h3>
-
-          <div class="product-rating">
-            <div class="stars">
-              <!-- SVG Stars (5) -->
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-              </svg>
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-              </svg>
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-              </svg>
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-              </svg>
-              <svg viewBox="0 0 24 24">
-                <path
-                  d="M12,17.27L18.18,21L16.54,13.97L22,9.24L14.81,8.62L12,2L9.19,8.62L2,9.24L7.45,13.97L5.82,21L12,17.27Z" />
-              </svg>
-            </div>
-            <span class="rating-text">(4.9/5 stars based on 1,200+ users)</span>
-          </div>
-
-          <div class="product-price">
-            <span class="price-current">₹199<span class="price-shipping-note">+ Courier Charges</span></span>
-            <span class="price-original">₹599</span>
-            <span class="price-tag">80% OFF</span>
-          </div>
-
-          <p class="product-description">Say goodbye to dry spells, plastic waste, and odor. The Gallops menstrual cup
-            sits comfortably inside, providing a secure seal so you can sleep, exercise, and run errands leak-free.</p>
-
-          <!-- Size Selector -->
-          <div class="product-selector-label">Select Size</div>
-          <div class="size-selector-tabs">
-            <!-- Size Small Tab -->
-            <button class="size-tab active" data-size="small" aria-label="Select size Small">
-              <div class="size-tab-header">
-                <span class="size-name">Size Small (Pink)</span>
-                <span class="size-radio"></span>
-              </div>
-              <div class="size-desc">Capacity: 25ml. Ideal for users under 30 or pre-childbirth.</div>
-            </button>
-
-            <!-- Size Medium Tab -->
-            <button class="size-tab" data-size="medium" aria-label="Select size Medium">
-              <div class="size-tab-header">
-                <span class="size-name">Size Medium (Pink)</span>
-                <span class="size-radio"></span>
-              </div>
-              <div class="size-desc">Capacity: 28ml. Ideal for general flow or almost all body types.</div>
-            </button>
-
-            <!-- Size Large Tab -->
-            <button class="size-tab" data-size="large" aria-label="Select size Large">
-              <div class="size-tab-header">
-                <span class="size-name">Size Large (Pink)</span>
-                <span class="size-radio"></span>
-              </div>
-              <div class="size-desc">Capacity: 30ml. Ideal for users over 30 or post-childbirth.</div>
-            </button>
-          </div>
-
-          <!-- Specs Summary -->
-          <div class="product-selector-label">Specifications</div>
-          <div class="product-specs">
-            <div class="spec-line">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A6,6 0 0,0 6,12A6,6 0 0,0 12,18A6,6 0 0,0 18,12A6,6 0 0,0 12,6M12,8V12L15.22,14.22L16.22,12.78L13.5,11.22V8H12Z" />
-              </svg>
-              <span>Capacity: <span id="spec-capacity">25 ml</span></span>
-            </div>
-            <div class="spec-line">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path d="M12,20A8,8 0 1,1 20,12A8,8 0 0,1 12,20M12,2A10,10 0 1,0 22,12A10,10 0 0,0 12,2Z" />
-              </svg>
-              <span>Diameter: <span id="spec-diameter">42 mm</span></span>
-            </div>
-            <div class="spec-line">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M10.59,4.58L9.17,6L11.17,8H8.83L10.83,6L9.41,4.58L6,8H2V10H6L9.41,13.41L10.83,12L8.83,10H11.17L9.17,12L10.59,13.41L14,10H22V8H14L10.59,4.58Z" />
-              </svg>
-              <span>Total Length: <span id="spec-length">65 mm</span></span>
-            </div>
-            <div class="spec-line">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <path
-                  d="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M12,4A8,8 0 0,1 20,12A8,8 0 0,1 12,20A8,8 0 0,1 4,12A8,8 0 0,1 12,4M12,6A1.5,1.5 0 0,0 10.5,7.5A1.5,1.5 0 0,0 12,9A1.5,1.5 0 0,0 13.5,7.5A1.5,1.5 0 0,0 12,6M10,10A2,2 0 0,0 8,12V15H10V18H14V14H16V12A2,2 0 0,0 14,10H10Z" />
-              </svg>
-              <span>Ideal for: <span id="spec-ideal-for">Light Flow / Pre-Childbirth</span></span>
-            </div>
-          </div>
-
-          <!-- Checkout Buttons -->
-          <div class="product-action-box">
-            <div class="product-action-buttons">
-              <!-- ORDER NOW button -->
-              <a href="order.html" class="btn btn-order-now" id="btn-order-now">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M2,21L23,12L2,3V10L17,12L2,14V21Z"/>
-                </svg>
-                Order Now
-              </a>
-              <!-- Dynamic WhatsApp checkout link -->
-              <a href="https://wa.me/919558642815" target="_blank" rel="noopener noreferrer" class="btn btn-primary"
-                id="btn-buy-whatsapp">
-                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                  <path
-                    d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.993L2 22l5.13-1.347a9.96 9.96 0 0 0 4.88 1.277h.005c5.505 0 9.988-4.478 9.99-9.985A9.97 9.97 0 0 0 12.012 2zm4.957 14.22c-.274.774-1.397 1.428-1.923 1.517-.457.078-.992.117-2.907-.639-2.45-.967-4.009-3.414-4.132-3.574-.12-.16-.991-1.294-.991-2.468 0-1.175.617-1.75.836-1.99.223-.242.484-.301.644-.301.163 0 .323.001.464.007.149.006.347-.057.542.404.201.477.689 1.652.75 1.773.06.12.101.26.021.42-.081.162-.121.26-.242.399-.12.141-.253.315-.361.424-.12.12-.246.252-.106.49.141.242.626 1.017 1.341 1.646.923.811 1.699 1.062 1.94 1.183.241.12.383.101.523-.061.141-.162.604-.69.765-.927.162-.239.323-.201.543-.12.22.081 1.402.652 1.643.771.241.12.402.181.463.283.06.1.06.58-.214 1.354z" />
-                </svg>
-                Order on WhatsApp
-              </a>
-              <a href="mailto:earthenterprise100@gmail.com?subject=Gallops%20Menstrual%20Cup%20Order%20Inquiry"
-                class="btn btn-secondary">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                  <path
-                    d="M20,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V6C22,4.89 21.1,4 20,4M20,6L12,11L4,6H20M20,18H4V8L12,13L20,8V18Z" />
-                </svg>
-                Email Order
-              </a>
-            </div>
-
-            <div class="payment-badge-row">
-              <span>ðŸ’³ Cash on Delivery / UPI Available</span>
-              <span>ðŸ”’ 100% Safe Checkout</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
   <!-- Community Gallery Section -->
   <section id="gallery" class="gallery-showcase">
