@@ -1,142 +1,110 @@
 ﻿// ============================================================
-// GALLOPS MENSTRUAL CUP - ORDER MANAGEMENT (Google Apps Script)
-// Version 2 - Handles both GET params and POST JSON
+// GALLOPS MENSTRUAL CUP - ORDER MANAGEMENT
+// Version 3 - Works with text/plain POST (no CORS preflight)
 // ============================================================
 
-var SHEET_NAME = 'Orders';
+var SHEET_NAME   = 'Orders';
 var NOTIFY_EMAIL = 'earthenterprise100@gmail.com';
 
+// ---------- helpers ----------
+function cors(output) {
+  return output; // Apps Script handles CORS automatically for deployed Web Apps
+}
+
 function getOrCreateSheet() {
-  var ss = SpreadsheetApp.getActiveSpreadsheet();
+  var ss    = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
-    var headers = ['Order ID','Date','Name','Mobile','Email','Address','Landmark','City','State','PIN Code','Size','Qty','Total (Rs)','Payment','Notes','How Heard','Status'];
-    sheet.appendRow(headers);
-    var hRange = sheet.getRange(1, 1, 1, headers.length);
-    hRange.setBackground('#f06292');
-    hRange.setFontColor('#ffffff');
-    hRange.setFontWeight('bold');
+    var h = ['Order ID','Date','Name','Mobile','Email','Address',
+             'Landmark','City','State','PIN','Size','Qty','Total (Rs)',
+             'Payment','Notes','How Heard','Status'];
+    sheet.appendRow(h);
+    var r = sheet.getRange(1, 1, 1, h.length);
+    r.setBackground('#f06292');
+    r.setFontColor('#fff');
+    r.setFontWeight('bold');
     sheet.setFrozenRows(1);
-    sheet.setColumnWidth(1, 120);
-    sheet.setColumnWidth(3, 150);
-    sheet.setColumnWidth(5, 180);
-    sheet.setColumnWidth(6, 200);
   }
   return sheet;
 }
 
-function saveOrderToSheet(data) {
+function saveOrder(d) {
   var sheet = getOrCreateSheet();
   sheet.appendRow([
-    data.id, data.date, data.name, data.mobile, data.email,
-    data.address, data.landmark, data.city, data.state, data.pincode,
-    data.size, data.qty, data.total, data.payment, data.notes,
-    data.howHeard, 'New'
+    d.id, d.date, d.name, d.mobile, d.email,
+    d.address, d.landmark, d.city, d.state, d.pincode,
+    d.size, d.qty, d.total, d.payment,
+    d.notes || '', d.howHeard || '', 'New'
   ]);
-  sendEmailNotification(data);
+  sendMail(d);
 }
 
-function sendEmailNotification(data) {
+function sendMail(d) {
   try {
-    var subject = 'New Gallops Order ' + data.id + ' - ' + data.name + ' - Rs.' + data.total;
-    var body = '*** NEW ORDER RECEIVED ***\n\n'
-      + 'Order ID: ' + data.id + '\n'
-      + 'Date: ' + data.date + '\n\n'
-      + '--- CUSTOMER DETAILS ---\n'
-      + 'Name: ' + data.name + '\n'
-      + 'Mobile: ' + data.mobile + '\n'
-      + 'Email: ' + data.email + '\n\n'
-      + '--- DELIVERY ADDRESS ---\n'
-      + 'Address: ' + data.address + '\n'
-      + 'Landmark: ' + data.landmark + '\n'
-      + 'City: ' + data.city + '\n'
-      + 'State: ' + data.state + '\n'
-      + 'PIN: ' + data.pincode + '\n\n'
-      + '--- ORDER DETAILS ---\n'
-      + 'Product: Gallops ' + data.size + ' Menstrual Cup\n'
-      + 'Quantity: ' + data.qty + '\n'
-      + 'Total Amount: Rs.' + data.total + '\n'
-      + 'Payment Method: ' + data.payment + '\n'
-      + (data.notes ? 'Customer Notes: ' + data.notes + '\n' : '')
-      + (data.howHeard ? 'Heard via: ' + data.howHeard + '\n' : '')
-      + '\n--- ACTION REQUIRED ---\n'
-      + 'Please confirm this order by calling/WhatsApp on: ' + data.mobile + '\n'
-      + 'View all orders in your Google Sheet.';
-    MailApp.sendEmail(NOTIFY_EMAIL, subject, body);
-  } catch(err) {
-    Logger.log('Email error: ' + err);
+    var sub  = 'New Gallops Order ' + d.id + ' | ' + d.name + ' | Rs.' + d.total;
+    var body = '*** NEW ORDER ***\n\n'
+      + 'Order ID : ' + d.id   + '\n'
+      + 'Date     : ' + d.date + '\n\n'
+      + 'CUSTOMER\n'
+      + 'Name     : ' + d.name   + '\n'
+      + 'Mobile   : ' + d.mobile + '\n'
+      + 'Email    : ' + d.email  + '\n\n'
+      + 'DELIVERY ADDRESS\n'
+      + 'Address  : ' + d.address  + '\n'
+      + 'Landmark : ' + d.landmark + '\n'
+      + 'City     : ' + d.city     + '\n'
+      + 'State    : ' + d.state    + '\n'
+      + 'PIN      : ' + d.pincode  + '\n\n'
+      + 'ORDER\n'
+      + 'Product  : Gallops ' + d.size + ' Menstrual Cup\n'
+      + 'Qty      : ' + d.qty     + '\n'
+      + 'Total    : Rs.' + d.total + '\n'
+      + 'Payment  : ' + d.payment  + '\n'
+      + (d.notes ? 'Notes    : ' + d.notes + '\n' : '')
+      + '\nPlease confirm with customer on: ' + d.mobile;
+    MailApp.sendEmail(NOTIFY_EMAIL, sub, body);
+  } catch(e) {
+    Logger.log('Mail error: ' + e);
   }
 }
 
-// Handle GET requests (save order via URL params OR fetch order list)
+// ---------- GET - returns order list ----------
 function doGet(e) {
-  var output = ContentService.createTextOutput();
-  output.setMimeType(ContentService.MimeType.JSON);
-
+  var out = ContentService.createTextOutput();
+  out.setMimeType(ContentService.MimeType.JSON);
   try {
-    var params = e.parameter;
-
-    // Save order action
-    if (params.action === 'save') {
-      var data = {
-        id:        params.id || '',
-        date:      params.date || new Date().toLocaleString(),
-        name:      params.name || '',
-        mobile:    params.mobile || '',
-        email:     params.email || '',
-        address:   params.address || '',
-        landmark:  params.landmark || '',
-        city:      params.city || '',
-        state:     params.state || '',
-        pincode:   params.pincode || '',
-        size:      params.size || '',
-        qty:       params.qty || 1,
-        total:     params.total || 0,
-        payment:   params.payment || '',
-        notes:     params.notes || '',
-        howHeard:  params.howHeard || '',
-        status:    'New'
-      };
-      saveOrderToSheet(data);
-      output.setContent(JSON.stringify({success: true, id: data.id}));
-      return output;
-    }
-
-    // Default: return all orders
-    var sheet = getOrCreateSheet();
-    var rows = sheet.getDataRange().getValues();
+    var sheet  = getOrCreateSheet();
+    var rows   = sheet.getDataRange().getValues();
     var orders = [];
     for (var i = 1; i < rows.length; i++) {
       var r = rows[i];
       if (!r[0]) continue;
       orders.push({
-        id: r[0], date: r[1], name: r[2], mobile: r[3], email: r[4],
-        address: r[5], landmark: r[6], city: r[7], state: r[8], pincode: r[9],
-        size: r[10], qty: r[11], total: r[12], payment: r[13], notes: r[14],
-        howHeard: r[15], status: r[16]
+        id:r[0], date:r[1], name:r[2], mobile:r[3], email:r[4],
+        address:r[5], landmark:r[6], city:r[7], state:r[8], pincode:r[9],
+        size:r[10], qty:r[11], total:r[12], payment:r[13],
+        notes:r[14], howHeard:r[15], status:r[16]
       });
     }
-    orders.reverse();
-    output.setContent(JSON.stringify({success: true, orders: orders}));
-    return output;
-
-  } catch(err) {
-    output.setContent(JSON.stringify({success: false, error: err.toString()}));
-    return output;
+    out.setContent(JSON.stringify({ success:true, orders:orders.reverse() }));
+  } catch(e) {
+    out.setContent(JSON.stringify({ success:false, error:e.toString() }));
   }
+  return out;
 }
 
-// Handle POST requests (JSON body)
+// ---------- POST - receives order (text/plain body containing JSON) ----------
 function doPost(e) {
-  var output = ContentService.createTextOutput();
-  output.setMimeType(ContentService.MimeType.JSON);
+  var out = ContentService.createTextOutput();
+  out.setMimeType(ContentService.MimeType.JSON);
   try {
-    var data = JSON.parse(e.postData.contents);
-    saveOrderToSheet(data);
-    output.setContent(JSON.stringify({success: true, id: data.id}));
-  } catch(err) {
-    output.setContent(JSON.stringify({success: false, error: err.toString()}));
+    var raw  = e.postData.contents;
+    var data = JSON.parse(raw);
+    saveOrder(data);
+    out.setContent(JSON.stringify({ success:true, id:data.id }));
+  } catch(e) {
+    out.setContent(JSON.stringify({ success:false, error:e.toString() }));
   }
-  return output;
+  return out;
 }

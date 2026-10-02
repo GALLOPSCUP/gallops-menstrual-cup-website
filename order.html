@@ -437,28 +437,19 @@
     document.getElementById('successMsg').textContent = 'Thank you ' + fn + '! Order ' + orderId + ' placed for ' + qty + ' x Gallops ' + currentSize + ' Cup (Rs.' + sub + '). We will contact you on ' + mob + ' within 24 hours.';
     document.getElementById('successOverlay').classList.add('show');
 
-    // Send order to Google Sheets via URL params (CORS-safe method)
+    // Send order to Google Sheets (text/plain POST - CORS safe, no preflight needed)
     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgXg2FweIGDLBnGDjhxsAhmqav6FNTYjhVxt2UrRpqYOOHzF0sd15Oisd8WofCz9oE/exec';
-    var params = new URLSearchParams();
-    params.append('id',      order.id);
-    params.append('date',    order.date);
-    params.append('name',    order.name);
-    params.append('mobile',  order.mobile);
-    params.append('email',   order.email);
-    params.append('address', order.address);
-    params.append('landmark',order.landmark);
-    params.append('city',    order.city);
-    params.append('state',   order.state);
-    params.append('pincode', order.pincode);
-    params.append('size',    order.size);
-    params.append('qty',     order.qty);
-    params.append('total',   order.total);
-    params.append('payment', order.payment);
-    params.append('notes',   order.notes || '');
-    params.append('howHeard',order.howHeard || '');
-    params.append('status',  'New');
-    var img = new Image();
-    img.src = SCRIPT_URL + '?action=save&' + params.toString();
+    try {
+      fetch(SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(order)
+      }).then(function(r) {
+        console.log('Order saved to Google Sheets - status:', r.status);
+      }).catch(function(err) {
+        console.warn('Sheet save error:', err);
+      });
+    } catch(err) { console.warn('Fetch error:', err); }
 
     // Open WhatsApp after short delay
     setTimeout(function() {
@@ -470,6 +461,7 @@
 </script>
 </body>
 </html>
+
 
 
 
