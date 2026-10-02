@@ -438,7 +438,7 @@
     document.getElementById('successOverlay').classList.add('show');
 
     // Send to Google Sheets (replace with your deployed Apps Script URL)
-    var SCRIPT_URL = 'YOUR_GOOGLE_SCRIPT_URL_HERE';
+    var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgXg2FweIGDLBnGDjhxsAhmqav6FNTYjhVxt2UrRpqYOOHzF0sd15Oisd8WofCz9oE/exec';
     if (SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
       fetch(SCRIPT_URL, {
         method: 'POST',
@@ -458,5 +458,6 @@
 </script>
 </body>
 </html>
+
 
 
