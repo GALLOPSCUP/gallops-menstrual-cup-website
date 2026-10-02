@@ -1,0 +1,433 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Orders - Gallops Menstrual Cup</title>
+  <link rel="icon" href="assets/favicon-32x32.png" type="image/png" />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --pink: hsl(340,85%,62%);
+      --purple: hsl(275,60%,45%);
+      --grad: linear-gradient(135deg, hsl(340,85%,62%) 0%, hsl(275,60%,45%) 100%);
+      --bg: #0f0f1a;
+      --surface: #1a1a2e;
+      --surface2: #22223a;
+      --text: #f0f0f8;
+      --muted: #8888aa;
+      --border: #2e2e4e;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+
+    /* LOGIN */
+    .login-screen { position: fixed; inset: 0; background: var(--bg); display: flex; align-items: center; justify-content: center; z-index: 9999; }
+    .login-box { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 3rem 2.5rem; width: 100%; max-width: 380px; text-align: center; box-shadow: 0 20px 60px rgba(0,0,0,0.5); }
+    .login-box .logo { width: 60px; height: 60px; background: var(--grad); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.5rem; }
+    .login-box .logo svg { fill: #fff; }
+    .login-box h1 { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.3rem; }
+    .login-box p { color: var(--muted); font-size: 0.88rem; margin-bottom: 1.8rem; }
+    .login-box input { width: 100%; padding: 0.85rem 1rem; background: var(--surface2); border: 1.5px solid var(--border); border-radius: 10px; color: var(--text); font-family: inherit; font-size: 1rem; outline: none; margin-bottom: 1rem; text-align: center; letter-spacing: 0.15em; }
+    .login-box input:focus { border-color: var(--pink); }
+    .login-box button { width: 100%; padding: 0.85rem; background: var(--grad); color: #fff; border: none; border-radius: 50px; font-family: inherit; font-size: 1rem; font-weight: 700; cursor: pointer; transition: transform .2s, box-shadow .2s; }
+    .login-box button:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(240,98,146,0.4); }
+    .login-err { color: #ff6b6b; font-size: 0.82rem; margin-top: -0.5rem; margin-bottom: 0.8rem; display: none; }
+    .login-err.show { display: block; }
+
+    /* ADMIN HEADER */
+    .admin-header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .admin-brand { display: flex; align-items: center; gap: 0.8rem; }
+    .admin-brand .dot { width: 10px; height: 10px; background: #25d366; border-radius: 50%; animation: blink 2s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.3;} }
+    .admin-brand h1 { font-size: 1.05rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .header-actions { display: flex; gap: 0.8rem; align-items: center; }
+    .hdr-btn { display: flex; align-items: center; gap: 0.4rem; padding: 0.5rem 1rem; border-radius: 50px; border: none; font-family: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all .2s; }
+    .hdr-btn.export { background: #25d366; color: #fff; }
+    .hdr-btn.logout { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
+    .hdr-btn:hover { transform: translateY(-1px); }
+    .back-site { color: var(--pink); text-decoration: none; font-size: 0.82rem; font-weight: 600; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; padding: 1.5rem 2rem 0; }
+    @media (max-width: 900px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 500px) { .stats-row { grid-template-columns: 1fr 1fr; } }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.2rem 1.4rem; }
+    .stat-card .stat-label { font-size: 0.75rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+    .stat-card .stat-val { font-size: 1.8rem; font-weight: 800; background: var(--grad); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .stat-card .stat-sub { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+    /* FILTER & SEARCH */
+    .toolbar { display: flex; align-items: center; gap: 1rem; padding: 1.2rem 2rem; flex-wrap: wrap; }
+    .search-box { flex: 1; min-width: 200px; position: relative; }
+    .search-box input { width: 100%; padding: 0.65rem 1rem 0.65rem 2.5rem; background: var(--surface); border: 1.5px solid var(--border); border-radius: 50px; color: var(--text); font-family: inherit; font-size: 0.9rem; outline: none; }
+    .search-box input:focus { border-color: var(--pink); }
+    .search-box svg { position: absolute; left: 0.9rem; top: 50%; transform: translateY(-50%); fill: var(--muted); pointer-events: none; }
+    .filter-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .fbtn { padding: 0.5rem 1rem; border-radius: 50px; border: 1.5px solid var(--border); background: transparent; color: var(--muted); font-family: inherit; font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all .2s; }
+    .fbtn.active, .fbtn:hover { background: var(--grad); color: #fff; border-color: transparent; }
+    .count-badge { background: var(--surface2); border: 1px solid var(--border); border-radius: 50px; padding: 0.5rem 1rem; font-size: 0.82rem; color: var(--muted); font-weight: 700; white-space: nowrap; }
+
+    /* TABLE */
+    .table-wrap { padding: 0 2rem 2rem; overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; }
+    thead th { background: var(--surface); border-bottom: 2px solid var(--border); padding: 0.8rem 1rem; text-align: left; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.08em; color: var(--muted); white-space: nowrap; }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background .15s; }
+    tbody tr:hover { background: var(--surface); }
+    tbody td { padding: 0.9rem 1rem; font-size: 0.88rem; vertical-align: top; }
+    .order-id-cell { font-weight: 800; color: var(--pink); font-size: 0.82rem; }
+    .customer-name { font-weight: 700; }
+    .customer-contact { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+    .address-cell { font-size: 0.82rem; color: var(--muted); max-width: 200px; }
+    .product-cell { font-weight: 700; }
+    .product-cell .qty { color: var(--muted); font-size: 0.78rem; }
+    .total-cell { font-weight: 800; color: #60d394; }
+    .payment-cell { font-size: 0.78rem; background: var(--surface2); border-radius: 50px; padding: 0.2rem 0.7rem; display: inline-block; }
+    .date-cell { font-size: 0.78rem; color: var(--muted); white-space: nowrap; }
+    .status-select { background: var(--surface2); border: 1.5px solid var(--border); border-radius: 50px; color: var(--text); font-family: inherit; font-size: 0.78rem; font-weight: 700; padding: 0.25rem 0.6rem; cursor: pointer; outline: none; }
+    .status-select.New    { border-color: #f6ad55; color: #f6ad55; }
+    .status-select.Confirmed { border-color: #63b3ed; color: #63b3ed; }
+    .status-select.Dispatched { border-color: #9f7aea; color: #9f7aea; }
+    .status-select.Delivered { border-color: #68d391; color: #68d391; }
+    .status-select.Cancelled  { border-color: #fc8181; color: #fc8181; }
+    .action-btns { display: flex; gap: 0.4rem; flex-wrap: wrap; }
+    .act-btn { padding: 0.3rem 0.7rem; border-radius: 50px; border: none; font-family: inherit; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all .2s; display: flex; align-items: center; gap: 0.3rem; }
+    .act-btn.wa  { background: #25d366; color: #fff; }
+    .act-btn.del { background: #fc818133; color: #fc8181; }
+    .act-btn:hover { transform: translateY(-1px); }
+
+    /* EMPTY */
+    .empty-state { text-align: center; padding: 4rem 2rem; color: var(--muted); }
+    .empty-state svg { fill: var(--muted); opacity: 0.3; margin-bottom: 1rem; }
+    .empty-state p { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+
+    /* NOTIFICATION TOAST */
+    .toast { position: fixed; bottom: 2rem; right: 2rem; background: #25d366; color: #fff; padding: 0.8rem 1.5rem; border-radius: 50px; font-weight: 700; font-size: 0.9rem; box-shadow: 0 8px 24px rgba(0,0,0,0.3); transform: translateY(100px); opacity: 0; transition: all .3s; z-index: 9998; }
+    .toast.show { transform: translateY(0); opacity: 1; }
+
+    /* NOTES CELL */
+    .notes-cell { font-size: 0.78rem; color: var(--muted); font-style: italic; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  </style>
+</head>
+<body>
+
+<!-- LOGIN SCREEN -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-box">
+    <div class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"><path d="M12,1L3,5V11C3,16.55 6.84,21.74 12,23C17.16,21.74 21,16.55 21,11V5L12,1Z"/></svg>
+    </div>
+    <h1>Admin Access</h1>
+    <p>Enter your password to view orders</p>
+    <input type="password" id="pwdInput" placeholder="Enter password" />
+    <span class="login-err" id="loginErr">Incorrect password. Try again.</span>
+    <button id="loginBtn">Login to Dashboard</button>
+  </div>
+</div>
+
+<!-- ADMIN CONTENT -->
+<div id="adminApp" style="display:none;">
+
+  <header class="admin-header">
+    <div class="admin-brand">
+      <div class="dot"></div>
+      <h1>Gallops Order Dashboard</h1>
+    </div>
+    <div class="header-actions">
+      <a href="index.html" class="back-site">&#8592; Back to Website</a>
+      <button class="hdr-btn export" id="exportBtn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M14,2H6A2,2 0 0,0 4,4V20A2,2 0 0,0 6,22H18A2,2 0 0,0 20,20V8L14,2M18,20H6V4H13V9H18V20M10,19L8,17L10,15V17H14V15L16,17L14,19V17H10V19Z"/></svg>
+        Export CSV
+      </button>
+      <button class="hdr-btn logout" id="logoutBtn">Logout</button>
+    </div>
+  </header>
+
+  <!-- Stats -->
+  <div class="stats-row" id="statsRow">
+    <div class="stat-card">
+      <div class="stat-label">Total Orders</div>
+      <div class="stat-val" id="statTotal">0</div>
+      <div class="stat-sub">All time</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Revenue</div>
+      <div class="stat-val" id="statRevenue">Rs.0</div>
+      <div class="stat-sub">From all orders</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">New Orders</div>
+      <div class="stat-val" id="statNew">0</div>
+      <div class="stat-sub">Awaiting confirmation</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Delivered</div>
+      <div class="stat-val" id="statDelivered">0</div>
+      <div class="stat-sub">Successfully completed</div>
+    </div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="toolbar">
+    <div class="search-box">
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"><path d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z"/></svg>
+      <input type="text" id="searchInput" placeholder="Search by name, mobile, city, order ID..." />
+    </div>
+    <div class="filter-btns">
+      <button class="fbtn active" data-filter="All">All</button>
+      <button class="fbtn" data-filter="New">New</button>
+      <button class="fbtn" data-filter="Confirmed">Confirmed</button>
+      <button class="fbtn" data-filter="Dispatched">Dispatched</button>
+      <button class="fbtn" data-filter="Delivered">Delivered</button>
+      <button class="fbtn" data-filter="Cancelled">Cancelled</button>
+    </div>
+    <span class="count-badge" id="countBadge">0 orders</span>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table id="ordersTable">
+      <thead>
+        <tr>
+          <th>Order ID</th>
+          <th>Date</th>
+          <th>Customer</th>
+          <th>Address</th>
+          <th>Product</th>
+          <th>Total</th>
+          <th>Payment</th>
+          <th>Notes</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody id="ordersBody"></tbody>
+    </table>
+    <div class="empty-state" id="emptyState" style="display:none;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24"><path d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"/></svg>
+      <p>No orders found</p>
+      <span>Orders will appear here when customers place them</span>
+    </div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  var ADMIN_PASSWORD = 'gallops2024'; // Change this password!
+  var currentFilter = 'All';
+  var currentSearch = '';
+
+  // LOGIN
+  function doLogin() {
+    var pwd = document.getElementById('pwdInput').value;
+    if (pwd === ADMIN_PASSWORD) {
+      sessionStorage.setItem('gallops_admin', '1');
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('adminApp').style.display = 'block';
+      renderAll();
+      checkForNewOrders();
+    } else {
+      document.getElementById('loginErr').classList.add('show');
+      document.getElementById('pwdInput').value = '';
+      document.getElementById('pwdInput').focus();
+    }
+  }
+
+  document.getElementById('loginBtn').addEventListener('click', doLogin);
+  document.getElementById('pwdInput').addEventListener('keydown', function(e) { if (e.key === 'Enter') doLogin(); });
+
+  document.getElementById('logoutBtn').addEventListener('click', function() {
+    sessionStorage.removeItem('gallops_admin');
+    document.getElementById('adminApp').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'flex';
+    document.getElementById('pwdInput').value = '';
+  });
+
+  // Auto login if session active
+  if (sessionStorage.getItem('gallops_admin')) {
+    document.getElementById('loginScreen').style.display = 'none';
+    document.getElementById('adminApp').style.display = 'block';
+    renderAll();
+    checkForNewOrders();
+  }
+
+  // GET ORDERS
+  function getOrders() {
+    return JSON.parse(localStorage.getItem('gallops_orders') || '[]');
+  }
+
+  // SAVE ORDERS
+  function saveOrders(orders) {
+    localStorage.setItem('gallops_orders', JSON.stringify(orders));
+  }
+
+  // TOAST
+  function showToast(msg) {
+    var t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(function() { t.classList.remove('show'); }, 3000);
+  }
+
+  // STATS
+  function renderStats(orders) {
+    var total = orders.length;
+    var revenue = orders.reduce(function(s, o) { return s + (parseInt(o.total) || 0); }, 0);
+    var newCount = orders.filter(function(o) { return o.status === 'New'; }).length;
+    var delivered = orders.filter(function(o) { return o.status === 'Delivered'; }).length;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statRevenue').textContent = 'Rs.' + revenue;
+    document.getElementById('statNew').textContent = newCount;
+    document.getElementById('statDelivered').textContent = delivered;
+  }
+
+  // FILTER + SEARCH
+  function getFiltered() {
+    var orders = getOrders();
+    if (currentFilter !== 'All') {
+      orders = orders.filter(function(o) { return o.status === currentFilter; });
+    }
+    if (currentSearch) {
+      var q = currentSearch.toLowerCase();
+      orders = orders.filter(function(o) {
+        return (o.name||'').toLowerCase().includes(q) ||
+               (o.mobile||'').includes(q) ||
+               (o.city||'').toLowerCase().includes(q) ||
+               (o.id||'').toLowerCase().includes(q) ||
+               (o.state||'').toLowerCase().includes(q) ||
+               (o.email||'').toLowerCase().includes(q);
+      });
+    }
+    return orders;
+  }
+
+  // RENDER TABLE
+  function renderTable() {
+    var orders = getFiltered();
+    var tbody = document.getElementById('ordersBody');
+    var empty = document.getElementById('emptyState');
+    document.getElementById('countBadge').textContent = orders.length + ' order' + (orders.length !== 1 ? 's' : '');
+
+    if (orders.length === 0) {
+      tbody.innerHTML = '';
+      empty.style.display = 'block';
+      return;
+    }
+    empty.style.display = 'none';
+
+    tbody.innerHTML = orders.map(function(o) {
+      return '<tr>' +
+        '<td class="order-id-cell">' + (o.id || '-') + '</td>' +
+        '<td class="date-cell">' + (o.date || '-') + '</td>' +
+        '<td><div class="customer-name">' + (o.name || '-') + '</div>' +
+          '<div class="customer-contact">' + (o.mobile || '') + '<br>' + (o.email || '') + '</div></td>' +
+        '<td class="address-cell">' + (o.address || '') + ', ' + (o.landmark ? 'Near ' + o.landmark + ', ' : '') + (o.city || '') + ', ' + (o.state || '') + ' - ' + (o.pincode || '') + '</td>' +
+        '<td class="product-cell">Gallops ' + (o.size || '') + ' Cup<div class="qty">Qty: ' + (o.qty || 1) + '</div></td>' +
+        '<td class="total-cell">Rs.' + (o.total || 0) + '</td>' +
+        '<td><span class="payment-cell">' + (o.payment || '-') + '</span></td>' +
+        '<td class="notes-cell" title="' + (o.notes || '') + '">' + (o.notes || '-') + '</td>' +
+        '<td><select class="status-select ' + (o.status||'New') + '" data-id="' + o.id + '" onchange="changeStatus(this)">' +
+          ['New','Confirmed','Dispatched','Delivered','Cancelled'].map(function(s) {
+            return '<option value="' + s + '"' + (o.status === s ? ' selected' : '') + '>' + s + '</option>';
+          }).join('') +
+        '</select></td>' +
+        '<td><div class="action-btns">' +
+          '<button class="act-btn wa" onclick="sendWA(\'' + o.id + '\')">WhatsApp</button>' +
+          '<button class="act-btn del" onclick="deleteOrder(\'' + o.id + '\')">Delete</button>' +
+        '</div></td>' +
+      '</tr>';
+    }).join('');
+  }
+
+  function renderAll() {
+    renderStats(getOrders());
+    renderTable();
+  }
+
+  // CHANGE STATUS
+  function changeStatus(select) {
+    var id = select.dataset.id;
+    var newStatus = select.value;
+    var orders = getOrders();
+    orders = orders.map(function(o) { if (o.id === id) o.status = newStatus; return o; });
+    saveOrders(orders);
+    select.className = 'status-select ' + newStatus;
+    renderStats(orders);
+    showToast('Order ' + id + ' marked as ' + newStatus);
+  }
+
+  // WHATSAPP QUICK REPLY
+  function sendWA(id) {
+    var orders = getOrders();
+    var o = orders.find(function(x) { return x.id === id; });
+    if (!o) return;
+    var msg = 'Hello ' + o.name + '! Your Gallops Menstrual Cup order ' + o.id + ' has been confirmed. We will dispatch your order of Gallops ' + o.size + ' Cup (x' + o.qty + ') at Rs.' + o.total + ' soon. Thank you for choosing Gallops!';
+    window.open('https://wa.me/91' + o.mobile + '?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  // DELETE ORDER
+  function deleteOrder(id) {
+    if (!confirm('Delete order ' + id + '? This cannot be undone.')) return;
+    var orders = getOrders().filter(function(o) { return o.id !== id; });
+    saveOrders(orders);
+    renderAll();
+    showToast('Order deleted');
+  }
+
+  // EXPORT CSV
+  document.getElementById('exportBtn').addEventListener('click', function() {
+    var orders = getOrders();
+    if (!orders.length) { showToast('No orders to export'); return; }
+    var header = ['Order ID','Date','Name','Mobile','Email','Address','Landmark','City','State','PIN','Size','Qty','Total','Payment','Notes','How Heard','Status'];
+    var rows = orders.map(function(o) {
+      return [o.id, o.date, o.name, o.mobile, o.email, '"'+o.address+'"', o.landmark, o.city, o.state, o.pincode, o.size, o.qty, o.total, o.payment, '"'+(o.notes||'')+'"', o.howHeard, o.status];
+    });
+    var csv = [header].concat(rows).map(function(r) { return r.join(','); }).join('\n');
+    var a = document.createElement('a');
+    a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+    a.download = 'gallops_orders_' + new Date().toISOString().slice(0,10) + '.csv';
+    a.click();
+    showToast('CSV exported!');
+  });
+
+  // SEARCH
+  document.getElementById('searchInput').addEventListener('input', function() {
+    currentSearch = this.value.trim();
+    renderTable();
+  });
+
+  // FILTER BUTTONS
+  document.querySelectorAll('.fbtn').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.fbtn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      currentFilter = btn.dataset.filter;
+      renderTable();
+    });
+  });
+
+  // CHECK FOR NEW ORDERS (notification)
+  function checkForNewOrders() {
+    var lastSeen = parseInt(localStorage.getItem('gallops_last_seen') || '0');
+    var orders = getOrders();
+    var newOrders = orders.filter(function(o) { return o.status === 'New'; });
+    if (newOrders.length > 0) {
+      showToast(newOrders.length + ' new order' + (newOrders.length > 1 ? 's' : '') + ' waiting!');
+    }
+    localStorage.setItem('gallops_last_seen', Date.now());
+
+    // Poll for new orders every 30 seconds
+    setInterval(function() {
+      var current = getOrders().filter(function(o) { return o.status === 'New'; }).length;
+      if (current > newOrders.length) {
+        showToast('New order received!');
+        renderAll();
+        newOrders = getOrders().filter(function(o) { return o.status === 'New'; });
+      }
+    }, 30000);
+  }
+</script>
+</body>
+</html>
