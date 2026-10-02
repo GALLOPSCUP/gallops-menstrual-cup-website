@@ -437,16 +437,28 @@
     document.getElementById('successMsg').textContent = 'Thank you ' + fn + '! Order ' + orderId + ' placed for ' + qty + ' x Gallops ' + currentSize + ' Cup (Rs.' + sub + '). We will contact you on ' + mob + ' within 24 hours.';
     document.getElementById('successOverlay').classList.add('show');
 
-    // Send to Google Sheets (replace with your deployed Apps Script URL)
+    // Send order to Google Sheets via URL params (CORS-safe method)
     var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgXg2FweIGDLBnGDjhxsAhmqav6FNTYjhVxt2UrRpqYOOHzF0sd15Oisd8WofCz9oE/exec';
-    if (SCRIPT_URL !== 'YOUR_GOOGLE_SCRIPT_URL_HERE') {
-      fetch(SCRIPT_URL, {
-        method: 'POST',
-        mode: 'no-cors',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(order)
-      }).catch(function(err) { console.warn('Google Sheet save failed:', err); });
-    }
+    var params = new URLSearchParams();
+    params.append('id',      order.id);
+    params.append('date',    order.date);
+    params.append('name',    order.name);
+    params.append('mobile',  order.mobile);
+    params.append('email',   order.email);
+    params.append('address', order.address);
+    params.append('landmark',order.landmark);
+    params.append('city',    order.city);
+    params.append('state',   order.state);
+    params.append('pincode', order.pincode);
+    params.append('size',    order.size);
+    params.append('qty',     order.qty);
+    params.append('total',   order.total);
+    params.append('payment', order.payment);
+    params.append('notes',   order.notes || '');
+    params.append('howHeard',order.howHeard || '');
+    params.append('status',  'New');
+    var img = new Image();
+    img.src = SCRIPT_URL + '?action=save&' + params.toString();
 
     // Open WhatsApp after short delay
     setTimeout(function() {
@@ -458,6 +470,7 @@
 </script>
 </body>
 </html>
+
 
 
 
