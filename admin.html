@@ -262,7 +262,7 @@
   }
 
   var STATUS_KEY = 'gallops_status_overrides';
-  var DELETED_KEY = 'gallops_deleted_orders';
+  var DELETED_KEY = 'gallops_deleted_orders_v2';
 
   function getStatusOverrides() {
     try { return JSON.parse(localStorage.getItem(STATUS_KEY) || '{}'); } catch(e) { return {}; }
@@ -303,20 +303,22 @@
         var deleted = getDeletedOrderIds();
         var overrides = getStatusOverrides();
 
-        // Filter out blank/empty test rows (must have customer name and phone)
+        // Filter out blank/empty test rows (must have customer name and phone, safely handling numbers)
         var validOrders = rawOrders.filter(function(o) {
-          var name = (o.name || '').trim();
-          var mobile = (o.mobile || '').trim();
+          if (!o) return false;
+          var name = String(o.name || '').trim();
+          var mobile = String(o.mobile || '').trim();
           return name !== '' && name !== '-' && mobile !== '' && mobile !== '-';
         });
 
-        // Deduplicate order IDs so duplicate blank rows never stack up
+        // Deduplicate order IDs so duplicate rows never stack up
         var seenIds = {};
         var uniqueOrders = [];
         for (var i = 0; i < validOrders.length; i++) {
           var ord = validOrders[i];
-          if (!seenIds[ord.id]) {
-            seenIds[ord.id] = true;
+          var ordId = String(ord.id || '');
+          if (ordId && !seenIds[ordId]) {
+            seenIds[ordId] = true;
             uniqueOrders.push(ord);
           }
         }
@@ -371,11 +373,11 @@
     if (currentSearch) {
       var q = currentSearch.toLowerCase();
       orders = orders.filter(function(o) {
-        return (o.name||'').toLowerCase().includes(q) ||
-               (o.mobile||'').includes(q) ||
-               (o.city||'').toLowerCase().includes(q) ||
-               (o.id||'').toLowerCase().includes(q) ||
-               (o.email||'').toLowerCase().includes(q);
+        return String(o.name || '').toLowerCase().indexOf(q) !== -1 ||
+               String(o.mobile || '').indexOf(q) !== -1 ||
+               String(o.city || '').toLowerCase().indexOf(q) !== -1 ||
+               String(o.id || '').toLowerCase().indexOf(q) !== -1 ||
+               String(o.email || '').toLowerCase().indexOf(q) !== -1;
       });
     }
     return orders;
@@ -438,10 +440,11 @@
 
   // WHATSAPP
   function sendWA(id) {
-    var o = allOrders.find(function(x) { return x.id === id; });
+    var o = allOrders.find(function(x) { return String(x.id) === String(id); });
     if (!o) return;
-    var msg = 'Hello ' + o.name + '! Your Gallops Menstrual Cup order ' + o.id + ' has been confirmed! We will dispatch your Gallops ' + o.size + ' Cup (x' + o.qty + ', Rs.' + o.total + ') within 24-48 hours. Thank you for choosing Gallops!';
-    window.open('https://wa.me/91' + o.mobile.replace(/\D/g,'') + '?text=' + encodeURIComponent(msg), '_blank');
+    var phone = String(o.mobile || '').replace(/\D/g, '');
+    var msg = 'Hello ' + o.name + '! Your Gallops Menstrual Cup order ' + o.id + ' has been confirmed! We will dispatch your Gallops ' + (o.size || '') + ' Cup (x' + (o.qty || 1) + ', Rs.' + (o.total || '') + ') within 24-48 hours. Thank you for choosing Gallops!';
+    window.open('https://wa.me/91' + phone + '?text=' + encodeURIComponent(msg), '_blank');
   }
 
   // DELETE
