@@ -303,7 +303,25 @@
         var deleted = getDeletedOrderIds();
         var overrides = getStatusOverrides();
 
-        allOrders = rawOrders.filter(function(o) {
+        // Filter out blank/empty test rows (must have customer name and phone)
+        var validOrders = rawOrders.filter(function(o) {
+          var name = (o.name || '').trim();
+          var mobile = (o.mobile || '').trim();
+          return name !== '' && name !== '-' && mobile !== '' && mobile !== '-';
+        });
+
+        // Deduplicate order IDs so duplicate blank rows never stack up
+        var seenIds = {};
+        var uniqueOrders = [];
+        for (var i = 0; i < validOrders.length; i++) {
+          var ord = validOrders[i];
+          if (!seenIds[ord.id]) {
+            seenIds[ord.id] = true;
+            uniqueOrders.push(ord);
+          }
+        }
+
+        allOrders = uniqueOrders.filter(function(o) {
           return deleted.indexOf(o.id) === -1;
         }).map(function(o) {
           if (overrides[o.id]) {
@@ -412,14 +430,7 @@
 
     var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
     if (scriptUrl) {
-      // POST text/plain
-      fetch(scriptUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'updateStatus', id: id, status: newStatus })
-      }).catch(function(e) { console.warn('POST sync error:', e); });
-
-      // GET fallback
+      // Use GET only: GET will NEVER invoke saveOrder() on older Apps Script deployments
       var sep = scriptUrl.indexOf('?') === -1 ? '?' : '&';
       fetch(scriptUrl + sep + 'action=updateStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(newStatus), { mode: 'no-cors' }).catch(function() {});
     }
@@ -446,14 +457,7 @@
 
     var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
     if (scriptUrl) {
-      // POST text/plain
-      fetch(scriptUrl, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify({ action: 'deleteOrder', id: id })
-      }).catch(function(e) { console.warn('POST sync error:', e); });
-
-      // GET fallback
+      // Use GET only: GET will NEVER invoke saveOrder() on older Apps Script deployments
       var sep = scriptUrl.indexOf('?') === -1 ? '?' : '&';
       fetch(scriptUrl + sep + 'action=deleteOrder&id=' + encodeURIComponent(id), { mode: 'no-cors' }).catch(function() {});
     }
