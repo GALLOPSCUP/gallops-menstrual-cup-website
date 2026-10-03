@@ -1,14 +1,14 @@
 ﻿// ============================================================
 // GALLOPS MENSTRUAL CUP - ORDER MANAGEMENT
-// Version 3 - Works with text/plain POST (no CORS preflight)
+// Version 4 - Supports New Orders, Status Update & Delete
+// Works with text/plain POST & GET (no CORS preflight)
 // ============================================================
 
 var SHEET_NAME   = 'Orders';
 var NOTIFY_EMAIL = 'earthenterprise100@gmail.com';
 
-// ---------- helpers ----------
 function cors(output) {
-  return output; // Apps Script handles CORS automatically for deployed Web Apps
+  return output;
 }
 
 function getOrCreateSheet() {
@@ -20,7 +20,7 @@ function getOrCreateSheet() {
     try {
       ss = SpreadsheetApp.openById(sheetId);
     } catch(e) {
-      sheetId = null; // ID is invalid or deleted
+      sheetId = null;
     }
   }
   
@@ -34,7 +34,6 @@ function getOrCreateSheet() {
     sheet.setName(SHEET_NAME);
   }
   
-  // Create headers if empty
   if (sheet.getLastRow() === 0) {
     var h = ['Order ID','Date','Name','Mobile','Email','Address',
              'Landmark','City','State','PIN','Size','Qty','Total (Rs)',
@@ -55,9 +54,33 @@ function saveOrder(d) {
     d.id, d.date, d.name, d.mobile, d.email,
     d.address, d.landmark, d.city, d.state, d.pincode,
     d.size, d.qty, d.total, d.payment,
-    d.notes || '', d.howHeard || '', 'New'
+    d.notes || '', d.howHeard || '', d.status || 'New'
   ]);
   sendMail(d);
+}
+
+function updateOrderStatus(id, newStatus) {
+  var sheet = getOrCreateSheet();
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][0]).trim() === String(id).trim()) {
+      sheet.getRange(i + 1, 17).setValue(newStatus);
+      return true;
+    }
+  }
+  return false;
+}
+
+function deleteOrderById(id) {
+  var sheet = getOrCreateSheet();
+  var rows = sheet.getDataRange().getValues();
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][0]).trim() === String(id).trim()) {
+      sheet.deleteRow(i + 1);
+      return true;
+    }
+  }
+  return false;
 }
 
 function sendMail(d) {
@@ -89,12 +112,27 @@ function sendMail(d) {
   }
 }
 
-// ---------- GET - returns order list ----------
+// ---------- GET - returns order list or handles status update / delete ----------
 function doGet(e) {
   var out = ContentService.createTextOutput();
   out.setMimeType(ContentService.MimeType.JSON);
   try {
+    var params = (e && e.parameter) ? e.parameter : {};
+    var action = params.action;
     var sheet  = getOrCreateSheet();
+
+    if (action === 'updateStatus' && params.id) {
+      var ok = updateOrderStatus(params.id, params.status || 'Confirmed');
+      out.setContent(JSON.stringify({ success: ok, id: params.id, status: params.status }));
+      return out;
+    }
+
+    if (action === 'deleteOrder' && params.id) {
+      var ok = deleteOrderById(params.id);
+      out.setContent(JSON.stringify({ success: ok, id: params.id }));
+      return out;
+    }
+
     var rows   = sheet.getDataRange().getValues();
     var orders = [];
     for (var i = 1; i < rows.length; i++) {
@@ -104,7 +142,7 @@ function doGet(e) {
         id:r[0], date:r[1], name:r[2], mobile:r[3], email:r[4],
         address:r[5], landmark:r[6], city:r[7], state:r[8], pincode:r[9],
         size:r[10], qty:r[11], total:r[12], payment:r[13],
-        notes:r[14], howHeard:r[15], status:r[16]
+        notes:r[14], howHeard:r[15], status:r[16] || 'New'
       });
     }
     out.setContent(JSON.stringify({ success:true, orders:orders.reverse() }));
@@ -114,13 +152,26 @@ function doGet(e) {
   return out;
 }
 
-// ---------- POST - receives order (text/plain body containing JSON) ----------
+// ---------- POST - receives order, status update, or delete ----------
 function doPost(e) {
   var out = ContentService.createTextOutput();
   out.setMimeType(ContentService.MimeType.JSON);
   try {
     var raw  = e.postData.contents;
     var data = JSON.parse(raw);
+
+    if (data.action === 'updateStatus' && data.id) {
+      var ok = updateOrderStatus(data.id, data.status || 'Confirmed');
+      out.setContent(JSON.stringify({ success: ok, id: data.id, status: data.status }));
+      return out;
+    }
+
+    if (data.action === 'deleteOrder' && data.id) {
+      var ok = deleteOrderById(data.id);
+      out.setContent(JSON.stringify({ success: ok, id: data.id }));
+      return out;
+    }
+
     saveOrder(data);
     out.setContent(JSON.stringify({ success:true, id:data.id }));
   } catch(e) {
@@ -128,4 +179,3 @@ function doPost(e) {
   }
   return out;
 }
-

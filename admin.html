@@ -261,11 +261,33 @@
     document.getElementById('loadingBar').style.width = pct + '%';
   }
 
+  var STATUS_KEY = 'gallops_status_overrides';
+  var DELETED_KEY = 'gallops_deleted_orders';
+
+  function getStatusOverrides() {
+    try { return JSON.parse(localStorage.getItem(STATUS_KEY) || '{}'); } catch(e) { return {}; }
+  }
+  function saveStatusOverride(id, status) {
+    var o = getStatusOverrides();
+    o[id] = status;
+    localStorage.setItem(STATUS_KEY, JSON.stringify(o));
+  }
+  function getDeletedOrderIds() {
+    try { return JSON.parse(localStorage.getItem(DELETED_KEY) || '[]'); } catch(e) { return []; }
+  }
+  function addDeletedOrderId(id) {
+    var d = getDeletedOrderIds();
+    if (d.indexOf(id) === -1) d.push(id);
+    localStorage.setItem(DELETED_KEY, JSON.stringify(d));
+    var o = getStatusOverrides();
+    delete o[id];
+    localStorage.setItem(STATUS_KEY, JSON.stringify(o));
+  }
+
   // LOAD ORDERS
   function loadOrders() {
     var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
     if (!scriptUrl) {
-      // Show demo/instructions
       allOrders = [];
       renderAll();
       document.getElementById('setupBanner').classList.add('show');
@@ -277,7 +299,21 @@
       .then(function(r) { return r.json(); })
       .then(function(data) {
         setLoading(100);
-        allOrders = data.orders || [];
+        var rawOrders = data.orders || [];
+        var deleted = getDeletedOrderIds();
+        var overrides = getStatusOverrides();
+
+        allOrders = rawOrders.filter(function(o) {
+          return deleted.indexOf(o.id) === -1;
+        }).map(function(o) {
+          if (overrides[o.id]) {
+            o.status = overrides[o.id];
+          } else if (!o.status) {
+            o.status = 'New';
+          }
+          return o;
+        });
+
         renderAll();
         if (allOrders.length > 0) {
           var newOrd = allOrders.filter(function(o) { return o.status === 'New'; }).length;
@@ -355,7 +391,7 @@
           }).join('') + '</select></td>' +
         '<td><div class="act-row">' +
           '<button class="abtn wa" onclick="sendWA(\'' + (o.id||'') + '\')">WhatsApp</button>' +
-          '<button class="abtn del" onclick="delOrder(' + idx + ')">Delete</button>' +
+          '<button class="abtn del" onclick="delOrder(\'' + (o.id||'') + '\')">Delete</button>' +
         '</div></td>' +
       '</tr>';
     }).join('');
@@ -365,12 +401,28 @@
 
   // STATUS CHANGE
   function changeStatus(sel) {
-    sel.className = 'status-sel ' + sel.value;
+    var newStatus = sel.value;
+    sel.className = 'status-sel ' + newStatus;
     var id = sel.dataset.id;
     var order = allOrders.find(function(o) { return o.id === id; });
-    if (order) order.status = sel.value;
+    if (order) order.status = newStatus;
+    saveStatusOverride(id, newStatus);
     renderStats();
-    showToast('Status updated to ' + sel.value);
+    showToast('Status updated to ' + newStatus);
+
+    var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
+    if (scriptUrl) {
+      // POST text/plain
+      fetch(scriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'updateStatus', id: id, status: newStatus })
+      }).catch(function(e) { console.warn('POST sync error:', e); });
+
+      // GET fallback
+      var sep = scriptUrl.indexOf('?') === -1 ? '?' : '&';
+      fetch(scriptUrl + sep + 'action=updateStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(newStatus), { mode: 'no-cors' }).catch(function() {});
+    }
   }
 
   // WHATSAPP
@@ -381,14 +433,30 @@
     window.open('https://wa.me/91' + o.mobile.replace(/\D/g,'') + '?text=' + encodeURIComponent(msg), '_blank');
   }
 
-  // DELETE (local only)
-  function delOrder(idx) {
-    if (!confirm('Remove this order from view?')) return;
-    var filtered = getFiltered();
-    var order = filtered[idx];
-    allOrders = allOrders.filter(function(o) { return o.id !== order.id; });
+  // DELETE
+  function delOrder(id) {
+    var order = allOrders.find(function(o) { return o.id === id; });
+    var name = order ? order.name : id;
+    if (!confirm('Are you sure you want to delete order ' + id + (name ? ' (' + name + ')' : '') + '?')) return;
+
+    addDeletedOrderId(id);
+    allOrders = allOrders.filter(function(o) { return o.id !== id; });
     renderAll();
-    showToast('Order removed from view');
+    showToast('Order ' + id + ' deleted');
+
+    var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
+    if (scriptUrl) {
+      // POST text/plain
+      fetch(scriptUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify({ action: 'deleteOrder', id: id })
+      }).catch(function(e) { console.warn('POST sync error:', e); });
+
+      // GET fallback
+      var sep = scriptUrl.indexOf('?') === -1 ? '?' : '&';
+      fetch(scriptUrl + sep + 'action=deleteOrder&id=' + encodeURIComponent(id), { mode: 'no-cors' }).catch(function() {});
+    }
   }
 
   // EXPORT CSV
