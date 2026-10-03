@@ -109,6 +109,21 @@
     .abtn{padding:0.28rem 0.6rem;border-radius:50px;border:none;font-family:inherit;font-size:0.72rem;font-weight:700;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:0.25rem;white-space:nowrap;}
     .abtn.wa{background:#25d36622;color:#25d366;border:1px solid #25d36644;}
     .abtn.del{background:#fc818122;color:#fc8181;border:1px solid #fc818144;}
+    .abtn.courier{background:#805ad522;color:#b794f4;border:1px solid #805ad544;}
+    .abtn.courier:hover{background:#805ad544;}
+
+    .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);display:none;place-items:center;z-index:9999;padding:1rem;}
+    .modal-overlay.show{display:grid;}
+    .modal-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,0.5);overflow:hidden;}
+    .modal-hdr{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid var(--border);background:var(--surface2);}
+    .modal-hdr h3{font-size:1.05rem;font-weight:800;color:var(--text);}
+    .modal-close-btn{background:none;border:none;font-size:1.2rem;color:var(--muted);cursor:pointer;}
+    .modal-close-btn:hover{color:#fff;}
+    .modal-body{padding:1.4rem;max-height:80vh;overflow-y:auto;}
+    .mgroup{margin-bottom:0.9rem;}
+    .mgroup label{display:block;font-size:0.74rem;font-weight:800;text-transform:uppercase;color:var(--muted);margin-bottom:0.35rem;letter-spacing:0.04em;}
+    .mgroup input,.mgroup select{width:100%;padding:0.55rem 0.85rem;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;color:var(--text);font-family:inherit;font-size:0.86rem;outline:none;}
+    .mgroup input:focus,.mgroup select:focus{border-color:var(--pink);}
     .abtn:hover{transform:translateY(-1px);}
 
     .empty-state{text-align:center;padding:4rem 2rem;color:var(--muted);}
@@ -234,6 +249,65 @@
   </div>
 </div>
 
+<div class="modal-overlay" id="courierModal">
+  <div class="modal-box">
+    <div class="modal-hdr">
+      <div>
+        <h3>Update Courier & POD Details</h3>
+        <p id="modalOrderInfo" style="font-size:0.8rem;color:var(--muted);margin-top:0.2rem;"></p>
+      </div>
+      <button class="modal-close-btn" onclick="closeCourierModal()">âœ•</button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="modalOrderId" />
+      <div class="mgroup">
+        <label>Courier Partner</label>
+        <select id="modalCourierSelect" onchange="onCourierChange()">
+          <option value="DTDC Express">DTDC Express</option>
+          <option value="Delhivery">Delhivery</option>
+          <option value="Blue Dart">Blue Dart</option>
+          <option value="India Post">India Post (Speed Post)</option>
+          <option value="Shree Tirupati Courier">Shree Tirupati Courier</option>
+          <option value="Trackon Courier">Trackon Courier</option>
+          <option value="Other">Other Courier</option>
+        </select>
+      </div>
+      <div class="mgroup">
+        <label>AWB / Consignment Tracking Number</label>
+        <input type="text" id="modalTrackingNo" placeholder="e.g. D82736412" />
+      </div>
+      <div class="mgroup">
+        <label>Courier Live Tracking URL</label>
+        <input type="text" id="modalTrackUrl" placeholder="https://www.dtdc.in/" />
+      </div>
+      <div class="mgroup">
+        <label>Proof of Delivery (POD) Status</label>
+        <select id="modalPodStatus">
+          <option value="Pending">Pending (Not Delivered)</option>
+          <option value="In Transit">In Transit</option>
+          <option value="Out for Delivery">Out for Delivery</option>
+          <option value="Delivered to Customer">Delivered to Customer (POD Complete)</option>
+        </select>
+      </div>
+      <div class="mgroup">
+        <label>POD Received By</label>
+        <input type="text" id="modalPodReceivedBy" placeholder="e.g. Customer (Self) / Family Member" />
+      </div>
+      <div class="mgroup">
+        <label>POD Delivered Date & Time</label>
+        <input type="text" id="modalPodDate" placeholder="e.g. 05 Oct 2026, 03:30 PM" />
+      </div>
+      <div class="mgroup">
+        <label>POD Remarks / Notes</label>
+        <input type="text" id="modalPodRemarks" placeholder="e.g. Doorstep delivery verified, signed" />
+      </div>
+      <div style="display:flex;gap:0.8rem;margin-top:1.4rem;">
+        <button class="save-url-btn" onclick="saveCourierModal()" style="flex:1;">Save Courier & POD</button>
+        <button class="hbtn logout" onclick="closeCourierModal()" style="padding:0.6rem 1.2rem;">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -557,6 +631,7 @@
             return '<option value="' + s + '"' + (st === s ? ' selected' : '') + '>' + s + '</option>';
           }).join('') + '</select></td>' +
         '<td><div class="act-row">' +
+          '<button class="abtn courier" onclick="openCourierModal(\'' + (o.id||'') + '\')">Courier/POD</button>' +
           '<button class="abtn wa" onclick="sendWA(\'' + (o.id||'') + '\')">WhatsApp</button>' +
           '<button class="abtn del" onclick="delOrder(\'' + (o.id||'') + '\')">Delete</button>' +
         '</div></td>' +
