@@ -74,7 +74,8 @@
     .summary-header { background: var(--pink-gradient); color: #fff; padding: 1.2rem 1.5rem; font-weight: 700; font-size: 1rem; display: flex; align-items: center; gap: 0.5rem; }
     .summary-body { padding: 1.4rem 1.5rem; }
     .product-preview { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid var(--border); }
-    .product-preview img { width: 70px; height: 70px; object-fit: contain; border-radius: 10px; background: #fff0f6; padding: 6px; }
+    .product-preview img { width: 76px; height: 76px; object-fit: contain; border-radius: 10px; background: #fff0f6; padding: 6px; transition: opacity 0.15s ease, transform 0.15s ease; }
+    .product-preview img.changing { opacity: 0.3; transform: scale(0.92); }
     .prod-info h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
     .prod-info .prod-size { font-size: 0.82rem; color: var(--text-muted); }
     .size-selector-group { margin-bottom: 1.2rem; }
@@ -278,7 +279,7 @@
     <div class="summary-header">Order Summary</div>
     <div class="summary-body">
       <div class="product-preview">
-        <img src="assets/cup_upright_real.png" alt="Gallops Menstrual Cup" />
+        <img src="assets/box_small.webp" alt="Gallops Menstrual Cup - Size Small" id="summaryProductImg" />
         <div class="prod-info">
           <h4>Gallops Menstrual Cup</h4>
           <p class="prod-size" id="summary-size-text">Size: Small</p>
@@ -345,6 +346,37 @@
   var currentPrice = 399, qty = 1, currentSize = 'Small';
   var sizeBtns = document.querySelectorAll('.size-btn');
 
+  var sizeImages = {
+    'Small': 'assets/box_small.webp',
+    'Medium': 'assets/box_medium.webp',
+    'Large': 'assets/box_large.webp'
+  };
+
+  function setSize(sizeName, price) {
+    currentSize = sizeName;
+    if (price) currentPrice = price;
+
+    sizeBtns.forEach(function(b) {
+      if (b.dataset.size.toLowerCase() === sizeName.toLowerCase()) {
+        b.classList.add('active');
+      } else {
+        b.classList.remove('active');
+      }
+    });
+
+    var img = document.getElementById('summaryProductImg');
+    if (img && sizeImages[sizeName]) {
+      img.classList.add('changing');
+      setTimeout(function() {
+        img.src = sizeImages[sizeName];
+        img.alt = 'Gallops Menstrual Cup - Size ' + sizeName;
+        img.classList.remove('changing');
+      }, 120);
+    }
+
+    updatePrice();
+  }
+
   function updatePrice() {
     var sub = currentPrice * qty;
     document.getElementById('priceLabel').textContent = qty + ' x ' + currentSize;
@@ -355,13 +387,21 @@
 
   sizeBtns.forEach(function(btn) {
     btn.addEventListener('click', function() {
-      sizeBtns.forEach(function(b) { b.classList.remove('active'); });
-      btn.classList.add('active');
-      currentSize = btn.dataset.size;
-      currentPrice = parseInt(btn.dataset.price);
-      updatePrice();
+      setSize(btn.dataset.size, parseInt(btn.dataset.price));
     });
   });
+
+  // Automatically select size if passed via URL parameter e.g. order.html?size=medium
+  var urlParams = new URLSearchParams(window.location.search);
+  var sizeParam = urlParams.get('size');
+  if (sizeParam) {
+    var validSizes = ['small', 'medium', 'large'];
+    var matched = validSizes.find(function(s) { return s === sizeParam.toLowerCase(); });
+    if (matched) {
+      var cap = matched.charAt(0).toUpperCase() + matched.slice(1);
+      setSize(cap, 399);
+    }
+  }
 
   document.getElementById('qtyPlus').addEventListener('click', function() { qty++; document.getElementById('qtyDisplay').textContent = qty; updatePrice(); });
   document.getElementById('qtyMinus').addEventListener('click', function() { if (qty > 1) { qty--; document.getElementById('qtyDisplay').textContent = qty; updatePrice(); } });

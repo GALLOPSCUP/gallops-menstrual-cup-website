@@ -167,6 +167,10 @@
 
           const encodedText = encodeURIComponent(data.message);
           buyBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedText}`;
+          const orderNowBtn = document.getElementById('btn-order-now');
+          if (orderNowBtn) {
+            orderNowBtn.href = "order.html?size=" + selectedSize;
+          }
 
           displayImage.classList.remove('fade-out');
         }, 300);
@@ -204,6 +208,10 @@
     const defaultData = productData.small;
     const encodedText = encodeURIComponent(defaultData.message);
     buyBtn.href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodedText}`;
+          const orderNowBtn = document.getElementById('btn-order-now');
+          if (orderNowBtn) {
+            orderNowBtn.href = "order.html?size=small";
+          }
   }
 
   // ==========================================
@@ -221,7 +229,7 @@
         // Copy tracking ID to clipboard automatically
         navigator.clipboard.writeText(trackingId).then(() => {
           if (trackingStatus) {
-            trackingStatus.textContent = `ðŸ“‹ Consignment ID "${trackingId}" copied to clipboard! Opening DTDC portal... please paste it in the search box.`;
+            trackingStatus.textContent = `📋 Consignment ID "${trackingId}" copied to clipboard! Opening DTDC portal... please paste it in the search box.`;
             trackingStatus.style.display = 'block';
           }
         }).catch(err => {
