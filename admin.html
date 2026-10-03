@@ -463,30 +463,55 @@
     document.getElementById('loadingBar').style.width = pct + '%';
   }
 
+  function cleanId(id) {
+    return String(id || '').trim();
+  }
+
   var STATUS_KEY = 'gallops_status_overrides';
   var DELETED_KEY = 'gallops_deleted_orders_v2';
 
   function getStatusOverrides() {
-    try { return JSON.parse(localStorage.getItem(STATUS_KEY) || '{}'); } catch(e) { return {}; }
+    try {
+      var raw = JSON.parse(localStorage.getItem(STATUS_KEY) || '{}');
+      var clean = {};
+      for (var k in raw) {
+        if (raw.hasOwnProperty(k)) {
+          var cid = cleanId(k);
+          if (cid) clean[cid] = String(raw[k] || '').trim();
+        }
+      }
+      return clean;
+    } catch(e) { return {}; }
   }
+
   function saveStatusOverride(id, status) {
+    var cid = cleanId(id);
+    if (!cid) return;
     var o = getStatusOverrides();
-    o[id] = status;
+    o[cid] = String(status || '').trim();
     localStorage.setItem(STATUS_KEY, JSON.stringify(o));
   }
+
   function getDeletedOrderIds() {
-    try { return JSON.parse(localStorage.getItem(DELETED_KEY) || '[]'); } catch(e) { return []; }
+    try {
+      var d = JSON.parse(localStorage.getItem(DELETED_KEY) || '[]');
+      return d.map(cleanId);
+    } catch(e) { return []; }
   }
+
   function addDeletedOrderId(id) {
+    var cid = cleanId(id);
+    if (!cid) return;
     var d = getDeletedOrderIds();
-    if (d.indexOf(id) === -1) d.push(id);
+    if (d.indexOf(cid) === -1) d.push(cid);
     localStorage.setItem(DELETED_KEY, JSON.stringify(d));
     var o = getStatusOverrides();
-    delete o[id];
+    delete o[cid];
     localStorage.setItem(STATUS_KEY, JSON.stringify(o));
   }
 
   // LOAD ORDERS
+  var isInitialLoad = true;
   function loadOrders() {
     var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
     if (!scriptUrl) {
@@ -504,8 +529,9 @@
         var rawOrders = data.orders || [];
         var deleted = getDeletedOrderIds();
         var overrides = getStatusOverrides();
+        var courierTrackingMap = getCourierTrackingData();
 
-        // Filter out blank/empty test rows (must have customer name and phone, safely handling numbers)
+        // 1. Filter out blank/empty test rows
         var validOrders = rawOrders.filter(function(o) {
           if (!o) return false;
           var name = String(o.name || '').trim();
@@ -513,31 +539,41 @@
           return name !== '' && name !== '-' && mobile !== '' && mobile !== '-';
         });
 
-        // Deduplicate order IDs so duplicate rows never stack up
+        // 2. Clean and deduplicate order IDs
         var seenIds = {};
         var uniqueOrders = [];
         for (var i = 0; i < validOrders.length; i++) {
           var ord = validOrders[i];
-          var ordId = String(ord.id || '');
-          if (ordId && !seenIds[ordId]) {
-            seenIds[ordId] = true;
+          ord.id = cleanId(ord.id);
+          if (ord.id && !seenIds[ord.id]) {
+            seenIds[ord.id] = true;
             uniqueOrders.push(ord);
           }
         }
 
+        // 3. Apply deleted and status overrides (Admin override ALWAYS takes precedence)
         allOrders = uniqueOrders.filter(function(o) {
           return deleted.indexOf(o.id) === -1;
         }).map(function(o) {
-          if (overrides[o.id]) {
-            o.status = overrides[o.id];
-          } else if (!o.status) {
+          var cid = cleanId(o.id);
+          if (overrides[cid]) {
+            o.status = overrides[cid];
+          } else if (!o.status || o.status === '-') {
             o.status = 'New';
           }
+
+          // Restore courier & tracking from local map if present
+          if (courierTrackingMap[cid]) {
+            if (!o.courier && courierTrackingMap[cid].courier) o.courier = courierTrackingMap[cid].courier;
+            if (!o.trackingNo && courierTrackingMap[cid].trackingNo) o.trackingNo = courierTrackingMap[cid].trackingNo;
+          }
+
           return o;
         });
 
         renderAll();
-        if (allOrders.length > 0) {
+        if (isInitialLoad) {
+          isInitialLoad = false;
           var newOrd = allOrders.filter(function(o) { return o.status === 'New'; }).length;
           if (newOrd > 0) showToast(newOrd + ' new order' + (newOrd > 1 ? 's' : '') + ' waiting!');
         }
@@ -560,9 +596,11 @@
   function renderStats() {
     var dateOrders = allOrders.filter(orderMatchesDate);
     var total = dateOrders.length;
-    var revenue = dateOrders.reduce(function(s, o) { return s + (parseInt(o.total) || 0); }, 0);
-    var newCount = dateOrders.filter(function(o) { return String(o.status) === 'New'; }).length;
-    var delivered = dateOrders.filter(function(o) { return String(o.status) === 'Delivered'; }).length;
+    // Do not count cancelled orders towards active revenue
+    var activeOrders = dateOrders.filter(function(o) { return String(o.status || '').toLowerCase() !== 'cancelled'; });
+    var revenue = activeOrders.reduce(function(s, o) { return s + (parseInt(o.total) || 0); }, 0);
+    var newCount = dateOrders.filter(function(o) { return String(o.status || '').toLowerCase() === 'new'; }).length;
+    var delivered = dateOrders.filter(function(o) { return String(o.status || '').toLowerCase() === 'delivered'; }).length;
 
     var periodLabel = 'All time';
     if (currentDatePeriod === 'today') periodLabel = 'Today';
@@ -580,7 +618,7 @@
     var totalSub = document.getElementById('statTotalSub');
     if (totalSub) totalSub.textContent = periodLabel;
     var revSub = document.getElementById('statRevenueSub');
-    if (revSub) revSub.textContent = periodLabel === 'All time' ? 'All orders' : periodLabel;
+    if (revSub) revSub.textContent = periodLabel === 'All time' ? 'All active' : periodLabel;
     var newSub = document.getElementById('statNewSub');
     if (newSub) newSub.textContent = periodLabel === 'All time' ? 'Need confirmation' : periodLabel;
     var delSub = document.getElementById('statDeliveredSub');
@@ -591,7 +629,12 @@
   function getFiltered() {
     var orders = allOrders.slice();
     orders = orders.filter(orderMatchesDate);
-    if (currentFilter !== 'All') orders = orders.filter(function(o) { return String(o.status) === currentFilter; });
+    if (currentFilter !== 'All') {
+      var filterLower = currentFilter.toLowerCase();
+      orders = orders.filter(function(o) {
+        return String(o.status || '').toLowerCase() === filterLower;
+      });
+    }
     if (currentSearch) {
       var q = currentSearch.toLowerCase();
       orders = orders.filter(function(o) {
@@ -672,18 +715,27 @@
 
   // STATUS CHANGE
   function changeStatus(sel) {
-    var newStatus = sel.value;
+    var newStatus = String(sel.value || '').trim();
     sel.className = 'status-sel ' + newStatus;
-    var id = sel.dataset.id;
-    var order = allOrders.find(function(o) { return o.id === id; });
-    if (order) order.status = newStatus;
-    saveStatusOverride(id, newStatus);
-    renderStats();
-    showToast('Status updated to ' + newStatus);
+    var id = cleanId(sel.dataset.id);
+    
+    // 1. Update in-memory allOrders immediately
+    var order = allOrders.find(function(o) { return cleanId(o.id) === id; });
+    if (order) {
+      order.status = newStatus;
+    }
 
+    // 2. Persist override to localStorage (prevents reverting on refresh)
+    saveStatusOverride(id, newStatus);
+
+    // 3. Immediately re-render BOTH stats and table so filters and badges update instantly!
+    renderAll();
+
+    showToast('Order ' + id + ' status updated to ' + newStatus);
+
+    // 4. Send update to Google Apps Script
     var scriptUrl = localStorage.getItem(SCRIPT_URL_KEY);
     if (scriptUrl) {
-      // Use GET only: GET will NEVER invoke saveOrder() on older Apps Script deployments
       var sep = scriptUrl.indexOf('?') === -1 ? '?' : '&';
       fetch(scriptUrl + sep + 'action=updateStatus&id=' + encodeURIComponent(id) + '&status=' + encodeURIComponent(newStatus), { mode: 'no-cors' }).catch(function() {});
     }
