@@ -59,6 +59,22 @@ function saveOrder(d) {
   sendMail(d);
 }
 
+function updateOrderCourier(id, courier, trackingNo) {
+  var sheet = getOrCreateSheet();
+  var rows = sheet.getDataRange().getValues();
+  if (rows[0].length < 18 || !rows[0][17]) sheet.getRange(1, 18).setValue('Courier');
+  if (rows[0].length < 19 || !rows[0][18]) sheet.getRange(1, 19).setValue('Tracking ID');
+
+  for (var i = 1; i < rows.length; i++) {
+    if (String(rows[i][0]).trim() === String(id).trim()) {
+      if (courier !== undefined && courier !== null) sheet.getRange(i + 1, 18).setValue(courier);
+      if (trackingNo !== undefined && trackingNo !== null) sheet.getRange(i + 1, 19).setValue(trackingNo);
+      return true;
+    }
+  }
+  return false;
+}
+
 function updateOrderStatus(id, newStatus) {
   var sheet = getOrCreateSheet();
   var rows = sheet.getDataRange().getValues();
@@ -121,6 +137,12 @@ function doGet(e) {
     var action = params.action;
     var sheet  = getOrCreateSheet();
 
+    if (action === 'updateCourier' && params.id) {
+      var ok = updateOrderCourier(params.id, params.courier || '', params.trackingNo || '');
+      out.setContent(JSON.stringify({ success: ok, id: params.id, courier: params.courier, trackingNo: params.trackingNo }));
+      return out;
+    }
+
     if (action === 'updateStatus' && params.id) {
       var ok = updateOrderStatus(params.id, params.status || 'Confirmed');
       out.setContent(JSON.stringify({ success: ok, id: params.id, status: params.status }));
@@ -142,7 +164,7 @@ function doGet(e) {
         id:r[0], date:r[1], name:r[2], mobile:r[3], email:r[4],
         address:r[5], landmark:r[6], city:r[7], state:r[8], pincode:r[9],
         size:r[10], qty:r[11], total:r[12], payment:r[13],
-        notes:r[14], howHeard:r[15], status:r[16] || 'New'
+        notes:r[14], howHeard:r[15], status:r[16] || 'New', courier:r[17] || '', trackingNo:r[18] || ''
       });
     }
     out.setContent(JSON.stringify({ success:true, orders:orders.reverse() }));

@@ -464,11 +464,26 @@
         else if (st === 'Dispatched') stepNum = 3;
         else if (st === 'Delivered') stepNum = 4;
 
-        // Courier details (from admin sync or defaults based on status)
         var courierInfo = courierMap[o.id] || {};
-        var courierName = courierInfo.courier || (st === 'Dispatched' || st === 'Delivered' ? 'DTDC Express' : '');
-        var trackingNo = courierInfo.trackingNo || (st === 'Dispatched' || st === 'Delivered' ? ('DT' + o.id.replace(/\D/g,'')) : '');
+        var courierTrackingMap = {};
+        try { courierTrackingMap = JSON.parse(localStorage.getItem('gallops_courier_tracking_data') || '{}'); } catch(e){}
+        var trackItem = courierTrackingMap[o.id] || {};
+
+        var courierName = o.courier || trackItem.courier || courierInfo.courier || (st === 'Dispatched' || st === 'Delivered' ? 'DTDC Express' : '');
+        var trackingNo = o.trackingNo || trackItem.trackingNo || courierInfo.trackingNo || (st === 'Dispatched' || st === 'Delivered' ? ('DT' + o.id.replace(/\D/g,'')) : '');
+
         var trackUrl = courierInfo.trackUrl || 'https://www.dtdc.in/';
+        if (courierName.indexOf('Delhivery') !== -1) {
+          trackUrl = 'https://www.delhivery.com/tracking';
+        } else if (courierName.indexOf('Blue Dart') !== -1) {
+          trackUrl = 'https://www.bluedart.com/tracking';
+        } else if (courierName.indexOf('India Post') !== -1) {
+          trackUrl = 'https://www.indiapost.gov.in/_layouts/15/dpt.cept.tracking/trackconsignment.aspx';
+        } else if (courierName.indexOf('Tirupati') !== -1) {
+          trackUrl = 'https://www.shreetirupaticourier.net/';
+        } else if (courierName.indexOf('Trackon') !== -1) {
+          trackUrl = 'http://trackon.in/';
+        }
         
         // POD details (from admin sync or delivered state)
         var podStatus = courierInfo.podStatus || (st === 'Delivered' ? 'Delivered to Customer' : '');

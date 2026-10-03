@@ -112,6 +112,16 @@
     .abtn.courier{background:#805ad522;color:#b794f4;border:1px solid #805ad544;}
     .abtn.courier:hover{background:#805ad544;}
 
+    .courier-cell{min-width:220px;}
+    .courier-field-wrap{display:flex;flex-direction:column;gap:0.32rem;}
+    .courier-sel{width:100%;background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-family:inherit;font-size:0.75rem;font-weight:700;padding:0.25rem 0.45rem;outline:none;cursor:pointer;}
+    .courier-sel:focus{border-color:var(--pink);}
+    .tracking-input-row{display:flex;gap:0.3rem;}
+    .tracking-inp{flex:1;min-width:0;background:var(--surface2);border:1.5px solid var(--border);border-radius:6px;color:var(--text);font-family:monospace;font-size:0.76rem;padding:0.25rem 0.45rem;outline:none;}
+    .tracking-inp:focus{border-color:var(--pink);}
+    .tbtn-save{background:#38a169;color:#fff;border:none;border-radius:6px;padding:0.25rem 0.55rem;font-family:inherit;font-size:0.72rem;font-weight:700;cursor:pointer;transition:background .2s;white-space:nowrap;}
+    .tbtn-save:hover{background:#2f855a;}
+
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px);display:none;place-items:center;z-index:9999;padding:1rem;}
     .modal-overlay.show{display:grid;}
     .modal-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:100%;max-width:520px;box-shadow:0 10px 40px rgba(0,0,0,0.5);overflow:hidden;}
@@ -237,7 +247,7 @@
       <thead><tr>
         <th>Order ID</th><th>Date</th><th>Customer</th><th>Address</th>
         <th>Product</th><th>Total</th><th>Payment</th><th>Notes</th>
-        <th>Status</th><th>Actions</th>
+        <th>Status</th><th>Courier &amp; Tracking ID</th><th>Actions</th>
       </tr></thead>
       <tbody id="ordersBody"></tbody>
     </table>
@@ -630,9 +640,28 @@
           ['New','Confirmed','Dispatched','Delivered','Cancelled'].map(function(s) {
             return '<option value="' + s + '"' + (st === s ? ' selected' : '') + '>' + s + '</option>';
           }).join('') + '</select></td>' +
+        '<td class="courier-cell">' +
+          (function() {
+            var cMap = getCourierTrackingData();
+            var item = cMap[o.id] || {};
+            var curC = o.courier || item.courier || '';
+            var curT = o.trackingNo || item.trackingNo || '';
+            var couriers = ['', 'DTDC Express', 'Delhivery', 'Blue Dart', 'India Post', 'Shree Tirupati Courier', 'Trackon Courier', 'Other'];
+            var opts = couriers.map(function(c) {
+              return '<option value="' + c + '"' + (curC === c ? ' selected' : '') + '>' + (c || '-- Select Courier --') + '</option>';
+            }).join('');
+            return '<div class="courier-field-wrap">' +
+              '<select class="courier-sel" data-id="' + (o.id||'') + '" onchange="saveRowTracking(\'' + (o.id||'') + '\')">' + opts + '</select>' +
+              '<div class="tracking-input-row">' +
+                '<input type="text" class="tracking-inp" placeholder="Enter Tracking ID..." value="' + curT + '" data-id="' + (o.id||'') + '" onkeydown="if(event.key===\'Enter\') saveRowTracking(\'' + (o.id||'') + '\')" />' +
+                '<button class="tbtn-save" onclick="saveRowTracking(\'' + (o.id||'') + '\')" title="Save Courier & Tracking ID">Save</button>' +
+              '</div>' +
+            '</div>';
+          })() +
+        '</td>' +
         '<td><div class="act-row">' +
-          '<button class="abtn courier" onclick="openCourierModal(\'' + (o.id||'') + '\')">Courier/POD</button>' +
           '<button class="abtn wa" onclick="sendWA(\'' + (o.id||'') + '\')">WhatsApp</button>' +
+          '<button class="abtn courier" onclick="openCourierModal(\'' + (o.id||'') + '\')">POD</button>' +
           '<button class="abtn del" onclick="delOrder(\'' + (o.id||'') + '\')">Delete</button>' +
         '</div></td>' +
       '</tr>';
