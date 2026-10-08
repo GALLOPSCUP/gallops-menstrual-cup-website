@@ -326,27 +326,21 @@
 
 <script>
   var ADMIN_PASSWORD = 'gallops2024';
+  var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgXg2FweIGDLBnGDjhxsAhmqav6FNTYjhVxt2UrRpqYOOHzF0sd15Oisd8WofCz9oE/exec';
   var SCRIPT_URL_KEY = 'gallops_script_url';
-  var DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzgXg2FweIGDLBnGDjhxsAhmqav6FNTYjhVxt2UrRpqYOOHzF0sd15Oisd8WofCz9oE/exec';
 
-  function normalizeScriptUrl(url) {
-    if (!url) return DEFAULT_SCRIPT_URL;
-    var u = String(url).trim();
-    if (!u) return DEFAULT_SCRIPT_URL;
-    // Auto-fix if user pasted just Deployment ID (e.g. AKfycbzg...)
-    if (!u.startsWith('http://') && !u.startsWith('https://')) {
-      u = u.replace(/[\/\?#].*$/, '');
-      return 'https://script.google.com/macros/s/' + u + '/exec';
+  // Force-reset localStorage to the verified working URL (fixes typo where letter I was typed as lowercase l)
+  localStorage.setItem(SCRIPT_URL_KEY, SCRIPT_URL);
+
+  function getActiveScriptUrl() {
+    var stored = localStorage.getItem(SCRIPT_URL_KEY);
+    if (!stored || stored.indexOf('welGDL') !== -1 || !stored.startsWith('http')) {
+      localStorage.setItem(SCRIPT_URL_KEY, SCRIPT_URL);
+      return SCRIPT_URL;
     }
-    // Auto-fix if URL is missing /exec at the end
-    if (u.indexOf('/macros/s/') !== -1 && !u.endsWith('/exec')) {
-      u = u.replace(/\/+$/, '') + '/exec';
-    }
-    return u;
+    return stored.trim();
   }
 
-  // Ensure localStorage always has valid full URL
-  localStorage.setItem(SCRIPT_URL_KEY, normalizeScriptUrl(localStorage.getItem(SCRIPT_URL_KEY)));
   var allOrders = [];
   var currentFilter = 'All';
   var currentSearch = '';
@@ -488,7 +482,7 @@
     setupOpen = !setupOpen;
     var b = document.getElementById('setupBanner');
     b.classList.toggle('show', setupOpen);
-    var sv = normalizeScriptUrl(localStorage.getItem(SCRIPT_URL_KEY));
+    var sv = getActiveScriptUrl();
     document.getElementById('scriptUrlInput').value = sv;
   };
   document.getElementById('saveScriptUrl').onclick = function() {
@@ -627,7 +621,7 @@
 
   var isInitialLoad = true;
   function loadOrders() {
-    var scriptUrl = normalizeScriptUrl(localStorage.getItem(SCRIPT_URL_KEY));
+    var scriptUrl = getActiveScriptUrl();
     localStorage.setItem(SCRIPT_URL_KEY, scriptUrl);
     setLoading(30);
     fetch(scriptUrl)
