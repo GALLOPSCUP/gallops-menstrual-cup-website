@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Orders - Gallops Menstrual Cup</title>
   <link rel="icon" href="assets/favicon-32x32.png" type="image/png" />
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root { --pink:hsl(340,85%,62%); --purple:hsl(275,60%,45%); --grad:linear-gradient(135deg,hsl(340,85%,62%) 0%,hsl(275,60%,45%) 100%); --bg:#0f0f1a; --surface:#1a1a2e; --surface2:#22223a; --text:#f0f0f8; --muted:#8888aa; --border:#2e2e4e; }
@@ -192,6 +195,7 @@
     </ol>
     <input type="text" class="url-input" id="scriptUrlInput" placeholder="Paste your Google Apps Script Web App URL here..." />
     <button class="save-url-btn" id="saveScriptUrl">Save URL</button>
+    <button type="button" class="save-url-btn" style="background:#4a5568;margin-left:0.5rem;" onclick="resetDefaultScriptUrl()">Reset to Default URL</button>
   </div>
 
   <div class="stats-row">
@@ -559,6 +563,68 @@
   }
 
   // LOAD ORDERS
+  function resetDefaultScriptUrl() {
+    localStorage.setItem(SCRIPT_URL_KEY, DEFAULT_SCRIPT_URL);
+    document.getElementById('scriptUrlInput').value = DEFAULT_SCRIPT_URL;
+    showToast('Reset to default Google Sheets URL! Refreshing...');
+    loadOrders();
+  }
+
+  function processOrdersData(data) {
+    var rawOrders = (data && data.orders) ? data.orders : [];
+    var deleted = getDeletedOrderIds();
+    var overrides = getStatusOverrides();
+    var courierTrackingMap = getCourierTrackingData();
+
+    // 1. Filter out blank/empty test rows
+    var validOrders = rawOrders.filter(function(o) {
+      if (!o) return false;
+      var name = String(o.name || '').trim();
+      var mobile = String(o.mobile || '').trim();
+      return name !== '' && name !== '-' && mobile !== '' && mobile !== '-';
+    });
+
+    // 2. Clean and deduplicate order IDs
+    var seenIds = {};
+    var uniqueOrders = [];
+    for (var i = 0; i < validOrders.length; i++) {
+      var ord = validOrders[i];
+      ord.id = cleanId(ord.id);
+      if (ord.id && !seenIds[ord.id]) {
+        seenIds[ord.id] = true;
+        uniqueOrders.push(ord);
+      }
+    }
+
+    // 3. Apply deleted and status overrides (Admin override ALWAYS takes precedence)
+    allOrders = uniqueOrders.filter(function(o) {
+      return deleted.indexOf(o.id) === -1;
+    }).map(function(o) {
+      var cid = cleanId(o.id);
+      if (overrides[cid]) {
+        o.status = overrides[cid];
+      } else if (!o.status || o.status === '-') {
+        o.status = 'New';
+      }
+
+      // Restore courier & tracking from local map if present
+      if (courierTrackingMap[cid]) {
+        if (!o.courier && courierTrackingMap[cid].courier) o.courier = courierTrackingMap[cid].courier;
+        if (!o.trackingNo && courierTrackingMap[cid].trackingNo) o.trackingNo = courierTrackingMap[cid].trackingNo;
+      }
+
+      return o;
+    });
+
+    renderAll();
+    if (isInitialLoad) {
+      isInitialLoad = false;
+      var newOrd = allOrders.filter(function(o) { return o.status === 'New'; }).length;
+      if (newOrd > 0) showToast(newOrd + ' new order' + (newOrd > 1 ? 's' : '') + ' waiting!');
+    }
+    setTimeout(function() { setLoading(0); }, 500);
+  }
+
   var isInitialLoad = true;
   function loadOrders() {
     var scriptUrl = normalizeScriptUrl(localStorage.getItem(SCRIPT_URL_KEY));
@@ -568,60 +634,26 @@
       .then(function(r) { return r.json(); })
       .then(function(data) {
         setLoading(100);
-        var rawOrders = data.orders || [];
-        var deleted = getDeletedOrderIds();
-        var overrides = getStatusOverrides();
-        var courierTrackingMap = getCourierTrackingData();
-
-        // 1. Filter out blank/empty test rows
-        var validOrders = rawOrders.filter(function(o) {
-          if (!o) return false;
-          var name = String(o.name || '').trim();
-          var mobile = String(o.mobile || '').trim();
-          return name !== '' && name !== '-' && mobile !== '' && mobile !== '-';
-        });
-
-        // 2. Clean and deduplicate order IDs
-        var seenIds = {};
-        var uniqueOrders = [];
-        for (var i = 0; i < validOrders.length; i++) {
-          var ord = validOrders[i];
-          ord.id = cleanId(ord.id);
-          if (ord.id && !seenIds[ord.id]) {
-            seenIds[ord.id] = true;
-            uniqueOrders.push(ord);
-          }
-        }
-
-        // 3. Apply deleted and status overrides (Admin override ALWAYS takes precedence)
-        allOrders = uniqueOrders.filter(function(o) {
-          return deleted.indexOf(o.id) === -1;
-        }).map(function(o) {
-          var cid = cleanId(o.id);
-          if (overrides[cid]) {
-            o.status = overrides[cid];
-          } else if (!o.status || o.status === '-') {
-            o.status = 'New';
-          }
-
-          // Restore courier & tracking from local map if present
-          if (courierTrackingMap[cid]) {
-            if (!o.courier && courierTrackingMap[cid].courier) o.courier = courierTrackingMap[cid].courier;
-            if (!o.trackingNo && courierTrackingMap[cid].trackingNo) o.trackingNo = courierTrackingMap[cid].trackingNo;
-          }
-
-          return o;
-        });
-
-        renderAll();
-        if (isInitialLoad) {
-          isInitialLoad = false;
-          var newOrd = allOrders.filter(function(o) { return o.status === 'New'; }).length;
-          if (newOrd > 0) showToast(newOrd + ' new order' + (newOrd > 1 ? 's' : '') + ' waiting!');
-        }
-        setTimeout(function() { setLoading(0); }, 500);
+        processOrdersData(data);
       })
       .catch(function(err) {
+        // Automatic fallback: if current URL fails, try DEFAULT_SCRIPT_URL
+        if (scriptUrl !== DEFAULT_SCRIPT_URL) {
+          console.warn('Initial URL failed, retrying with DEFAULT_SCRIPT_URL');
+          localStorage.setItem(SCRIPT_URL_KEY, DEFAULT_SCRIPT_URL);
+          document.getElementById('scriptUrlInput').value = DEFAULT_SCRIPT_URL;
+          fetch(DEFAULT_SCRIPT_URL)
+            .then(function(r) { return r.json(); })
+            .then(function(data) {
+              setLoading(100);
+              processOrdersData(data);
+            })
+            .catch(function(e) {
+              setLoading(0);
+              showToast('Could not load orders. Check your Script URL.', true);
+            });
+          return;
+        }
         setLoading(0);
         showToast('Could not load orders. Check your Script URL.', true);
       });
