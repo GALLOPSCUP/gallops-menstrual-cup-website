@@ -215,37 +215,6 @@
   }
 
   // ==========================================
-  // 5.5. DTDC Order Tracking Form Submission
-  // ==========================================
-  const trackingForm = document.getElementById('tracking-form');
-  const trackingInput = document.getElementById('tracking-id-input');
-  const trackingStatus = document.getElementById('tracking-status-msg');
-
-  if (trackingForm) {
-    trackingForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const trackingId = trackingInput.value.trim();
-      if (trackingId) {
-        // Copy tracking ID to clipboard automatically
-        navigator.clipboard.writeText(trackingId).then(() => {
-          if (trackingStatus) {
-            trackingStatus.textContent = `📋 Consignment ID "${trackingId}" copied to clipboard! Opening DTDC portal... please paste it in the search box.`;
-            trackingStatus.style.display = 'block';
-          }
-        }).catch(err => {
-          if (trackingStatus) {
-            trackingStatus.textContent = `Opening DTDC portal for tracking ID: ${trackingId}`;
-            trackingStatus.style.display = 'block';
-          }
-        });
-
-        // Open DTDC portal immediately in a new tab to bypass popup blockers
-        window.open('https://www.dtdc.in/', '_blank');
-      }
-    });
-  }
-
-  // ==========================================
   // 6. Navigation Active State on Scroll
   // ==========================================
   const sections = document.querySelectorAll('section[id]');
