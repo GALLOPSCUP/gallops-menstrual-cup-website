@@ -1,6 +1,6 @@
 ﻿// ============================================================
 // GALLOPS MENSTRUAL CUP - ORDER MANAGEMENT
-// Version 5 - Supports New Orders, Status Update, Courier & Delete
+// Version 6 - Supports New Orders, Status Update, Courier & Delete
 // Mail order confirmation alert removed as per user request
 // ============================================================
 
