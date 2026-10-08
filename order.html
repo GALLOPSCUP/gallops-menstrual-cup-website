@@ -98,7 +98,11 @@
     .trust-icon-row { font-size: 0.82rem; color: var(--text-muted); font-weight: 600; }
     .success-overlay { display: none; position: fixed; inset: 0; background: rgba(26,26,46,0.7); z-index: 999; place-items: center; }
     .success-overlay.show { display: grid; }
-    .success-box { background: #fff; border-radius: 24px; padding: 3rem 2.5rem; text-align: center; max-width: 400px; width: 90%; animation: popIn .4s cubic-bezier(.34,1.56,.64,1); }
+    .success-box { background: #fff; border-radius: 24px; padding: 2.5rem 2rem; text-align: center; max-width: 460px; width: 92%; animation: popIn .4s cubic-bezier(.34,1.56,.64,1); }
+      .receipt-row { display: flex; justify-content: space-between; align-items: center; padding: 0.45rem 0; border-bottom: 1px dashed #f0d5eb; font-size: 0.88rem; }
+      .receipt-row:last-child { border-bottom: none; }
+      .receipt-lbl { color: var(--text-muted); font-size: 0.82rem; }
+      .receipt-val { font-weight: 700; color: var(--text-dark); }
     @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
     .tick { width: 72px; height: 72px; background: var(--pink-gradient); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1.2rem; }
     .tick svg { fill: #fff; }
@@ -340,10 +344,34 @@
     <div class="tick">
       <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24"><path d="M9,20.42L2.79,14.21L5.62,11.38L9,14.77L18.88,4.88L21.71,7.71L9,20.42Z"/></svg>
     </div>
-    <h2>Order Placed!</h2>
-    <p id="successMsg">Thank you! We have received your order and will contact you within 24 hours to confirm delivery.</p>
+    <h2>Order Placed Successfully!</h2>
+    <p id="successMsg">Thank you! Your order has been placed. We will contact you to confirm delivery.</p>
+
+    <div class="order-receipt-card" id="receiptCard" style="display:none;background:#fdf8fb;border:1.5px solid #f3ddec;border-radius:16px;padding:1.1rem 1.3rem;margin:1.2rem 0 1.5rem;text-align:left;">
+      <div class="receipt-row">
+        <span class="receipt-lbl">Order ID:</span>
+        <span class="receipt-val" style="color:var(--primary-purple);font-family:monospace;letter-spacing:0.04em;" id="receiptId">-</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-lbl">Order Time:</span>
+        <span class="receipt-val" style="color:#d9534f;font-weight:700;" id="receiptTime">-</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-lbl">Product &amp; Qty:</span>
+        <span class="receipt-val" id="receiptProduct">-</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-lbl">Total Amount:</span>
+        <span class="receipt-val" style="color:#28a745;font-size:0.95rem;" id="receiptTotal">-</span>
+      </div>
+      <div class="receipt-row">
+        <span class="receipt-lbl">Customer:</span>
+        <span class="receipt-val" id="receiptCustomer">-</span>
+      </div>
+    </div>
+
     <div style="display:flex;gap:0.8rem;justify-content:center;margin-top:1.2rem;flex-wrap:wrap;">
-      <a href="track.html" id="trackOrderSuccessBtn" class="ok-btn" style="background:#805ad5;box-shadow:0 4px 16px rgba(128,90,213,0.35);">Track Order & Delivery Status</a>
+      <a href="track.html" id="trackOrderSuccessBtn" class="ok-btn" style="background:#805ad5;box-shadow:0 4px 16px rgba(128,90,213,0.35);">Track Order &amp; Delivery Status</a>
       <a href="index.html" class="ok-btn">Back to Homepage</a>
     </div>
   </div>
@@ -454,11 +482,21 @@
     if (!valid) { var firstErr = document.querySelector('.error'); if (firstErr) firstErr.scrollIntoView({ behavior: 'smooth', block: 'center' }); return; }
 
     var sub = currentPrice * qty;
-    var now = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
     var d = new Date();
+    var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var day = ('0' + d.getDate()).slice(-2);
+    var mon = months[d.getMonth()];
+    var yr = d.getFullYear();
+    var hours = d.getHours();
+    var mins = ('0' + d.getMinutes()).slice(-2);
+    var secs = ('0' + d.getSeconds()).slice(-2);
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    var dispHours = hours % 12 || 12;
+    var displayTime = day + ' ' + mon + ' ' + yr + ', ' + ('0' + dispHours).slice(-2) + ':' + mins + ':' + secs + ' ' + ampm;
+    var isoDate = d.toISOString();
     var orderId = 'GC-' + d.getFullYear().toString().slice(-2) + ('0'+(d.getMonth()+1)).slice(-2) + ('0'+d.getDate()).slice(-2) + '-' + Math.floor(1000 + Math.random()*9000);
 
-    var order = { id:orderId, date:now, name:fn+' '+ln, mobile:mob, email:em, address:addr, landmark:near, city:city, state:state, pincode:pin, size:currentSize, qty:qty, total:sub, payment:pay, notes:notes, howHeard:howHeard, status:'New' };
+    var order = { id:orderId, date:isoDate, formattedDate:displayTime, name:fn+' '+ln, mobile:mob, email:em, address:addr, landmark:near, city:city, state:state, pincode:pin, size:currentSize, qty:qty, total:sub, payment:pay, notes:notes, howHeard:howHeard, status:'New' };
 
     // Build WhatsApp message
     var msg = 'NEW GALLOPS ORDER ' + orderId
@@ -475,10 +513,20 @@
       + '\nTotal: Rs.' + sub
       + '\nPayment: ' + pay
       + (notes ? '\nNotes: ' + notes : '')
-      + '\nOrdered at: ' + now;
+      + '\nOrdered at: ' + displayTime;
 
-    // Show success popup immediately
-    document.getElementById('successMsg').textContent = 'Thank you ' + fn + '! Order ' + orderId + ' placed for ' + qty + ' x Gallops ' + currentSize + ' Cup (Rs.' + sub + '). We will contact you on ' + mob + ' within 24 hours.';
+    // Show success popup immediately with exact live time and details
+    document.getElementById('successMsg').textContent = 'Thank you ' + fn + '! Order ' + orderId + ' placed for ' + qty + ' x Gallops ' + currentSize + ' Cup (Rs.' + sub + ').';
+    document.getElementById('receiptId').textContent = orderId;
+    document.getElementById('receiptTime').textContent = displayTime;
+    document.getElementById('receiptProduct').textContent = qty + ' x Gallops ' + currentSize + ' Cup';
+    document.getElementById('receiptTotal').textContent = 'Rs.' + sub + ' (' + pay + ')';
+    document.getElementById('receiptCustomer').textContent = fn + ' ' + ln + ' (+91 ' + mob + ')';
+    document.getElementById('receiptCard').style.display = 'block';
+
+    var trackBtn = document.getElementById('trackOrderSuccessBtn');
+    if (trackBtn) trackBtn.href = 'track.html?mobile=' + encodeURIComponent(mob);
+
     document.getElementById('successOverlay').classList.add('show');
 
     // Send order to Google Sheets (text/plain POST - CORS safe, no preflight needed)

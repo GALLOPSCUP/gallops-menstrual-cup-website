@@ -388,10 +388,51 @@
       } catch(e) { return {}; }
     }
 
+    function parseOrderDate(dateVal) {
+      if (!dateVal) return null;
+      if (dateVal instanceof Date) return isNaN(dateVal.getTime()) ? null : dateVal;
+      var str = String(dateVal).trim();
+      if (!str || str === '-') return null;
+
+      var d = new Date(str);
+      if (!isNaN(d.getTime())) {
+        var dmMatch = str.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})(?:[,\s]+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?\s*(am|pm)?)?/i);
+        if (dmMatch) {
+          var day = parseInt(dmMatch[1], 10);
+          var mon = parseInt(dmMatch[2], 10) - 1;
+          var yr = parseInt(dmMatch[3], 10);
+          var hr = dmMatch[4] ? parseInt(dmMatch[4], 10) : 0;
+          var min = dmMatch[5] ? parseInt(dmMatch[5], 10) : 0;
+          var sec = dmMatch[6] ? parseInt(dmMatch[6], 10) : 0;
+          var ampm = dmMatch[7] ? dmMatch[7].toLowerCase() : '';
+          if (ampm === 'pm' && hr < 12) hr += 12;
+          if (ampm === 'am' && hr === 12) hr = 0;
+          return new Date(yr, mon, day, hr, min, sec);
+        }
+        return d;
+      }
+
+      var ymMatch = str.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})(?:[,\sT]+(\d{1,2}):(\d{1,2})(?::(\d{1,2}))?\s*(am|pm)?)?/i);
+      if (ymMatch) {
+        var yr = parseInt(ymMatch[1], 10);
+        var mon = parseInt(ymMatch[2], 10) - 1;
+        var day = parseInt(ymMatch[3], 10);
+        var hr = ymMatch[4] ? parseInt(ymMatch[4], 10) : 0;
+        var min = ymMatch[5] ? parseInt(ymMatch[5], 10) : 0;
+        var sec = ymMatch[6] ? parseInt(ymMatch[6], 10) : 0;
+        var ampm = ymMatch[7] ? ymMatch[7].toLowerCase() : '';
+        if (ampm === 'pm' && hr < 12) hr += 12;
+        if (ampm === 'am' && hr === 12) hr = 0;
+        return new Date(yr, mon, day, hr, min, sec);
+      }
+
+      return null;
+    }
+
     function formatDisplayDate(dateVal) {
       if (!dateVal) return '-';
-      var d = new Date(dateVal);
-      if (isNaN(d.getTime())) return String(dateVal);
+      var d = parseOrderDate(dateVal);
+      if (!d) return String(dateVal);
       var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
       var day = ('0' + d.getDate()).slice(-2);
       var mon = months[d.getMonth()];
