@@ -7,6 +7,11 @@
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
   <title>Gallops Admin - Order Management</title>
+  <meta name="theme-color" content="#0d0e15" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Gallops Admin" />
   <link rel="icon" href="assets/favicon-32x32.png" type="image/png" />
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -151,6 +156,29 @@
     .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--surface); border: 1px solid var(--border); color: var(--text); padding: 0.9rem 1.4rem; border-radius: 12px; font-size: 0.9rem; font-weight: 600; box-shadow: 0 15px 40px rgba(0,0,0,0.5); z-index: 999999; transform: translateY(120px); opacity: 0; transition: all .3s cubic-bezier(.34,1.56,.64,1); border-left: 4px solid var(--pink); }
     .toast.show { transform: translateY(0); opacity: 1; }
     .toast.err { border-left-color: var(--red); color: #f87171; }
+      /* MOBILE APP RESPONSIVE OPTIMIZATIONS */
+    @media (max-width: 768px) {
+      .hdr { padding: 0.8rem 1rem; flex-direction: column; gap: 0.75rem; align-items: stretch; }
+      .hdr-left { justify-content: space-between; }
+      .hdr-right { justify-content: space-between; width: 100%; gap: 0.35rem; }
+      .hdr-right .btn { padding: 0.45rem 0.65rem; font-size: 0.74rem; flex: 1; justify-content: center; text-align: center; }
+      .main-wrap { padding: 1rem 0.75rem 3rem; }
+      .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1.2rem; }
+      .stat-box { padding: 1rem; border-radius: 14px; }
+      .stat-num { font-size: 1.5rem; }
+      .stat-label { font-size: 0.7rem; }
+      .bar-row { flex-direction: column; align-items: stretch; gap: 0.75rem; }
+      .search-input-wrap { max-width: 100%; min-width: 100%; }
+      .filter-pills { overflow-x: auto; flex-wrap: nowrap; padding-bottom: 0.3rem; -webkit-overflow-scrolling: touch; width: 100%; }
+      .pill { flex-shrink: 0; font-size: 0.75rem; padding: 0.35rem 0.8rem; }
+      .date-filter-bar { flex-direction: column; align-items: stretch; gap: 0.75rem; padding: 0.75rem; }
+      .date-left { overflow-x: auto; flex-wrap: nowrap; width: 100%; padding-bottom: 0.2rem; }
+      .dpill { flex-shrink: 0; }
+      .date-right { justify-content: space-between; width: 100%; }
+      .date-pick-item input { max-width: 125px; }
+      .table-card { border-radius: 14px; }
+      .login-card { padding: 2.2rem 1.6rem; border-radius: 20px; }
+    }
   </style>
 </head>
 <body>
